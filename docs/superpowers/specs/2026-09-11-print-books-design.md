@@ -189,9 +189,9 @@ once and every rebuild is instant. `--fit page` skips it entirely.
 ### Drawing specifics
 
 - **Dot grid**: line width = dot diameter, `1 J` round cap, all dots as degenerate
-  subpaths in **one path with a single `S`**. ~2400 dots on A4 at 5 mm pitch, one
-  stroke operator, ~30 KB — and as a Form XObject it appears once in the file, not
-  once per page.
+  subpaths in **one path with a single `S`**. An A4 content area at a 5 mm pitch
+  is 1890 dots (measured): 73 KB raw, 7.6 KB Flate — and as a Form XObject it
+  appears once in the file, not once per page.
 - Defaults: 5 mm pitch, 0.25 mm dot, 25 % K. Below ~0.2 mm most printers drop the dot.
 - **Center ticks**: 4 inward ticks at the edge midpoints, 3 mm, 0.3 pt, 40 % K —
   both axes, outside the writing area, ~8 path ops. Quarter ticks optional.

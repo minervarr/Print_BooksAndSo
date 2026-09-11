@@ -61,8 +61,11 @@ under a second once the crop box is cached; if it does not, something is bypassi
 the object-copy path and rendering instead.
 
 The dot grid's own stream is one path: line width set to the dot diameter, `1 J`
-round cap, every dot a degenerate subpath, **one `S` at the end**. ~2400 dots on A4
-at 5 mm pitch for ~30 KB and a single stroke operator.
+round cap, every dot a degenerate subpath, **one `S` at the end**. An A4 content
+area at a 5 mm pitch is 1890 dots: 73 KB of stream raw, 7.6 KB Flate-compressed,
+one stroke operator -- and written **once** for the whole document, however many
+pages reference it. (Measured, not estimated; the first draft of this file
+guessed 2400 dots and 30 KB and was wrong about both.)
 
 ## One crop box for the whole book, and that is not laziness
 
