@@ -20,29 +20,14 @@ from __future__ import annotations
 from typing import Literal
 
 from core.geometry import Rect
+from core.pdfops import gray as _gray
+from core.pdfops import num as _num
 
 Corner = Literal["bottom-left", "bottom-right", "top-left", "top-right"]
 
 #: Slack allowed when counting how many pitches span a box. 170 mm / 5 mm is
 #: exactly 34, but in binary it can land a hair under and lose a whole column.
 _EPS = 1e-9
-
-
-def _num(value: float) -> str:
-    """A PDF number: four decimals, no trailing zeros, no trailing point.
-
-    PDF points are 1/72 inch, so four decimals is ~0.4 micron -- far finer than
-    any printer. Shorter numbers keep the stream small, and the grid stream is
-    the biggest thing this program writes.
-    """
-    text = f"{value:.4f}".rstrip("0").rstrip(".")
-    return "0" if text in ("", "-", "-0") else text
-
-
-def _gray(ink: float) -> str:
-    if not 0.0 <= ink <= 1.0:
-        raise ValueError(f"ink must be a fraction of black in 0..1, got {ink}")
-    return _num(1.0 - ink)
 
 
 def _count(span: float, pitch: float) -> int:
