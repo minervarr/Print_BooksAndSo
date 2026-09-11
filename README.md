@@ -31,14 +31,16 @@ $ print-books build habits.toml --chapters 1 --duplex manual
 
 **The unit of imposition is a *side*, not a page.** A chapter is a portrait on a
 recto, a mini-TOC on its verso, then one spread per source page: content on the
-left, notes on the right. Four invariants fall out and they are the tests — portraits
-on rectos, content on versos, `2 + 2N` sides per chapter, every source page exactly
-once. Getting this wrong is invisible until you have printed forty sheets.
+left, notes on the right. Five invariants fall out and they are the tests — portraits
+on rectos, content on versos, every content page facing a notes page, `4 + 2N` sides
+per chapter, every source page exactly once. Getting any of them wrong is invisible
+until you have printed forty sheets.
 
-**The mini-TOC pays for itself.** `2 + 2N` is even, so the next chapter's portrait
-lands on a recto with no filler page. Without it you need a blank to restore parity —
-the same paper, less use. So the back of each portrait carries the chapter's own
-sub-sections and page numbers.
+**The mini-TOC costs a sheet, and that was a choice.** The back of each portrait
+carries the chapter's own sub-sections and page numbers. It is not free: landing on
+side 2 obliges side 3 to be its facing page, so a chapter runs `4 + 2N` sides rather
+than `2 + 2N`. The design was briefly wrong about this, and the symptom was the last
+content page of every chapter having no notes page beside it.
 
 **Nothing is ever rendered.** Source pages are referenced as Form XObjects, never
 decoded. The dot grid is one shared XObject referenced N times, not drawn per page.

@@ -107,22 +107,34 @@ The unit of imposition is a `Side`, not a page. A chapter is:
 |---|---|
 | 1 (recto) | chapter portrait |
 | 2 (verso) | chapter mini-TOC |
-| 3 (recto) | notes |
+| 3 (recto) | notes — faces the mini-TOC, for planning the chapter |
 | 4 (verso) | source page 1 |
 | 5 (recto) | notes |
-| 6 (verso) | source page 2 |
+| … | … |
+| 2N+2 (verso) | source page N |
+| 2N+3 (recto) | notes |
+| 2N+4 (verso) | blank — parity, so the next portrait is a recto |
 
 Open the book and you see the portrait alone, then `mini-TOC | notes`, then
-`source page | notes`. Four invariants hold, and they are the tests:
+`source page | notes` for every page of the chapter. **Five** invariants hold,
+and they are the tests:
 
 - every portrait is on a **recto**
 - every content page is on a **verso**
-- sides per chapter == **`2 + 2N`**
+- every content page **faces a notes page**
+- sides per chapter == **`4 + 2N`**
 - source pages appear **exactly once, in order**
 
-The mini-TOC is not decoration: `2 + 2N` is even, so the next chapter's portrait
-lands on a recto with **no filler page**. Drop the mini-TOC and you have to add a
-blank back to restore parity — the same paper, less use. That is why it is there.
+**`4 + 2N`, and the fourth invariant is why.** This was first designed as
+`2 + 2N`, on the belief that the mini-TOC rode along on the parity side for
+free. It does not: landing on side 2 obliges side 3 to be its facing page, so
+the mini-TOC costs **one sheet per chapter**, not nothing. The error was
+invisible in every rule except one — the *last* content page of each chapter
+faced the next chapter's portrait instead of a notes page — which is exactly
+why `test_every_content_page_faces_a_notes_page` exists. At `2 + 2N` there is
+room for only one page beyond portrait + content + notes, and it must sit on
+the chapter's final verso. Paying the sheet was a deliberate choice; do not
+"optimise" it back without re-reading that test.
 
 `--notes none` is not a special case in the code. It is a different `Plan` through
 the same engine.

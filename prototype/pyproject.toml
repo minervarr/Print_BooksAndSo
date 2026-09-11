@@ -1,0 +1,37 @@
+# Print_BooksAndSo — the Python 3.13 prototype.
+#
+# 3.13 and not 3.14 because pikepdf publishes a cp313 manylinux wheel, so a
+# fresh environment needs no compiler. In a venv because this machine's system
+# python3 IS 3.14 -- there is no other way to pin 3.13.
+#
+# This is the first Python project in this workspace; see CLAUDE.md.
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "print-books"
+version = "0.1.0"
+description = "Turn a PDF book into a printable interleaved notebook"
+requires-python = "==3.13.*"
+license = "AGPL-3.0-or-later"
+
+# core/ deliberately has NO dependencies -- it is stdlib only, and a test
+# enforces that. Everything here is for backend/ and cli/.
+dependencies = [
+    "pikepdf>=10.13",   # qpdf bindings: page import, object plumbing
+    "fontTools>=4.53",  # glyph outlines for the portrait/TOC/footer text
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+print-books = "cli.main:main"
+
+[tool.setuptools]
+packages = ["core", "backend", "cli"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -31,7 +31,7 @@ rather than a redesign.
 | Front door | CLI + a generated, hand-editable TOML project file. No GUI in v1; `core/` never learns who called it, so a GUI can be added later with zero rework. |
 | Binding | Sequential leaves (punch/binder/spiral), left-edge gutter. The page-slot model is shaped so saddle-stitch booklet imposition drops in later as a second strategy. |
 | Chapter portrait | LaTeX `\chapter` head: letterspaced small-caps kicker, 0.4 pt hairline rule, 24 pt ragged-right title on the upper third, book identity + page range in 8.5 pt italic at the foot. |
-| The parity side | Back of the portrait becomes the chapter's **mini-TOC** (sub-sections + page numbers from the outline tree), falling back to a dot page. Costs zero extra paper. |
+| The parity side | Back of the portrait becomes the chapter's **mini-TOC** (sub-sections + page numbers from the outline tree), falling back to a dot page. Costs one extra sheet per chapter -- see the correction under "The core model". |
 | Generated text | **Glyph outlines as vector paths.** No font embedding, no CID dictionaries, no subsetting. Generated furniture is not searchable; original book pages are untouched and stay searchable. |
 | Content fit | One crop box for the whole book from a sampled ink bbox, cached in the project file. Not per-page. |
 
@@ -145,12 +145,21 @@ plain data; core never touches a PDF object.
 - `Notes{grid, footer}`
 - `Blank`
 
+**Correction, found during implementation.** A chapter is `4 + 2N` sides, not
+`2 + 2N`: portrait (recto), mini-TOC (verso), a notes page facing the mini-TOC,
+then one `content | notes` spread per source page, then a parity blank. The
+mini-TOC is not free -- landing on side 2 obliges side 3 to be its facing page.
+At `2 + 2N` the last content page of every chapter faced the next chapter's
+portrait rather than a notes page. Paying the extra sheet per chapter was
+chosen deliberately over dropping the mini-TOC.
+
 Each `Side` carries its index, its recto/verso parity, and the gutter edge. This is
 the load-bearing abstraction, because it makes the rules *assertable*:
 
 - every `Portrait` is on a recto
 - every `Content` is on a verso
-- sides per chapter == `2 + 2N`
+- every content page faces a notes page
+- sides per chapter == `4 + 2N`
 - source pages appear exactly once, in order
 
 **3. Render** *(pure)* → each `Side` becomes a PDF **content-stream string** plus the
