@@ -1,0 +1,70 @@
+# Build trees
+build/
+build-*/
+cpp/build/
+dist/
+out/
+bin/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+_deps/
+compile_commands.json
+
+# Python build & virtual environment files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.venv*/
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Binaries / objects
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# The wrapper binary itself is a local tool, not project source.
+git_wrapper
+
+# Output. This program's whole job is emitting PDFs; none of them are source.
+# Fixtures are the exception -- fixtures/*.pdf are tiny, synthetic and tracked
+# deliberately, because the golden tests are worthless without them.
+*.pdf
+!fixtures/*.pdf
+
+# Proof renders (pdftoppm). Regenerate, never commit.
+proofs/
+*_proof*.png
+*_proof*.ppm
+
+# Editor / OS
+.idea/
+.vs/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Session history
+.remember/
+.superpowers/
+.claude/
