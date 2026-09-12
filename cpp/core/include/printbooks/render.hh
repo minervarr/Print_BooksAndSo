@@ -104,6 +104,9 @@ public:
     Renderer(Layout layout, GridSpec grid, Style style, BookInfo book,
              const GlyphSource* roman, const GlyphSource* italic, NotesMode notes);
 
+    const Layout& layout() const { return layout_; }
+    const GridSpec& grid() const { return grid_; }
+
     // The drawable box for `side`, with the gutter on its binding edge.
     Rect box_for(const Side& side) const;
 

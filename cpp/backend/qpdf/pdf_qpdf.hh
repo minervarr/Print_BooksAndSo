@@ -1,17 +1,19 @@
-// pdf_qpdf.hh — probe a source PDF into plain data (qpdf).
+// pdf_qpdf.hh — probe a source PDF into plain data, emit a notebook (qpdf).
 //
 // Copyright (C) 2026 nava. AGPLv3 or later; see LICENSE.
 //
 // Two jobs, probe and emit, and between them core/ does all the deciding.
-// This header is the probe half: page boxes, the outline tree, metadata.
-// Nothing PDF-shaped crosses back into core/.
+// Probe returns page boxes, the outline tree, metadata. Emit writes one output
+// page per planned side. Nothing PDF-shaped crosses back into core/.
 #pragma once
 
+#include <optional>
 #include <string>
 #include <vector>
 
 #include "printbooks/geometry.hh"
 #include "printbooks/plan.hh"
+#include "printbooks/render.hh"
 
 namespace pb {
 
@@ -43,6 +45,16 @@ struct SourceBook {
 
 // Read `path` into plain data for core/ to plan against.
 SourceBook probe(const std::string& path);
+
+// Write the planned sides to `output_path`.
+// `crop` is the box of each source page to show — ONE box for the whole book.
+// nullopt means use each page's own CropBox.
+void emit(const SourceBook& book,
+          const std::vector<Chapter>& chapters,
+          const std::vector<Side>& sides,
+          const Renderer& renderer,
+          const std::string& output_path,
+          const std::optional<Rect>& crop = std::nullopt);
 
 // Top-level outline entries as chapters, with their sub-entries as TOC.
 // A chapter runs from its own first page to the page before the next

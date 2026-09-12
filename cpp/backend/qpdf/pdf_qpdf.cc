@@ -1,11 +1,12 @@
-// pdf_qpdf.cc — probe a source PDF into plain data.
+// pdf_qpdf.cc — probe a source PDF into plain data, emit a notebook.
 //
 // Copyright (C) 2026 nava. AGPLv3 or later; see LICENSE.
 //
 // MediaBox fallback 612×792; CropBox falls back to MediaBox; corners sorted.
 // /Info is snapshotted before XMP; XMP dc:title / dc:creator wins when present;
 // malformed XMP is not fatal. Outline destinations that will not resolve are
-// skipped rather than fatal.
+// skipped rather than fatal. Emit copies source pages as Form XObjects and
+// never calls placeFormXObject's auto-fit.
 
 #include "qpdf/pdf_qpdf.hh"
 
@@ -14,6 +15,7 @@
 #include <cstring>
 #include <map>
 #include <stdexcept>
+#include <tuple>
 #include <utility>
 
 #include <qpdf/Buffer.hh>
@@ -24,6 +26,9 @@
 #include <qpdf/QPDFOutlineObjectHelper.hh>
 #include <qpdf/QPDFPageDocumentHelper.hh>
 #include <qpdf/QPDFPageObjectHelper.hh>
+#include <qpdf/QPDFWriter.hh>
+
+#include "printbooks/drawing.hh"
 
 namespace pb {
 namespace {
@@ -284,6 +289,181 @@ std::vector<Chapter> chapters_from_outline(const SourceBook& book, int min_gap) 
         chapters.push_back(std::move(ch));
     }
     return chapters;
+}
+
+namespace {
+
+using BoxKey = std::tuple<double, double, double, double>;
+
+std::string add_xobject(QPDFPageObjectHelper& page, QPDFObjectHandle form,
+                        const char* prefix) {
+    QPDFObjectHandle resources = page.getAttribute("/Resources", true);
+    if (!resources.isDictionary()) {
+        resources = QPDFObjectHandle::newDictionary();
+        page.getObjectHandle().replaceKey("/Resources", resources);
+    }
+    resources.mergeResources(QPDFObjectHandle::parse("<< /XObject << >> >>"));
+    int min_suffix = 1;
+    const std::string name = resources.getUniqueResourceName(prefix, min_suffix);
+    resources.getKey("/XObject").replaceKey(name, form);
+    return name;
+}
+
+class Emitter {
+public:
+    Emitter(QPDF& source, const Renderer& renderer, const SourceBook& book,
+            const std::optional<Rect>& crop)
+        : renderer_(renderer),
+          src_pages_(QPDFPageDocumentHelper::get(source).getAllPages()) {
+        out_.emptyPDF();
+        for (const SourcePage& page : book.pages)
+            page_boxes_.emplace(page.number, crop.has_value() ? *crop : page.crop_box);
+    }
+
+    void add_side(const Side& side, const Chapter* chapter) {
+        const Size& paper = renderer_.layout().paper;
+        QPDFObjectHandle page = out_.makeIndirectObject(QPDFObjectHandle::newDictionary());
+        page.replaceKey("/Type", QPDFObjectHandle::newName("/Page"));
+        page.replaceKey("/MediaBox",
+                        QPDFObjectHandle::newArray(QPDFObjectHandle::Rectangle{
+                            0.0, 0.0, paper.width, paper.height}));
+        page.replaceKey("/Resources", QPDFObjectHandle::parse("<< /XObject << >> >>"));
+        QPDFPageDocumentHelper::get(out_).addPage(page, false);
+        QPDFPageObjectHelper ph =
+            QPDFPageDocumentHelper::get(out_).getAllPages().back();
+
+        std::optional<int> facing;
+        std::optional<Rect> page_box;
+        if (side.kind == SideKind::Notes)
+            facing = facing_page_;
+        else if (side.kind == SideKind::Content) {
+            if (!side.source_page.has_value())
+                throw std::invalid_argument("content side with no source_page");
+            page_box = page_boxes_.at(*side.source_page);
+        }
+
+        const SideLayout sl = renderer_.layout_side(side, chapter, page_box, facing);
+
+        std::vector<std::string> parts;
+
+        // Source page first, so furniture never hides under it.
+        if (side.kind == SideKind::Content) {
+            if (!sl.content.has_value())
+                throw std::invalid_argument("content side with no placement");
+            const QPDFObjectHandle form = page_form(*side.source_page);
+            const std::string name = add_xobject(ph, form, "/Im");
+            parts.push_back(renderer_.place_form(name, *sl.content));
+        }
+
+        // Shared Form XObject: one copy per distinct box (recto vs verso gutter).
+        if (sl.grid) {
+            const GridSpec& grid = renderer_.grid();
+            const std::string stream =
+                dot_grid(sl.box, grid.pitch, grid.dot, grid.ink);
+            const QPDFObjectHandle form = grid_form(sl.box, stream);
+            const std::string name = add_xobject(ph, form, "/G");
+            parts.push_back("q\n" + name + " Do\nQ");
+        }
+
+        SideLayout furniture = sl;
+        furniture.grid = false;
+        furniture.content = std::nullopt;
+        const std::string drawn = renderer_.emit(furniture);
+        if (!drawn.empty())
+            parts.push_back(drawn);
+
+        if (!parts.empty()) {
+            std::string joined = parts.front();
+            for (std::size_t i = 1; i < parts.size(); ++i) {
+                joined += '\n';
+                joined += parts[i];
+            }
+            ph.addPageContents(out_.newStream(joined), false);
+        }
+    }
+
+    void save(const std::string& output_path) {
+        QPDFWriter writer(out_, output_path.c_str());
+        writer.setLinearization(false);
+        writer.write();
+    }
+
+    std::optional<int> facing_page_;
+
+private:
+    QPDFObjectHandle grid_form(const Rect& box, const std::string& stream) {
+        const BoxKey key{box.x0, box.y0, box.x1, box.y1};
+        auto it = grids_.find(key);
+        if (it != grids_.end())
+            return it->second;
+
+        QPDFObjectHandle form = out_.newStream(stream);
+        QPDFObjectHandle dict = form.getDict();
+        dict.replaceKey("/Type", QPDFObjectHandle::newName("/XObject"));
+        dict.replaceKey("/Subtype", QPDFObjectHandle::newName("/Form"));
+        dict.replaceKey("/BBox", QPDFObjectHandle::newArray(QPDFObjectHandle::Rectangle{
+                                     box.x0, box.y0, box.x1, box.y1}));
+        grids_.emplace(key, form);
+        return form;
+    }
+
+    QPDFObjectHandle page_form(int number) {
+        auto it = forms_.find(number);
+        if (it != forms_.end())
+            return it->second;
+        if (number < 1 || number > static_cast<int>(src_pages_.size()))
+            throw std::out_of_range("source page not in book");
+        QPDFObjectHandle form =
+            out_.copyForeignObject(src_pages_[static_cast<std::size_t>(number - 1)]
+                                       .getFormXObjectForPage());
+        forms_.emplace(number, form);
+        return form;
+    }
+
+    const Renderer& renderer_;
+    std::vector<QPDFPageObjectHelper> src_pages_;
+    QPDF out_;
+    std::map<int, QPDFObjectHandle> forms_;
+    std::map<BoxKey, QPDFObjectHandle> grids_;
+    std::map<int, Rect> page_boxes_;
+};
+
+}  // namespace
+
+void emit(const SourceBook& book,
+          const std::vector<Chapter>& chapters,
+          const std::vector<Side>& sides,
+          const Renderer& renderer,
+          const std::string& output_path,
+          const std::optional<Rect>& crop) {
+    std::map<int, const Chapter*> by_number;
+    for (const Chapter& ch : chapters)
+        by_number[ch.number] = &ch;
+
+    QPDF source;
+    source.setSuppressWarnings(true);
+    source.processFile(book.path.c_str());
+
+    Emitter em(source, renderer, book, crop);
+
+    for (std::size_t position = 0; position < sides.size(); ++position) {
+        const Side& side = sides[position];
+        if (side.kind == SideKind::Notes && position > 0) {
+            const Side& previous = sides[position - 1];
+            em.facing_page_ = (previous.kind == SideKind::Content) ? previous.source_page
+                                                                   : std::nullopt;
+        } else {
+            em.facing_page_ = std::nullopt;
+        }
+
+        const Chapter* chapter = nullptr;
+        auto it = by_number.find(side.chapter);
+        if (it != by_number.end())
+            chapter = it->second;
+        em.add_side(side, chapter);
+    }
+
+    em.save(output_path);
 }
 
 }  // namespace pb

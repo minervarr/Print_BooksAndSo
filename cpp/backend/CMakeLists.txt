@@ -34,7 +34,7 @@ if(PRINTBOOKS_TESTS)
     add_executable(glyphs_freetype_test tests/glyphs_freetype_test.cc)
     add_executable(pdf_qpdf_test tests/pdf_qpdf_test.cc)
     target_link_libraries(glyphs_freetype_test PRIVATE printbooks_backend)
-    target_link_libraries(pdf_qpdf_test PRIVATE printbooks_backend)
+    target_link_libraries(pdf_qpdf_test PRIVATE printbooks_backend libqpdf)
     target_compile_definitions(pdf_qpdf_test PRIVATE
         PRINTBOOKS_FIXTURE_DIR="${_printbooks_fixture_dir}")
     if(MSVC)
