@@ -87,7 +87,16 @@ class FindBinaryTests(unittest.TestCase):
         debug = _touch_exe(self.root / "build" / "linux_debug" / "cli" / "print-books")
         self.assertEqual(print_books.find_binary(), str(debug.resolve()))
         release = _touch_exe(self.root / "build" / "linux" / "cli" / "print-books")
+        # Release is newer, so it wins.
         self.assertEqual(print_books.find_binary(), str(release.resolve()))
+
+    def test_newer_debug_beats_stale_release(self) -> None:
+        self._patch_roots()
+        release = _touch_exe(self.root / "build" / "linux" / "cli" / "print-books")
+        debug = _touch_exe(self.root / "build" / "linux_debug" / "cli" / "print-books")
+        os.utime(release, (1, 1))
+        os.utime(debug, (100, 100))
+        self.assertEqual(print_books.find_binary(), str(debug.resolve()))
 
     def test_well_known_native_and_custom(self) -> None:
         self._patch_roots()

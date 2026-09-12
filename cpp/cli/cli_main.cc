@@ -3,8 +3,12 @@
 // Copyright (C) 2026 nava. AGPLv3 or later; see LICENSE.
 //
 // Usage:
+//     print-books                         # questions, then init + build
+//     print-books BOOK.pdf                # same, book path filled in
 //     print-books init BOOK.pdf [-o project.toml] [--paper a4|letter] [--notes dots|lines|blank|none]
 //     print-books build project.toml [-o out.pdf] [--chapters all|1|1,3-5]
+//
+// Default build output is <project>_notebook.pdf, never the source book.
 
 #include <cctype>
 #include <cstring>
@@ -13,10 +17,11 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sys/stat.h>
+#include <unistd.h>
 #include <vector>
 
 #include "freetype/glyphs_freetype.hh"
+#include "paths.hh"
 #include "printbooks/geometry.hh"
 #include "printbooks/plan.hh"
 #include "printbooks/render.hh"
@@ -26,17 +31,25 @@
 
 namespace {
 
+using pb::cli::default_notebook_pdf;
+using pb::cli::default_project_toml;
+using pb::cli::ends_with_ci;
+using pb::cli::same_regular_file;
+using pb::cli::with_suffix;
+
 void usage(std::ostream& out) {
     out << "Turn a PDF book into a printable interleaved notebook.\n"
         << "\n"
         << "Usage:\n"
-        << "    print-books init BOOK.pdf [-o project.toml] [--paper a4|letter] "
-           "[--notes dots|lines|blank|none]\n"
-        << "    print-books build project.toml [-o out.pdf] [--chapters all|1|1,3-5]\n";
+        << "    print-books                         ask, then init + build\n"
+        << "    print-books BOOK.pdf                same, with the book filled in\n"
+        << "    print-books init BOOK.pdf [-o project.toml] [--paper a4|letter]\n"
+        << "                                [--notes dots|lines|blank|none]\n"
+        << "    print-books build project.toml [-o out.pdf] [--chapters all|1,3-5]\n";
 }
 
 bool is_regular_file(const std::string& path) {
-    struct stat st;
+    struct stat st {};
     return ::stat(path.c_str(), &st) == 0 && S_ISREG(st.st_mode);
 }
 
@@ -48,17 +61,6 @@ std::string trim(const std::string& s) {
     while (j > i && std::isspace(static_cast<unsigned char>(s[j - 1])))
         --j;
     return s.substr(i, j - i);
-}
-
-// pathlib.Path.with_suffix: replace the last suffix of the filename, or
-// append if the last component has none (a leading dot is not a suffix).
-std::string with_suffix(const std::string& path, const std::string& suffix) {
-    const auto slash = path.find_last_of("/\\");
-    const auto start = (slash == std::string::npos) ? 0 : slash + 1;
-    const auto dot = path.find_last_of('.');
-    if (dot == std::string::npos || dot < start || dot == start)
-        return path + suffix;
-    return path.substr(0, dot) + suffix;
 }
 
 bool valid_paper(const std::string& name) {
@@ -144,16 +146,33 @@ bool take_value(int& i, int argc, char** argv, std::string* out) {
 }
 
 int parse_args(int argc, char** argv, Args* args) {
-    if (argc < 2)
-        return fail_usage("missing command");
+    if (argc < 2) {
+        args->command = "wizard";
+        return 0;
+    }
 
     int i = 1;
     if (std::strcmp(argv[1], "-h") == 0 || std::strcmp(argv[1], "--help") == 0) {
         args->help = true;
         return 0;
     }
-    args->command = argv[1];
-    i = 2;
+
+    const std::string first = argv[1];
+    if (first == "init" || first == "build" || first == "wizard") {
+        args->command = first;
+        i = 2;
+    } else if (ends_with_ci(first, ".pdf")) {
+        args->command = "wizard";
+        args->positional = first;
+        i = 2;
+    } else if (ends_with_ci(first, ".toml")) {
+        args->command = "build";
+        args->positional = first;
+        i = 2;
+    } else {
+        args->command = first;
+        i = 2;
+    }
 
     for (; i < argc; ++i) {
         const char* a = argv[i];
@@ -192,6 +211,41 @@ int parse_args(int argc, char** argv, Args* args) {
     return 0;
 }
 
+std::string ask_line(const std::string& prompt, const std::string& def) {
+    std::cout << prompt;
+    if (!def.empty())
+        std::cout << " [" << def << "]";
+    std::cout << ": " << std::flush;
+    std::string line;
+    if (!std::getline(std::cin, line))
+        throw std::runtime_error("input closed");
+    line = trim(line);
+    return line.empty() ? def : line;
+}
+
+int ask_choice(const std::string& prompt, int n, int def) {
+    std::cout << prompt << " [" << def << "]: " << std::flush;
+    std::string line;
+    if (!std::getline(std::cin, line))
+        throw std::runtime_error("input closed");
+    line = trim(line);
+    if (line.empty())
+        return def;
+    const int v = std::stoi(line);
+    if (v < 1 || v > n)
+        throw std::invalid_argument("choice must be 1.." + std::to_string(n));
+    return v;
+}
+
+int refuse_clobber(const std::string& out, const std::string& book) {
+    if (!same_regular_file(out, book) && out != book)
+        return 0;
+    std::cerr << "error: refusing to write the notebook over the source book:\n"
+              << "  " << book << "\n"
+              << "  use -o some_other.pdf  (default is *_notebook.pdf)\n";
+    return 1;
+}
+
 int cmd_init(const Args& args) {
     if (args.positional.empty())
         return fail_usage("missing BOOK.pdf");
@@ -218,7 +272,7 @@ int cmd_init(const Args& args) {
     }
 
     const std::string out =
-        args.saw_output ? args.output : with_suffix(args.positional, ".toml");
+        args.saw_output ? args.output : default_project_toml(args.positional);
     pb::write_project(out, args.positional, book.title, book.author, chapters,
                       args.paper, args.notes);
     std::cout << "  " << chapters.size() << " chapters from the PDF outline\n";
@@ -232,7 +286,7 @@ int cmd_build(const Args& args) {
     if (args.positional.empty())
         return fail_usage("missing project.toml");
     if (args.saw_paper || args.saw_notes)
-        return fail_usage("build does not take --paper/--notes");
+        return fail_usage("build does not take --paper/--notes (they live in the TOML)");
     if (!is_regular_file(args.positional)) {
         std::cerr << "error: " << args.positional << " not found\n";
         return 1;
@@ -264,6 +318,11 @@ int cmd_build(const Args& args) {
         return 2;
     }
 
+    const std::string out =
+        args.saw_output ? args.output : default_notebook_pdf(args.positional);
+    if (const int r = refuse_clobber(out, project.book))
+        return r;
+
     const pb::NotesMode notes = notes_mode(project.notes);
     const pb::SourceBook book = pb::probe(project.book);
     const std::vector<pb::Side> sides = pb::plan_sides(chapters, notes);
@@ -275,8 +334,6 @@ int cmd_build(const Args& args) {
         pb::GridSpec{}, pb::Style{}, pb::BookInfo{project.title, project.author},
         &roman, &italic, notes);
 
-    const std::string out =
-        args.saw_output ? args.output : with_suffix(args.positional, ".pdf");
     pb::emit(book, chapters, sides, renderer, out);
 
     const std::size_t sheets = (sides.size() + 1) / 2;
@@ -284,6 +341,79 @@ int cmd_build(const Args& args) {
               << " sides -> " << sheets << " sheets\n";
     std::cout << "  wrote " << out << "\n";
     return 0;
+}
+
+int cmd_wizard(Args args) {
+    if (!::isatty(STDIN_FILENO) || !::isatty(STDOUT_FILENO))
+        return fail_usage("missing command (not a terminal — pass init or build)");
+
+    std::cout << "print-books — printable interleaved notebook\n\n";
+
+    if (args.positional.empty()) {
+        args.positional = ask_line("Path to the PDF book", "");
+        if (args.positional.empty())
+            return fail_usage("need a PDF path");
+    }
+    if (!is_regular_file(args.positional)) {
+        std::cerr << "error: " << args.positional << " not found\n";
+        return 1;
+    }
+
+    if (!args.saw_paper) {
+        std::cout << "Paper size:\n"
+                  << "  1) A4 (default)\n"
+                  << "  2) US Letter\n";
+        args.paper = (ask_choice("Enter choice", 2, 1) == 2) ? "letter" : "a4";
+        args.saw_paper = true;
+    }
+
+    if (!args.saw_notes) {
+        std::cout << "Notes pages facing each book page?\n"
+                  << "  1) Yes — dot grid (default)\n"
+                  << "  2) Yes — blank paper\n"
+                  << "  3) No  — book on both sides of the sheet\n";
+        switch (ask_choice("Enter choice", 3, 1)) {
+            case 2: args.notes = "blank"; break;
+            case 3: args.notes = "none"; break;
+            default: args.notes = "dots"; break;
+        }
+        args.saw_notes = true;
+    }
+
+    std::cout << "Two-sided printing: this program writes a sequential PDF\n"
+              << "(page 1, page 2, …). Duplex shuffle for a printer with no\n"
+              << "duplex unit is not built yet — use the printer driver, or\n"
+              << "print odd then even pages.\n";
+
+    const std::string toml = default_project_toml(args.positional);
+    Args init = args;
+    init.positional = args.positional;
+    init.saw_output = true;
+    init.output = toml;
+    const int ir = cmd_init(init);
+    if (ir != 0)
+        return ir;
+
+    if (!args.saw_chapters) {
+        std::cout << "Chapters to print (all, or e.g. 1,3-5)\n";
+        args.chapters = ask_line("Chapters", "all");
+        args.saw_chapters = true;
+    }
+
+    const std::string notebook = default_notebook_pdf(toml);
+    if (!args.saw_output) {
+        args.output = ask_line("Output PDF", notebook);
+        args.saw_output = true;
+    }
+
+    Args build;
+    build.command = "build";
+    build.positional = toml;
+    build.output = args.output;
+    build.saw_output = true;
+    build.chapters = args.chapters;
+    build.saw_chapters = args.saw_chapters;
+    return cmd_build(build);
 }
 
 }  // namespace
@@ -300,6 +430,8 @@ int main(int argc, char** argv) {
             usage(std::cout);
             return 0;
         }
+        if (args.command == "wizard")
+            return cmd_wizard(args);
         if (args.command == "init")
             return cmd_init(args);
         if (args.command == "build")

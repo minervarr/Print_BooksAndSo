@@ -104,8 +104,8 @@ From the original spec, still not built:
 - `NotesMode.LINES` (accepted, not drawn — ticks only)
 - Golden tests: dump `Plan` + content streams, C++ vs Python prototype
 - TOC scrape for books with no outline
-- Implicit `./print-books BOOK.pdf` → `init` (today the first token is a
-  command; a bare PDF is “unknown command”)
+- Manual duplex shuffle (`--duplex manual`, calibrate, printer profiles).
+  Sequential PDF is what we emit; the printer driver handles two-sided.
 
 ## Done enough to use
 

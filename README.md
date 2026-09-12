@@ -19,6 +19,10 @@ Binaries in build/linux/:
   ./print-books init BOOK.pdf
   ./print-books build project.toml
 
+$ ./print-books
+  Path to the PDF book: ~/Books/atomic_habits.pdf
+  ... questions (paper, notes, chapters, output) ...
+
 $ ./print-books init ~/Books/atomic_habits.pdf -o habits.toml
   19 chapters from the PDF outline
   wrote habits.toml

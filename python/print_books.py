@@ -85,10 +85,13 @@ def find_binary() -> str | None:
     if build_root.is_dir():
         ordered.extend(sorted(build_root.glob("linux_custom-*/cli/print-books")))
 
-    for candidate in ordered:
-        if _is_executable(candidate):
-            return str(candidate.resolve())
-    return None
+    found = [c for c in ordered if _is_executable(c)]
+    if not found:
+        return None
+    # Newest mtime wins: a Debug rebuild must beat a stale Release tree,
+    # otherwise ./print-books keeps running the binary that lacked the fix.
+    newest = max(found, key=lambda p: p.stat().st_mtime)
+    return str(newest.resolve())
 
 
 def main() -> None:
