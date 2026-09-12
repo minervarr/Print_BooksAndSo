@@ -197,8 +197,25 @@ repo; copy it from the workspace root. See the workspace `CLAUDE.md`.
 
 ## Known gaps
 
-The repo is scaffolded and the design is settled; **the implementation has not
-started**. Nothing below `prototype/` or `cpp/` is written yet.
+The design is settled and **`core/` is implemented on both sides**: the Python
+prototype and the C++ port both have units, geometry, metrics, pdfops, plan,
+drawing, text, numwords and render, each with a mirrored test suite. What has
+not been written yet:
+
+- **The backends** — `backend/pdf_pikepdf.py` (probe/emit) and
+  `backend/glyphs_fonttools.py` exist on the Python side; the C++ counterparts
+  (`backend/qpdf`, `backend/freetype`) do not. The `GlyphSource` seam in
+  `metrics.hh` is exactly the door `FT_Outline_Decompose` will enter through.
+- **The CLI** — `cli/main.py` and `cli/cli_main.cc` are still empty on both
+  sides; `pyproject.toml` already points at `cli.main:main`.
+- **The golden tests** — the cross-language diff that is the port's real safety
+  net, still to come once the C++ backend can emit a PDF.
+- **`core/project.py` + `core/outline.py` + `core/printer.py`** — the spec names
+  them but they are not written yet on either side; chapter detection lives in
+  `backend/pdf_pikepdf.py::chapters_from_outline` for now.
+
+See `docs/cpp-port-handoff.md` for the exact Python ↔ C++ file map and the
+deviations that came up during the port.
 
 Deferred deliberately, and not to be treated as oversights:
 
