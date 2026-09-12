@@ -52,6 +52,38 @@ std::string toc_inline(const std::vector<TocEntry>& toc) {
     return "[" + rows + "]";
 }
 
+std::vector<Chapter> chapters_from_table(const toml::table& data) {
+    std::vector<Chapter> chapters;
+    const toml::array* entries = data["chapters"].as_array();
+    if (entries == nullptr)
+        return chapters;
+
+    for (const toml::node& node : *entries) {
+        const toml::table* entry = node.as_table();
+        if (entry == nullptr)
+            continue;
+        Chapter ch;
+        ch.number = static_cast<int>((*entry)["number"].value_or(int64_t{0}));
+        ch.title = (*entry)["title"].value_or(std::string{});
+        ch.first_page = static_cast<int>((*entry)["first"].value_or(int64_t{0}));
+        ch.last_page = static_cast<int>((*entry)["last"].value_or(int64_t{0}));
+        if (const toml::array* toc = (*entry)["toc"].as_array()) {
+            for (const toml::node& row_node : *toc) {
+                const toml::array* row = row_node.as_array();
+                if (row == nullptr || row->size() < 3)
+                    continue;
+                TocEntry e;
+                e.title = (*row)[0].value_or(std::string{});
+                e.page = static_cast<int>((*row)[1].value_or(int64_t{0}));
+                e.depth = static_cast<int>((*row)[2].value_or(int64_t{0}));
+                ch.toc.push_back(std::move(e));
+            }
+        }
+        chapters.push_back(std::move(ch));
+    }
+    return chapters;
+}
+
 }  // namespace
 
 void write_project(const std::string& out_path,
@@ -87,37 +119,20 @@ void write_project(const std::string& out_path,
         throw std::runtime_error("cannot write project TOML: " + out_path);
 }
 
-std::vector<Chapter> read_chapters(const std::string& path) {
+Project read_project(const std::string& path) {
     const toml::table data = toml::parse_file(path);
-    std::vector<Chapter> chapters;
-    const toml::array* entries = data["chapters"].as_array();
-    if (entries == nullptr)
-        return chapters;
+    Project p;
+    p.book = data["book"].value_or(std::string{});
+    p.title = data["title"].value_or(std::string{});
+    p.author = data["author"].value_or(std::string{});
+    p.paper = data["paper"].value_or(std::string{"a4"});
+    p.notes = data["notes"].value_or(std::string{"dots"});
+    p.chapters = chapters_from_table(data);
+    return p;
+}
 
-    for (const toml::node& node : *entries) {
-        const toml::table* entry = node.as_table();
-        if (entry == nullptr)
-            continue;
-        Chapter ch;
-        ch.number = static_cast<int>((*entry)["number"].value_or(int64_t{0}));
-        ch.title = (*entry)["title"].value_or(std::string{});
-        ch.first_page = static_cast<int>((*entry)["first"].value_or(int64_t{0}));
-        ch.last_page = static_cast<int>((*entry)["last"].value_or(int64_t{0}));
-        if (const toml::array* toc = (*entry)["toc"].as_array()) {
-            for (const toml::node& row_node : *toc) {
-                const toml::array* row = row_node.as_array();
-                if (row == nullptr || row->size() < 3)
-                    continue;
-                TocEntry e;
-                e.title = (*row)[0].value_or(std::string{});
-                e.page = static_cast<int>((*row)[1].value_or(int64_t{0}));
-                e.depth = static_cast<int>((*row)[2].value_or(int64_t{0}));
-                ch.toc.push_back(std::move(e));
-            }
-        }
-        chapters.push_back(std::move(ch));
-    }
-    return chapters;
+std::vector<Chapter> read_chapters(const std::string& path) {
+    return read_project(path).chapters;
 }
 
 }  // namespace pb

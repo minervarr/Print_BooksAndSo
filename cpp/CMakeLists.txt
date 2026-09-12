@@ -191,3 +191,4 @@ add_custom_target(printbooks_third_party ALL DEPENDS libqpdf freetype)
 
 add_subdirectory(core)
 add_subdirectory(backend)
+add_subdirectory(cli)

@@ -21,6 +21,18 @@ void write_project(const std::string& out_path,
                    const std::string& paper,
                    const std::string& notes);
 
+// Everything `build` needs from the generated TOML. `read_chapters` is the
+// chapters field of the same parse.
+struct Project {
+    std::string book;
+    std::string title;
+    std::string author;
+    std::string paper = "a4";
+    std::string notes = "dots";
+    std::vector<Chapter> chapters;
+};
+
+Project read_project(const std::string& path);
 std::vector<Chapter> read_chapters(const std::string& path);
 
 }  // namespace pb

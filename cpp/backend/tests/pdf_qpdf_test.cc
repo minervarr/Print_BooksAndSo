@@ -88,8 +88,15 @@ static void test_toml_round_trip_writes_then_reads_chapters() {
         "/tmp/printbooks_proj_" + std::to_string(getpid()) + ".toml";
     write_project(path, mini_book(), "The Test Book", "Test Author", in, "a4",
                   "dots");
+    const Project proj = read_project(path);
+    assert(proj.book == mini_book());
+    assert(proj.title == "The Test Book");
+    assert(proj.author == "Test Author");
+    assert(proj.paper == "a4");
+    assert(proj.notes == "dots");
     const std::vector<Chapter> out = read_chapters(path);
     assert(out.size() == 2);
+    assert(proj.chapters.size() == 2);
     assert(out[0].number == 1);
     assert(out[0].title == "Chapter One");
     assert(out[0].first_page == 1);
