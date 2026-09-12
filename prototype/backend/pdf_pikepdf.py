@@ -77,7 +77,15 @@ def _metadata(pdf: pikepdf.Pdf) -> tuple[str, str]:
     XMP is the modern one and wins where both exist. Either may be absent,
     which is the common case rather than an error -- the portrait footer
     degrades instead of printing a gap.
+
+    /Info is snapshotted BEFORE open_metadata(): pikepdf's open_metadata()
+    migrates /Info into XMP when the context closes, removing /Title from the
+    /Info dictionary, so reading it after the fact always sees nothing.
     """
+    info = pdf.docinfo
+    info_title = str(info["/Title"]) if "/Title" in info else ""
+    info_author = str(info["/Author"]) if "/Author" in info else ""
+
     title = author = ""
     try:
         with pdf.open_metadata() as meta:
@@ -87,11 +95,10 @@ def _metadata(pdf: pikepdf.Pdf) -> tuple[str, str]:
     except Exception:  # noqa: BLE001 - malformed XMP is common and not fatal
         pass
 
-    info = pdf.docinfo
-    if not title and "/Title" in info:
-        title = str(info["/Title"])
-    if not author and "/Author" in info:
-        author = str(info["/Author"])
+    if not title:
+        title = info_title
+    if not author:
+        author = info_author
     return title.strip(), author.strip()
 
 

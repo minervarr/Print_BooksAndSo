@@ -206,8 +206,9 @@ not been written yet:
   `backend/glyphs_fonttools.py` exist on the Python side; the C++ counterparts
   (`backend/qpdf`, `backend/freetype`) do not. The `GlyphSource` seam in
   `metrics.hh` is exactly the door `FT_Outline_Decompose` will enter through.
-- **The CLI** — `cli/main.py` and `cli/cli_main.cc` are still empty on both
-  sides; `pyproject.toml` already points at `cli.main:main`.
+- **The CLI** — the Python `print-books` (`cli/main.py`: `init` + `build`) is
+  written and works end to end; `cli/cli_main.cc` and the C++ binary are still
+  empty, because they cannot emit a PDF until the C++ backends exist.
 - **The golden tests** — the cross-language diff that is the port's real safety
   net, still to come once the C++ backend can emit a PDF.
 - **`core/project.py` + `core/outline.py` + `core/printer.py`** — the spec names

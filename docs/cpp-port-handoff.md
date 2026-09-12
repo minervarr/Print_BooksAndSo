@@ -89,9 +89,11 @@ In spec order, these are the remaining Phase 3 steps:
    `cpp/backend/gs/` for the sampled ink bbox. These need the shipped
    `assets/fonts/lmroman10-*.otf` and real fixture PDFs, so they cannot be
    unit-tested the way core is.
-2. **CLI** — write `prototype/cli/main.py` (`init`/`build`) first, then
-   `cpp/cli/cli_main.cc` + `cpp/cli/CMakeLists.txt` (`OUTPUT_NAME print-books`).
-   The mirroring rule means the C++ cli follows the Python cli.
+2. **CLI** — `prototype/cli/main.py` (`init` + `build`) is written and usable
+   now: `print-books init BOOK.pdf` probes the book and writes a project TOML,
+   `print-books build project.toml` emits the notebook PDF. `cpp/cli/cli_main.cc`
+   + `cpp/cli/CMakeLists.txt` (`OUTPUT_NAME print-books`) still need to follow,
+   once the C++ backend exists.
 3. **Golden tests** — the cross-language diff that names the disagreeing side.
    Blocked on (1), since both sides must be able to dump a real `Plan` and
    content streams for the fixture books.
