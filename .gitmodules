@@ -1,0 +1,9 @@
+[submodule "cpp/third_party/qpdf"]
+	path = cpp/third_party/qpdf
+	url = https://github.com/qpdf/qpdf.git
+[submodule "cpp/third_party/freetype"]
+	path = cpp/third_party/freetype
+	url = https://github.com/freetype/freetype.git
+[submodule "cpp/third_party/tomlplusplus"]
+	path = cpp/third_party/tomlplusplus
+	url = https://github.com/marzer/tomlplusplus.git

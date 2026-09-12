@@ -6,7 +6,9 @@
 #           Python prototype; names are mirrored so the port is mechanical.
 # ---------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.22)
-project(printbooks LANGUAGES CXX)
+# C is required by the freetype and qpdf submodules (their project() enables it
+# too; declaring it here keeps the top-level language set honest).
+project(printbooks LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -89,5 +91,102 @@ endif()
 if(PRINTBOOKS_TESTS)
     enable_testing()
 endif()
+
+# ── Third-party (submodules under cpp/third_party/) ─────────────────────────
+# Vendored so the backend can link qpdf / freetype / toml++ without depending
+# on distro package versions. core/ must never link these — that boundary is
+# enforced by cpp/core/CMakeLists.txt listing only its own sources on every
+# test executable. Set every CACHE option BEFORE add_subdirectory so the
+# subprojects' option() calls see the values we want.
+#
+# Pins (release tags, not main):
+#   qpdf          v12.4.1
+#   freetype      VER-2-14-3
+#   tomlplusplus  v3.4.0
+#
+# qpdf is ExternalProject, not add_subdirectory: its qpdf/ and libtests/
+# CMakeLists use ${CMAKE_SOURCE_DIR}/libqpdf for private headers, which
+# points at *our* source root when nested and breaks the build (same class
+# of "not a subproject" problem as Matrix's libjpeg-turbo). Building it
+# out-of-tree also keeps its enable_testing()/add_test() out of our ctest.
+
+find_package(ZLIB QUIET)
+if(NOT ZLIB_FOUND)
+    message(FATAL_ERROR "ZLIB not found (required by qpdf). "
+                        "Install the Arch package: zlib")
+endif()
+find_package(JPEG QUIET)
+if(NOT JPEG_FOUND)
+    message(FATAL_ERROR "JPEG not found (required by qpdf). "
+                        "Install the Arch package: libjpeg")
+endif()
+# Re-find as REQUIRED so ZLIB::ZLIB / JPEG::JPEG imported targets exist for
+# dependents; the QUIET probes above only exist to name the Arch packages.
+find_package(ZLIB REQUIRED)
+find_package(JPEG REQUIRED)
+
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+
+# FreeType: outlines only — no raster deps.
+set(FT_DISABLE_HARFBUZZ ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_PNG      ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_BZIP2    ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_BROTLI   ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_ZLIB     ON CACHE BOOL "" FORCE)
+
+add_subdirectory(third_party/freetype)
+add_subdirectory(third_party/tomlplusplus)
+
+include(ExternalProject)
+set(QPDF_INSTALL_DIR "${CMAKE_BINARY_DIR}/qpdf-install")
+set(QPDF_LIBRARY "${QPDF_INSTALL_DIR}/lib/libqpdf.a")
+# CMAKE_CXX_FLAGS/CMAKE_C_FLAGS forwarded explicitly: ExternalProject runs a
+# separate configure, so PRINTBOOKS_ARCH_LEVEL would otherwise not reach qpdf.
+ExternalProject_Add(qpdf_ext
+    SOURCE_DIR "${CMAKE_SOURCE_DIR}/third_party/qpdf"
+    CMAKE_ARGS
+        -G${CMAKE_GENERATOR}
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+        -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+        -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+        -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+        -DCMAKE_INSTALL_PREFIX=${QPDF_INSTALL_DIR}
+        -DCMAKE_INSTALL_LIBDIR=lib
+        -DBUILD_SHARED_LIBS=OFF
+        -DBUILD_STATIC_LIBS=ON
+        -DBUILD_DOC=OFF
+        -DINSTALL_MANUAL=OFF
+        -DINSTALL_EXAMPLES=OFF
+        -DINSTALL_CMAKE_PACKAGE=OFF
+        -DINSTALL_PKGCONFIG=OFF
+        -DOSS_FUZZ=OFF
+        -DUSE_IMPLICIT_CRYPTO=OFF
+        -DREQUIRE_CRYPTO_NATIVE=ON
+        -DREQUIRE_CRYPTO_OPENSSL=OFF
+        -DREQUIRE_CRYPTO_GNUTLS=OFF
+    # Only the static library — skip CLI / libtests / examples / fuzz.
+    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --target libqpdf
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory
+                        "${QPDF_INSTALL_DIR}/lib"
+                        "${QPDF_INSTALL_DIR}/include"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                        <BINARY_DIR>/libqpdf/libqpdf.a "${QPDF_LIBRARY}"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                        "${CMAKE_SOURCE_DIR}/third_party/qpdf/include/qpdf"
+                        "${QPDF_INSTALL_DIR}/include/qpdf"
+    BUILD_BYPRODUCTS "${QPDF_LIBRARY}")
+
+add_library(libqpdf STATIC IMPORTED GLOBAL)
+file(MAKE_DIRECTORY "${QPDF_INSTALL_DIR}/include") # must exist at configure time
+set_target_properties(libqpdf PROPERTIES
+    IMPORTED_LOCATION "${QPDF_LIBRARY}"
+    INTERFACE_INCLUDE_DIRECTORIES "${QPDF_INSTALL_DIR}/include")
+target_link_libraries(libqpdf INTERFACE ZLIB::ZLIB JPEG::JPEG)
+add_dependencies(libqpdf qpdf_ext)
+
+# Ensure Debug/Release `ninja` actually compiles the vendored libs even though
+# nothing in-tree links them yet (backends land in later tasks).
+add_custom_target(printbooks_third_party ALL DEPENDS libqpdf freetype)
 
 add_subdirectory(core)
