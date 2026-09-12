@@ -71,3 +71,6 @@ Thumbs.db
 
 # Isolated git worktrees (local, never source)
 .worktrees/
+
+# Generated project files (print-books init). Hand-edited locally, not source.
+*.toml

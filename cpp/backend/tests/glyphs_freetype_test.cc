@@ -25,6 +25,7 @@ static void test_the_shipped_faces_exist() {
     const std::string dir = font_dir();
     assert(is_file(dir + "/lmroman10-regular.otf"));
     assert(is_file(dir + "/lmroman10-italic.otf"));
+    assert(is_file(dir + "/latinmodern-math.otf"));
 }
 
 static void test_regular_and_italic_load() {
@@ -92,6 +93,47 @@ static void test_unmapped_character_throws_out_of_range() {
     assert(threw);
 }
 
+static void test_roman_has_no_pi_math_does() {
+    // Spivak's mini-TOC: "16. π is Irrational". LM Roman maps uppercase
+    // Greek, not U+03C0. Latin Modern Math does. The fallback exists so a
+    // real book title does not abort the build.
+    bool roman_threw = false;
+    try {
+        (void)FreeTypeGlyphs::regular().outline(U'\u03C0');
+    } catch (const std::out_of_range&) {
+        roman_threw = true;
+    }
+    assert(roman_threw);
+
+    const GlyphOutline pi = FreeTypeGlyphs::math().outline(U'\u03C0');
+    assert(pi.advance > 0);
+    assert(!pi.commands.empty());
+    bool cubic = false;
+    for (const PathCommand& cmd : pi.commands) {
+        if (cmd.op == 'c')
+            cubic = true;
+    }
+    assert(cubic);
+}
+
+static void test_fallback_regular_draws_pi() {
+    const GlyphOutline pi = FallbackGlyphs::regular().outline(U'\u03C0');
+    assert(pi.advance > 0);
+    assert(!pi.commands.empty());
+    // Still a real A from the primary face.
+    assert(!FallbackGlyphs::regular().outline(U'A').commands.empty());
+}
+
+static void test_fallback_still_throws_when_no_face_has_it() {
+    bool threw = false;
+    try {
+        (void)FallbackGlyphs::regular().outline(U'\uFFFD');
+    } catch (const std::out_of_range&) {
+        threw = true;
+    }
+    assert(threw);
+}
+
 static void test_closed_contours_are_closed_explicitly() {
     // PDF's `f` closes open subpaths implicitly, so dropping `h` renders the
     // same and no other test notices. It is pinned anyway: `h` is part of the
@@ -117,6 +159,9 @@ int main() {
     test_every_operator_is_one_pdf_understands();
     test_a_space_advances_without_drawing();
     test_unmapped_character_throws_out_of_range();
+    test_roman_has_no_pi_math_does();
+    test_fallback_regular_draws_pi();
+    test_fallback_still_throws_when_no_face_has_it();
     test_closed_contours_are_closed_explicitly();
     std::printf("glyphs_freetype_test: all assertions passed\n");
     return 0;

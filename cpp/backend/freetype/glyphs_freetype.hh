@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "printbooks/metrics.hh"
 
@@ -35,6 +36,7 @@ public:
 
     static FreeTypeGlyphs regular();  // font_dir()/lmroman10-regular.otf
     static FreeTypeGlyphs italic();
+    static FreeTypeGlyphs math();     // font_dir()/latinmodern-math.otf — Greek, etc.
 
     int units_per_em() const override;
     GlyphOutline outline(char32_t codepoint) const override;
@@ -42,6 +44,22 @@ public:
 private:
     struct Impl;
     std::unique_ptr<Impl> impl_;
+};
+
+// First face that has the glyph wins. `units_per_em` is the primary face's;
+// outlines from a later face are scaled into that em so text.cc's one scale
+// factor stays correct. Latin Modern Roman has no π; Latin Modern Math does.
+class FallbackGlyphs : public GlyphSource {
+public:
+    explicit FallbackGlyphs(std::vector<FreeTypeGlyphs> faces);
+    static FallbackGlyphs regular();  // roman, then math
+    static FallbackGlyphs italic();   // italic, then math
+
+    int units_per_em() const override;
+    GlyphOutline outline(char32_t codepoint) const override;
+
+private:
+    std::vector<FreeTypeGlyphs> faces_;
 };
 
 }  // namespace pb

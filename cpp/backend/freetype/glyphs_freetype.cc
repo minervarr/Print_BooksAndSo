@@ -214,6 +214,10 @@ FreeTypeGlyphs FreeTypeGlyphs::italic() {
     return FreeTypeGlyphs(join_font(font_dir(), "lmroman10-italic.otf"));
 }
 
+FreeTypeGlyphs FreeTypeGlyphs::math() {
+    return FreeTypeGlyphs(join_font(font_dir(), "latinmodern-math.otf"));
+}
+
 int FreeTypeGlyphs::units_per_em() const {
     return static_cast<int>(impl_->face->units_per_EM);
 }
@@ -256,6 +260,60 @@ GlyphOutline FreeTypeGlyphs::outline(char32_t codepoint) const {
     GlyphOutline glyph = impl_->load(codepoint);
     impl_->cache.emplace(codepoint, glyph);
     return glyph;
+}
+
+namespace {
+
+GlyphOutline scale_outline(GlyphOutline g, double s) {
+    if (s == 1.0)
+        return g;
+    g.advance *= s;
+    for (PathCommand& cmd : g.commands)
+        for (double& v : cmd.operands)
+            v *= s;
+    return g;
+}
+
+}  // namespace
+
+FallbackGlyphs::FallbackGlyphs(std::vector<FreeTypeGlyphs> faces)
+    : faces_(std::move(faces)) {
+    if (faces_.empty())
+        throw std::invalid_argument("FallbackGlyphs needs at least one face");
+}
+
+FallbackGlyphs FallbackGlyphs::regular() {
+    std::vector<FreeTypeGlyphs> faces;
+    faces.push_back(FreeTypeGlyphs::regular());
+    faces.push_back(FreeTypeGlyphs::math());
+    return FallbackGlyphs(std::move(faces));
+}
+
+FallbackGlyphs FallbackGlyphs::italic() {
+    std::vector<FreeTypeGlyphs> faces;
+    faces.push_back(FreeTypeGlyphs::italic());
+    faces.push_back(FreeTypeGlyphs::math());
+    return FallbackGlyphs(std::move(faces));
+}
+
+int FallbackGlyphs::units_per_em() const {
+    return faces_.front().units_per_em();
+}
+
+GlyphOutline FallbackGlyphs::outline(char32_t codepoint) const {
+    const int primary = faces_.front().units_per_em();
+    for (const FreeTypeGlyphs& face : faces_) {
+        try {
+            GlyphOutline g = face.outline(codepoint);
+            const int em = face.units_per_em();
+            if (em != primary && em != 0)
+                g = scale_outline(std::move(g), static_cast<double>(primary) / em);
+            return g;
+        } catch (const std::out_of_range&) {
+            continue;
+        }
+    }
+    throw std::out_of_range("font has no glyph for codepoint");
 }
 
 }  // namespace pb

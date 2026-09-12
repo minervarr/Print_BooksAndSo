@@ -268,8 +268,8 @@ int cmd_build(const Args& args) {
     const pb::SourceBook book = pb::probe(project.book);
     const std::vector<pb::Side> sides = pb::plan_sides(chapters, notes);
 
-    const pb::FreeTypeGlyphs roman = pb::FreeTypeGlyphs::regular();
-    const pb::FreeTypeGlyphs italic = pb::FreeTypeGlyphs::italic();
+    const pb::FallbackGlyphs roman = pb::FallbackGlyphs::regular();
+    const pb::FallbackGlyphs italic = pb::FallbackGlyphs::italic();
     const pb::Renderer renderer(
         pb::Layout{pb::paper(project.paper), pb::mm(15.0), pb::mm(10.0)},
         pb::GridSpec{}, pb::Style{}, pb::BookInfo{project.title, project.author},
