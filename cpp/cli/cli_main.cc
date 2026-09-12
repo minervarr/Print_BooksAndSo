@@ -31,10 +31,12 @@
 
 namespace {
 
+using pb::cli::chapter_pdf;
 using pb::cli::default_notebook_pdf;
 using pb::cli::default_project_toml;
 using pb::cli::ends_with_ci;
 using pb::cli::same_regular_file;
+using pb::cli::strip_pdf_suffix;
 using pb::cli::with_suffix;
 
 void usage(std::ostream& out) {
@@ -45,7 +47,8 @@ void usage(std::ostream& out) {
         << "    print-books BOOK.pdf                same, with the book filled in\n"
         << "    print-books init BOOK.pdf [-o project.toml] [--paper a4|letter]\n"
         << "                                [--notes dots|lines|blank|none]\n"
-        << "    print-books build project.toml [-o out.pdf] [--chapters all|1,3-5]\n";
+        << "    print-books build project.toml [-o out.pdf] [--chapters all|1,3-5]\n"
+        << "                                [--split]   # -o niu  → niu1.pdf, niu2.pdf, …\n";
 }
 
 bool is_regular_file(const std::string& path) {
@@ -123,6 +126,7 @@ struct Args {
     bool saw_paper = false;
     bool saw_notes = false;
     bool saw_chapters = false;
+    bool split = false;
     bool help = false;
 };
 
@@ -200,6 +204,8 @@ int parse_args(int argc, char** argv, Args* args) {
             if (!take_value(i, argc, argv, &args->chapters))
                 return fail_usage("--chapters needs a value");
             args->saw_chapters = true;
+        } else if (name == "--split") {
+            args->split = true;
         } else if (a[0] == '-') {
             return fail_usage(std::string("unknown option '") + a + "'");
         } else if (args->positional.empty()) {
@@ -251,6 +257,8 @@ int cmd_init(const Args& args) {
         return fail_usage("missing BOOK.pdf");
     if (args.saw_chapters)
         return fail_usage("init does not take --chapters");
+    if (args.split)
+        return fail_usage("init does not take --split");
     if (!valid_paper(args.paper))
         return fail_usage("paper must be a4 or letter");
     if (!valid_notes(args.notes))
@@ -318,14 +326,8 @@ int cmd_build(const Args& args) {
         return 2;
     }
 
-    const std::string out =
-        args.saw_output ? args.output : default_notebook_pdf(args.positional);
-    if (const int r = refuse_clobber(out, project.book))
-        return r;
-
     const pb::NotesMode notes = notes_mode(project.notes);
     const pb::SourceBook book = pb::probe(project.book);
-    const std::vector<pb::Side> sides = pb::plan_sides(chapters, notes);
 
     const pb::FallbackGlyphs roman = pb::FallbackGlyphs::regular();
     const pb::FallbackGlyphs italic = pb::FallbackGlyphs::italic();
@@ -334,13 +336,32 @@ int cmd_build(const Args& args) {
         pb::GridSpec{}, pb::Style{}, pb::BookInfo{project.title, project.author},
         &roman, &italic, notes);
 
-    pb::emit(book, chapters, sides, renderer, out);
+    auto write_one = [&](const std::vector<pb::Chapter>& chs, const std::string& out) -> int {
+        if (const int r = refuse_clobber(out, project.book))
+            return r;
+        const std::vector<pb::Side> sides = pb::plan_sides(chs, notes);
+        pb::emit(book, chs, sides, renderer, out);
+        const std::size_t sheets = (sides.size() + 1) / 2;
+        std::cout << "  " << chs.size() << " chapter" << (chs.size() == 1 ? "" : "s")
+                  << ", " << sides.size() << " sides -> " << sheets << " sheets\n";
+        std::cout << "  wrote " << out << "\n";
+        return 0;
+    };
 
-    const std::size_t sheets = (sides.size() + 1) / 2;
-    std::cout << "  " << chapters.size() << " chapters, " << sides.size()
-              << " sides -> " << sheets << " sheets\n";
-    std::cout << "  wrote " << out << "\n";
-    return 0;
+    if (args.split) {
+        const std::string stem = strip_pdf_suffix(
+            args.saw_output ? args.output : with_suffix(args.positional, ""));
+        for (const pb::Chapter& ch : chapters) {
+            const std::string out = chapter_pdf(stem, ch.number);
+            if (const int r = write_one({ch}, out))
+                return r;
+        }
+        return 0;
+    }
+
+    const std::string out =
+        args.saw_output ? args.output : default_notebook_pdf(args.positional);
+    return write_one(chapters, out);
 }
 
 int cmd_wizard(Args args) {
@@ -400,9 +421,21 @@ int cmd_wizard(Args args) {
         args.saw_chapters = true;
     }
 
-    const std::string notebook = default_notebook_pdf(toml);
-    if (!args.saw_output) {
-        args.output = ask_line("Output PDF", notebook);
+    std::cout << "Output files:\n"
+              << "  1) One PDF (default)\n"
+              << "  2) One PDF per chapter  (niu1.pdf, niu2.pdf, …)\n";
+    args.split = (ask_choice("Enter choice", 2, 1) == 2);
+
+    const std::string toml_stem = with_suffix(toml, "");
+    if (args.split) {
+        const std::string name = ask_line(
+            "Name for the files (.pdf is optional; chapter number is appended)", toml_stem);
+        args.output = name;
+        args.saw_output = true;
+        std::cout << "  will write " << chapter_pdf(name, 1) << ", "
+                  << chapter_pdf(name, 2) << ", …\n";
+    } else if (!args.saw_output) {
+        args.output = ask_line("Output PDF", default_notebook_pdf(toml));
         args.saw_output = true;
     }
 
@@ -410,9 +443,10 @@ int cmd_wizard(Args args) {
     build.command = "build";
     build.positional = toml;
     build.output = args.output;
-    build.saw_output = true;
+    build.saw_output = args.saw_output;
     build.chapters = args.chapters;
     build.saw_chapters = args.saw_chapters;
+    build.split = args.split;
     return cmd_build(build);
 }
 

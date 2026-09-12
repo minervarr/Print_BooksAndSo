@@ -53,5 +53,16 @@ inline bool ends_with_ci(const std::string& s, const std::string& suf) {
     return true;
 }
 
+// "niu", "niu.pdf", "niu.PDF" → "niu1.pdf" for chapter 1.
+inline std::string strip_pdf_suffix(const std::string& path) {
+    if (ends_with_ci(path, ".pdf"))
+        return path.substr(0, path.size() - 4);
+    return path;
+}
+
+inline std::string chapter_pdf(const std::string& name, int chapter) {
+    return strip_pdf_suffix(name) + std::to_string(chapter) + ".pdf";
+}
+
 }  // namespace cli
 }  // namespace pb

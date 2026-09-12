@@ -8,6 +8,7 @@
 
 #include "paths.hh"
 
+using pb::cli::chapter_pdf;
 using pb::cli::default_notebook_pdf;
 using pb::cli::default_project_toml;
 using pb::cli::same_regular_file;
@@ -43,10 +44,18 @@ static void test_same_regular_file() {
     ::rmdir(dir);
 }
 
+static void test_chapter_pdf_strips_optional_suffix() {
+    assert(chapter_pdf("niu", 1) == "niu1.pdf");
+    assert(chapter_pdf("niu.pdf", 1) == "niu1.pdf");
+    assert(chapter_pdf("niu.PDF", 2) == "niu2.pdf");
+    assert(chapter_pdf("/tmp/niu", 13) == "/tmp/niu13.pdf");
+}
+
 int main() {
     test_notebook_is_not_the_source_pdf();
     test_project_toml_from_book();
     test_same_regular_file();
+    test_chapter_pdf_strips_optional_suffix();
     std::printf("cli_paths_test: all assertions passed\n");
     return 0;
 }

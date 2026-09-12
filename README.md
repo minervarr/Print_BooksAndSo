@@ -28,6 +28,7 @@ $ ./print-books init ~/Books/atomic_habits.pdf -o habits.toml
   wrote habits.toml
 
 $ ./print-books build habits.toml --chapters 1
+$ ./print-books build habits.toml --split -o niu    # niu1.pdf, niu2.pdf, …
   1 chapters, 38 sides -> 19 sheets
   wrote habits.toml.pdf
 ```
