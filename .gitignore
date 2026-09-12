@@ -68,3 +68,6 @@ Thumbs.db
 .remember/
 .superpowers/
 .claude/
+
+# Isolated git worktrees (local, never source)
+.worktrees/
