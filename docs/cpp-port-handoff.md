@@ -46,6 +46,8 @@ extension `.hh`, source `.cc`, matching Economycs and archive_engine.
 | project TOML | `cpp/backend/project.*` | toml++ read; hand-rolled write |
 | CLI `init` / `build` | `cpp/cli/cli_main.cc` | `OUTPUT_NAME print-books` |
 | Stdlib launcher | `python/print_books.py` | `$PRINT_BOOKS_BIN` → PATH → `build/linux*/cli/` |
+| `--share` tarballs | `scripts/linux/build.sh --share` | binary + LM Roman OTFs under `dist/linux/` |
+| Arch PKGBUILD | `packaging/arch/PKGBUILD` | four variants; fonts → `/usr/share/print-books/fonts` |
 
 Smoke: `build/linux_debug/cli/print-books init fixtures/mini_book.pdf` then
 `build …` yields a PDF whose page count equals `sides.size()` (`4+2N` per chapter).
@@ -107,6 +109,9 @@ prototype. None change behaviour.
 
 ## What is NOT done (next)
 
+Packaging (`--share` fonts payload + Arch PKGBUILD) is done — see the backends
+table above.
+
 1. **Golden tests** — the cross-language diff that names the disagreeing side.
    Both sides can dump a real `Plan` and emit PDFs; remaining work is matching
    streams / fixtures, not "C++ cannot write a PDF".
@@ -115,8 +120,6 @@ prototype. None change behaviour.
 4. **`NotesMode.LINES` drawing.**
 5. **`core/project` / `outline` / `printer` as named in the spec** — still unwritten
    on both sides as pure core modules; outline→chapters lives in the backend.
-6. **`--share` fonts payload + Arch PKGBUILD** — build.sh flag surface exists;
-   packaging completeness is a separate task.
 
 ## Hygiene notes for the next session
 

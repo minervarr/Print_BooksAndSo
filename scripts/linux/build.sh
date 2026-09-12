@@ -39,9 +39,9 @@
 # cmake root is cpp/ (repo root has no CMakeLists.txt). Build trees land at
 # the repo root: cmake -S cpp -B build/linux…
 #
-# Prereqs: cmake >= 3.22, ninja, a C++17 compiler. Nothing else: core/ has no
-# PDF library and no font library on its link line. --packages also needs
-# makepkg (base-devel).
+# Prereqs: cmake >= 3.22, ninja, a C++17 compiler, zlib, libjpeg. core/ has no
+# PDF library and no font library on its link line (qpdf needs zlib+libjpeg).
+# --packages also needs makepkg (base-devel).
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
