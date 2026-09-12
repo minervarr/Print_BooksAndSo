@@ -7,25 +7,24 @@ including cheap printers with no duplex unit.
 
 Input a PDF. Output a PDF. No network, no AI, no service, no account.
 
-> **Status:** scaffolded. The design is settled (`docs/superpowers/specs/`) and the
-> implementation has not started. The transcript below is the designed interface,
-> not a recording.
+> **Status:** the product is the C++17 `print-books` binary. A stdlib-only Python
+> script (`python/print_books.py`) locates that binary and `exec`s it — no venv,
+> no pikepdf. `prototype/` is a historical reference kept for later golden diffs.
 
 ```console
-$ print-books init ~/Books/atomic_habits.pdf -o habits.toml
+$ python3 python/print_books.py init ~/Books/atomic_habits.pdf -o habits.toml
   19 chapters from the PDF outline
   crop box from a 16-page sample: 71.99 42.12 540.01 716.94
   wrote habits.toml
 
-$ print-books build habits.toml --chapters 1 --duplex manual
+$ python3 python/print_books.py build habits.toml --chapters 1
   chapter 1 "The Mechanism of Habit Formation", pages 27-44
   38 sides -> 19 sheets
-  habits_ch01_fronts.pdf   19 pages
-  habits_ch01_backs.pdf    19 pages  (reversed, rotated 180 for printer "hp_1020")
-
-  Print habits_ch01_fronts.pdf first. Reload the stack as printed, then print
-  habits_ch01_backs.pdf. Check the corner ticks align before printing the rest.
+  wrote habits_ch01.pdf
 ```
+
+(`init` status about the crop box is the designed interface; sampled ink bbox is
+not in this build yet — `build` uses each page's CropBox.)
 
 ## The decisions, and why
 
@@ -50,51 +49,63 @@ under a second.
 **One crop box for the whole book.** Pages are cropped to their ink and scaled up,
 but from a 16-page sample, cached — not per page. Per-page cropping makes text size
 jitter as you read, because a short chapter-ending page gets blown up while the next
-is normal. It is also 26 s slower on a 500-page book, measured.
+is normal. It is also 26 s slower on a 500-page book, measured. (Sampled bbox is
+not wired into this build yet; see Known gaps in `CLAUDE.md`.)
 
 **Generated text is glyph outlines, not an embedded font.** Real Computer Modern with
-no font dictionary, no CID map, no subsetting, on either side of the port. The
-trade: the portraits and footers are not searchable. The book's own pages are
-untouched and stay searchable.
+no font dictionary, no CID map, no subsetting. The trade: the portraits and footers
+are not searchable. The book's own pages are untouched and stay searchable.
 
 **Ink is a cost.** The notes page is a 0.25 mm dot grid at 25 % gray, not lines — and
 the page centre is marked by four small ticks at the edge midpoints instead of two
 full crosshairs. You get both axes for about eight path operators.
 
-**Two implementations, one design.** A Python 3.13 prototype and a C++17 port, with
-mirrored file names so the port is mechanical. Both drive the same engine underneath:
-pikepdf is qpdf, so `Page.as_form_xobject()` and
-`QPDFPageObjectHelper::getFormXObjectForPage()` are the same call.
+**C++ is the engine; Python is a locator.** The CLI, probe, plan, render and emit
+path live in C++17 (`cpp/`). `python/print_books.py` only finds
+`build/*/cli/print-books` (or `$PRINT_BOOKS_BIN` / `PATH`) and replaces itself with
+it. The Python 3.13 `prototype/` tree remains on disk as the reference the golden
+tests will diff against — it is not the product front door.
 
 ## Layout
 
 ```
-prototype/    Python 3.13. The reference implementation, and not throwaway —
-              the golden tests diff the C++ port against it.
-  core/       PURE: stdlib only, no PDF library, no I/O. Plans and decides.
-  backend/    the only place pikepdf, fontTools or a subprocess appears.
-  cli/        argparse front door.
-cpp/          C++17. cpp/CMakeLists.txt is the project() root.
-  core/       the same promise: no OS headers, no PDF library, no I/O.
-  backend/    qpdf, freetype, ghostscript.
-  cli/        -> print-books
-assets/fonts/ Latin Modern Roman, regular and italic. Shared by both.
-fixtures/     tiny synthetic PDFs + golden JSON plans for the cross-language tests.
-docs/         the design spec.
+python/       stdlib launcher only (print_books.py → exec the C++ binary).
+cpp/          C++17 product. cpp/CMakeLists.txt is the project() root.
+  core/       PURE: no OS headers, no PDF library, no I/O. Plans and decides.
+  backend/    qpdf, freetype, toml++ (submodules under third_party/).
+  cli/        -> print-books  (init + build)
+prototype/    historical Python 3.13 reference (pikepdf/fontTools); golden diffs.
+assets/fonts/ Latin Modern Roman, regular and italic.
+fixtures/     tiny synthetic PDFs for tests.
+docs/         the design spec + port handoff.
+scripts/linux/build.sh   Matrix-shaped: --debug/--release/--share/--packages/--asan
 ```
 
 ## Building
 
 ```bash
-python3.13 -m venv prototype/.venv
-prototype/.venv/bin/pip install -e prototype[dev]
+# C++ binary (prompts on a TTY; non-interactive → Release, Universal)
+scripts/linux/build.sh              # -> build/linux/cli/print-books
+scripts/linux/build.sh debug        # -> build/linux_debug/cli/print-books + tests
+scripts/linux/build.sh --asan
+scripts/linux/build.sh --share      # four microarch variants → dist/linux/*.tar.gz
+scripts/linux/build.sh --packages   # Arch makepkg (needs packaging/arch/PKGBUILD)
 
-scripts/linux/build.sh debug        # C++, + tests
-ctest --test-dir cpp/build/linux_debug --output-on-failure
+ctest --test-dir build/linux_debug --output-on-failure
+
+# Drive it (stdlib Python; no venv)
+python3 python/print_books.py init fixtures/mini_book.pdf -o /tmp/mini.toml
+python3 python/print_books.py build /tmp/mini.toml -o /tmp/mini_nb.pdf
+# or call the binary directly:
+build/linux_debug/cli/print-books --help
 ```
 
-Python **3.13, not 3.14**: pikepdf ships a `cp313` wheel, so nothing needs a
-compiler. In a venv, because this machine's system `python3` is 3.14.
+Optional: `PRINT_BOOKS_BIN=/path/to/print-books` overrides discovery. Prereqs for
+the C++ build: cmake ≥ 3.22, ninja, a C++17 compiler, plus OS `zlib` and `libjpeg`
+(qpdf's CMake `find_package`s them).
+
+The prototype still builds under Python 3.13 in a venv if you need it for goldens;
+that pin is prototype-only — the product launcher runs on current system Python.
 
 ## Licence
 

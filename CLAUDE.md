@@ -12,8 +12,12 @@ opens with a LaTeX-style portrait, and the output is shaped for the printer you
 actually own — including cheap printers with no duplex unit. Input a PDF, output a
 PDF. Fully offline: no network, no AI, no service.
 
-It is **two implementations of one design** — a Python 3.13 prototype and a C++17
-port. The design lives in `docs/superpowers/specs/`. Read that before changing
+The **product** is the C++17 binary `print-books` under `cpp/`. A stdlib-only
+Python launcher (`python/print_books.py`) finds that binary and `os.execv`s it —
+no venv, no pikepdf, no argparse reimplementation. `prototype/` is a historical
+Python 3.13 reference kept for later golden diffs; it is not the front door.
+
+The design lives in `docs/superpowers/specs/`. Read that before changing
 behaviour; read this before changing structure.
 
 ## Two implementations, and the names are mirrored on purpose
@@ -21,12 +25,13 @@ behaviour; read this before changing structure.
 `prototype/core/plan.py` and `cpp/core/src/plan.cc` hold the same logic under the
 same name, and `prototype/tests/test_plan.py` and `cpp/core/tests/plan_test.cc`
 assert the same facts. That is not tidiness — it is what makes the port mechanical
-instead of a redesign. **When you add a concept, add it to both sides under the same
-name, or add it to neither.** A file that exists on one side only is a bug report
-about this repo's structure.
+instead of a redesign. **When you add a concept to core, add it to both sides under
+the same name, or add it to neither.** A core file that exists on one side only is
+a bug report about this repo's structure.
 
 The prototype is not throwaway. It stays as the reference implementation the golden
-tests diff against.
+tests will diff against. It is also not the product: do not extend `prototype/cli`
+as if it were still the shipped entry point.
 
 ## `core/` never imports a PDF library, and a test enforces it
 
@@ -50,7 +55,8 @@ attach a stream, write the file.
 This is not a cute trick. Page drawing is normally the untestable part of a program
 like this, and moving it into `core` as string generation is what buys real tests on
 it. `QPDFPageObjectHelper::placeFormXObject()` returns a `std::string` for exactly
-this reason — the design follows qpdf's grain, it does not fight it.
+this reason — the design follows qpdf's grain, it does not fight it. (Emit uses our
+`Renderer::place_form` / `fit()`, not qpdf's auto-shrink placer.)
 
 ## Nothing is ever rendered, and that is the whole performance story
 
@@ -85,13 +91,16 @@ Two reasons, and the second is the real one:
 Blank pages return `0 0 0 0` from the bbox device. Discard them from the sample
 rather than letting them collapse the union.
 
+**Not wired yet on the product path:** `build` currently places using each page's
+CropBox. The sampled ink-bbox / `--fit content` path is still a follow-up.
+
 ## The generated text is outlines, not an embedded font
 
 Chapter portraits, chapter mini-TOCs and page footers are drawn by asking the font
 for each glyph's outline and emitting PDF path operators — `m`, `c`, `h`, then `f`.
 No font dictionary, no CID map, no subsetting, on either side of the port. The
 backend's entire font duty is *"give me the outline of glyph G"*: a fontTools pen in
-Python, `FT_Outline_Decompose` in C++.
+the prototype, `FT_Outline_Decompose` in C++.
 
 Latin Modern is CFF-flavoured OTF, so its outlines are **already cubic** and map
 straight onto PDF's `c` with no quadratic conversion. Fill with `f` (nonzero
@@ -142,51 +151,63 @@ the chapter's final verso. Paying the sheet was a deliberate choice; do not
 `--notes none` is not a special case in the code. It is a different `Plan` through
 the same engine.
 
-## Python 3.13 in a venv, and both halves of that are deliberate
+## Python: product launcher vs prototype
 
-**3.13, not 3.14**, because pikepdf ships a `cp313` manylinux wheel and 3.13 needs no
-compiler. **In a venv**, because this machine's system `python3` *is* 3.14 — there is
-no other way to pin 3.13.
+**Product Python** (`python/print_books.py`) is stdlib only. No `requires-python`
+pin, no venv, no pikepdf, no fontTools. It searches `$PRINT_BOOKS_BIN`, then
+`PATH`, then well-known `build/linux*/cli/print-books` trees next to the repo, and
+`os.execv`s the hit.
 
-This repo is also the **first Python project in this workspace**. There is no
-`pyproject.toml`, venv, pytest config or formatter config in any sibling repo; all
-first-party Python elsewhere is one-off `tools/*.py` generators run against system
-site-packages. So `prototype/pyproject.toml` *establishes* a convention rather than
-following one. That is intentional — do not "correct" it into the `tools/` style.
-What is kept from that style: a why-first module docstring and a `Usage:` line on
-every entry point.
+**Prototype Python** is **3.13, not 3.14**, because pikepdf ships a `cp313`
+manylinux wheel and 3.13 needs no compiler — **in a venv**, because this machine's
+system `python3` *is* 3.14. That pin and the `prototype/pyproject.toml` convention
+are prototype-only. Do not "correct" the product launcher into the prototype style,
+and do not make the product depend on 3.13.
+
+What is kept from the workspace `tools/*.py` voice on every entry point: a why-first
+module docstring and a `Usage:` line.
 
 ## Build
 
 ```bash
-# Prototype
+# Product (C++). cmake root is cpp/; build trees land at repo-root build/linux…
+scripts/linux/build.sh              # prompts on a TTY, Release/Universal otherwise
+scripts/linux/build.sh debug        # + tests -> build/linux_debug
+scripts/linux/build.sh --asan
+scripts/linux/build.sh --share      # four variants; Release tarballs in dist/linux/
+scripts/linux/build.sh --packages   # makepkg (needs packaging/arch/PKGBUILD)
+
+# Stdlib launcher (forwards to the binary)
+python3 python/print_books.py --help
+
+# Prototype only (historical / goldens)
 python3.13 -m venv prototype/.venv
 prototype/.venv/bin/pip install -e prototype[dev]
-
-# C++ — cpp/CMakeLists.txt is the project() root; the repo root has no CMake file,
-# following archive_engine, whose core/CMakeLists.txt is its entry point.
-scripts/linux/build.sh              # prompts on a TTY, Release otherwise
-scripts/linux/build.sh debug        # + tests
 ```
 
 ## Tests
 
 ```bash
-prototype/.venv/bin/pytest prototype/tests -q
+python3 -m unittest python.tests.test_launcher -q
+# or: python3 -m unittest discover -s python/tests
 
-cmake -S cpp -B cpp/build/linux_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
-cmake --build cpp/build/linux_debug -j"$(nproc)"
-ctest --test-dir cpp/build/linux_debug --output-on-failure
+cmake -S cpp -B build/linux_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/linux_debug -j"$(nproc)"
+ctest --test-dir build/linux_debug --output-on-failure
+
+# Prototype (optional)
+prototype/.venv/bin/pytest prototype/tests -q
 ```
 
-Assert-based, Debug-only, no framework. Each test **compiles the real sources it
-exercises and links nothing else** — worth protecting more than the assertions,
-because it is what keeps a test from quietly depending on a PDF library. Test
-sources `#undef NDEBUG` so asserts survive Release.
+Assert-based, Debug-only, no framework on the C++ side. Each core test **compiles
+the real sources it exercises and links nothing else** — worth protecting more than
+the assertions, because it is what keeps a test from quietly depending on a PDF
+library. Test sources `#undef NDEBUG` so asserts survive Release.
 
 Rendering has no automated tests. It is verified by **proof capture**:
 `print-books proof` writes PNGs via `pdftoppm`, the same way the rest of this
-workspace verifies drawing. Look at the sheets.
+workspace verifies drawing. Look at the sheets. (`proof` itself is not implemented
+yet.)
 
 ## Committing
 
@@ -197,26 +218,23 @@ repo; copy it from the workspace root. See the workspace `CLAUDE.md`.
 
 ## Known gaps
 
-The design is settled and **`core/` is implemented on both sides**: the Python
-prototype and the C++ port both have units, geometry, metrics, pdfops, plan,
-drawing, text, numwords and render, each with a mirrored test suite. What has
-not been written yet:
+The design is settled. **`core/`**, **C++ backends** (qpdf probe/emit, FreeType
+glyphs, project TOML), and **`cli/print-books` (`init` + `build`)** are written.
+The stdlib launcher is written. What remains:
 
-- **The backends** — `backend/pdf_pikepdf.py` (probe/emit) and
-  `backend/glyphs_fonttools.py` exist on the Python side; the C++ counterparts
-  (`backend/qpdf`, `backend/freetype`) do not. The `GlyphSource` seam in
-  `metrics.hh` is exactly the door `FT_Outline_Decompose` will enter through.
-- **The CLI** — the Python `print-books` (`cli/main.py`: `init` + `build`) is
-  written and works end to end; `cli/cli_main.cc` and the C++ binary are still
-  empty, because they cannot emit a PDF until the C++ backends exist.
-- **The golden tests** — the cross-language diff that is the port's real safety
-  net, still to come once the C++ backend can emit a PDF.
-- **`core/project.py` + `core/outline.py` + `core/printer.py`** — the spec names
-  them but they are not written yet on either side; chapter detection lives in
-  `backend/pdf_pikepdf.py::chapters_from_outline` for now.
+- **Golden tests** — cross-language content-stream / plan diffs against `prototype/`.
+  Both sides can emit a PDF now; goldens are blocked on matching streams, not on
+  "no C++ PDF".
+- **Sampled ink bbox / `--fit content`** — `gs -sDEVICE=bbox` sample at `init`,
+  cached in the project TOML. `build` currently uses CropBox.
+- **`--duplex manual`**, printer profiles, **`calibrate`**, **`proof`**.
+- **`NotesMode.LINES` drawing** — the plan accepts `lines`; the grid drawer for it
+  is not done.
+- **`core/project` / `outline` / `printer` as named in the spec** — chapter detection
+  lives in the backend (`chapters_from_outline`); printer profiles are out of scope
+  for this pass.
 
-See `docs/cpp-port-handoff.md` for the exact Python ↔ C++ file map and the
-deviations that came up during the port.
+See `docs/cpp-port-handoff.md` for the Python ↔ C++ file map and port deviations.
 
 Deferred deliberately, and not to be treated as oversights:
 

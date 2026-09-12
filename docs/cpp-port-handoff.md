@@ -4,11 +4,16 @@ State of the C++ port as of this commit, for whoever picks it up next. Read the
 repo `CLAUDE.md` first (authoritative for structure); this documents the port
 specifically.
 
+The **product** is the C++ `print-books` binary. `python/print_books.py` is a
+stdlib locator that `exec`s it. `prototype/` is historical reference for goldens.
+
 ## What is done
 
-`core/` is ported file-by-file from the Python prototype, under mirrored names,
-and every module has a mirrored test. The whole thing builds with nothing but a
-C++17 compiler — no PDF library, no font library, no I/O on any core link line.
+### `core/`
+
+Ported file-by-file from the Python prototype, under mirrored names, and every
+module has a mirrored test. The whole thing builds with nothing but a C++17
+compiler — no PDF library, no font library, no I/O on any core link line.
 
 | Python (`prototype/core/`) | C++ header | C++ source | C++ test |
 |---|---|---|---|
@@ -31,23 +36,45 @@ Namespace is `pb`, include prefix is `printbooks/`, so `#include
 <printbooks/plan.hh>` reads the way `<economycs/money.hh>` does. Header
 extension `.hh`, source `.cc`, matching Economycs and archive_engine.
 
+### Backends + CLI (done)
+
+| Concern | C++ | Notes |
+|---|---|---|
+| GlyphSource | `cpp/backend/freetype/` | `FT_Outline_Decompose`; cubic CFF only |
+| probe + outline chapters | `cpp/backend/qpdf/pdf_qpdf.*` | mirrors pikepdf probe rules |
+| emit (Form XObject copy) | same | shared dot-grid XObject; unlinearized |
+| project TOML | `cpp/backend/project.*` | toml++ read; hand-rolled write |
+| CLI `init` / `build` | `cpp/cli/cli_main.cc` | `OUTPUT_NAME print-books` |
+| Stdlib launcher | `python/print_books.py` | `$PRINT_BOOKS_BIN` → PATH → `build/linux*/cli/` |
+
+Smoke: `build/linux_debug/cli/print-books init fixtures/mini_book.pdf` then
+`build …` yields a PDF whose page count equals `sides.size()` (`4+2N` per chapter).
+
 ## Build and test
 
 ```bash
 # Debug, tests included (also what scripts/linux/build.sh debug does):
-cmake -S cpp -B cpp/build/linux_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
-cmake --build cpp/build/linux_debug -j"$(nproc)"
-ctest --test-dir cpp/build/linux_debug --output-on-failure   # 7/7 pass
+cmake -S cpp -B build/linux_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/linux_debug -j"$(nproc)"
+ctest --test-dir build/linux_debug --output-on-failure
 
-# Release, no tests:
-scripts/linux/build.sh release     # -> cpp/build/linux
+# Release / share / packages / asan:
+scripts/linux/build.sh release     # -> build/linux
 scripts/linux/build.sh --clean debug
 scripts/linux/build.sh --asan
+scripts/linux/build.sh --share
+scripts/linux/build.sh --packages  # needs packaging/arch/PKGBUILD
+
+python3 -m unittest python.tests.test_launcher -q
+python3 python/print_books.py --help
 ```
+
+Build trees land at the **repo root** (`build/linux…`), not under `cpp/build/`.
+(`cpp/build/` may still exist from older trees; it is gitignored.)
 
 The CMake shape is Economycs': `cpp/CMakeLists.txt` is the `project()` root (the
 repo root has none), `PRINTBOOKS_TESTS` defaults ON in Debug and OFF in Release,
-tests are gated on the **option** not the build type, and each test executable
+tests are gated on the **option** not the build type, and each core test executable
 lists the real `.cc` TUs it exercises and links nothing else. `PRINTBOOKS_SANITIZE`
 adds ASan+UBSan and refuses Release, copied verbatim from Economycs.
 
@@ -80,32 +107,23 @@ prototype. None change behaviour.
 
 ## What is NOT done (next)
 
-In spec order, these are the remaining Phase 3 steps:
-
-1. **Backends** — `cpp/backend/freetype/` (an `FT_Outline_Decompose` GlyphSource,
-   the one-file swap the whole design promises) and `cpp/backend/qpdf/`
-   (`probe` + `emit`, calling `QPDFPageObjectHelper::getFormXObjectForPage()` and
-   `placeFormXObject()`, whose `std::string` return is why `render.hh` emits text).
-   `cpp/backend/gs/` for the sampled ink bbox. These need the shipped
-   `assets/fonts/lmroman10-*.otf` and real fixture PDFs, so they cannot be
-   unit-tested the way core is.
-2. **CLI** — `prototype/cli/main.py` (`init` + `build`) is written and usable
-   now: `print-books init BOOK.pdf` probes the book and writes a project TOML,
-   `print-books build project.toml` emits the notebook PDF. `cpp/cli/cli_main.cc`
-   + `cpp/cli/CMakeLists.txt` (`OUTPUT_NAME print-books`) still need to follow,
-   once the C++ backend exists.
-3. **Golden tests** — the cross-language diff that names the disagreeing side.
-   Blocked on (1), since both sides must be able to dump a real `Plan` and
-   content streams for the fixture books.
-4. **`core/project.py`/`outline.py`/`printer.py`** — still unwritten on *both*
-   sides (see CLAUDE.md "Known gaps"). `backend/pdf_pikepdf.py::
-   chapters_from_outline` currently does outline → chapters.
+1. **Golden tests** — the cross-language diff that names the disagreeing side.
+   Both sides can dump a real `Plan` and emit PDFs; remaining work is matching
+   streams / fixtures, not "C++ cannot write a PDF".
+2. **Sampled ink bbox / `--fit content`** — still follow-up; `build` uses CropBox.
+3. **`--duplex manual`**, calibrate, printer profiles, `proof`.
+4. **`NotesMode.LINES` drawing.**
+5. **`core/project` / `outline` / `printer` as named in the spec** — still unwritten
+   on both sides as pure core modules; outline→chapters lives in the backend.
+6. **`--share` fonts payload + Arch PKGBUILD** — build.sh flag surface exists;
+   packaging completeness is a separate task.
 
 ## Hygiene notes for the next session
 
 - Commit with `./git_wrapper`, never plain `git commit`; bare message, no
   `Co-Authored-By` / `Claude-Session` / 🤖.
-- `cpp/build/` is gitignored; `compile_commands.json` and `CMakeCache.txt` too.
+- `build/` and `cpp/build/` are gitignored; `compile_commands.json` and
+  `CMakeCache.txt` too.
 - The LSP in this workspace reports "`printbooks/*.hh` file not found" until
   CMake has configured a build directory — it does not know the `include/` path.
   Configure first, then trust the compiler, not the editor.
