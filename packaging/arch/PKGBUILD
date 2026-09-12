@@ -1,0 +1,135 @@
+# Maintainer: nava <nava@noreply.com>
+#
+# print-books — Arch packages, four microarchitecture variants.
+#
+# ONE makepkg run produces FOUR packages. Each is SELF-CONTAINED: a person
+# downloads exactly one file, runs `pacman -U`, and it works.
+#
+#   makepkg                         # all four
+#   makepkg --pkg print-books-v3    # just one
+#
+# Builds the latest pushed main, not this working tree. Commit and push first.
+# scripts/linux/build.sh --packages sets SRCDEST/BUILDDIR/PKGDEST so makepkg
+# does not drop a clone under packaging/arch/.
+#
+# Which variant is which:
+#   universal  portable generic x86-64 — works on ANY x86-64 CPU
+#   v3         AVX2/BMI2      (Intel Haswell 2013+, AMD Excavator/Zen 2015+)
+#   v4         AVX-512        (Intel Skylake-X/Ice Lake+, AMD Zen 4+)
+#   zen4       -march=znver4  (AMD Zen 4 specifically)
+#
+# A downloader finds their level with:
+#   /lib/ld-linux-x86-64.so.2 --help | grep -A4 'Subdirectories of glibc-hwcaps'
+#
+# NOTE: -march=native is deliberately NOT offered. It bakes in whatever the
+# BUILD machine supports and SIGILLs on anything older — fine for a local
+# install, never for something uploaded.
+
+pkgbase=print-books
+pkgname=('print-books-universal'
+         'print-books-v3'
+         'print-books-v4'
+         'print-books-zen4')
+pkgver=0.1.0.r0.g0000000
+pkgrel=1
+arch=('x86_64')
+url='https://github.com/minervarr/Print_BooksAndSo'
+license=('AGPL-3.0-or-later')
+
+# qpdf and FreeType are linked statically from the in-tree submodules.
+# zlib and libjpeg stay dynamic — they are what qpdf's static lib needs at
+# runtime, and pacman enforces them on `pacman -U`.
+depends=('gcc-libs' 'zlib' 'libjpeg-turbo')
+makedepends=('git' 'cmake' 'ninja')
+
+options=('!lto' '!debug')
+
+source=("print_books::git+https://github.com/minervarr/Print_BooksAndSo.git#branch=main")
+sha256sums=('SKIP')
+
+PKGEXT='.pkg.tar.zst'
+
+# variant -> PRINTBOOKS_ARCH_LEVEL ("" = the compiler's portable baseline).
+# Same set scripts/linux/build.sh --share produces as tarballs, so the two
+# distribution paths stay in step.
+_arch_level() {
+    case "$1" in
+        universal) printf '' ;;
+        v3)        printf 'v3' ;;
+        v4)        printf 'v4' ;;
+        zen4)      printf 'znver4' ;;
+        *)         echo "unknown variant: $1" >&2; return 1 ;;
+    esac
+}
+
+pkgver() {
+    cd "${srcdir}/print_books"
+    printf "0.1.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "${srcdir}/print_books"
+    # qpdf / freetype / tomlplusplus live as submodules under cpp/third_party/.
+    git submodule update --init
+}
+
+build() {
+    local _v _level _arch_arg
+    for _v in universal v3 v4 zen4; do
+        _level="$(_arch_level "$_v")"
+        _arch_arg=()
+        [[ -n "$_level" ]] && _arch_arg=(-DPRINTBOOKS_ARCH_LEVEL="$_level")
+
+        echo "==> Building variant '${_v}'${_level:+ (-march=${_level})}"
+
+        # cmake root is cpp/; the clone's repo root has no CMakeLists.txt.
+        cmake -S print_books/cpp -B "build-${_v}" -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            "${_arch_arg[@]}"
+        cmake --build "build-${_v}"
+    done
+}
+
+# Everything a variant installs. Identical for all four apart from which
+# build-<variant>/ the binary comes from.
+_package_variant() {
+    local _v="$1"
+    cd "${srcdir}"
+
+    install -Dm755 "build-${_v}/cli/print-books" \
+        "${pkgdir}/usr/bin/print-books"
+
+    install -dm755 "${pkgdir}/usr/share/print-books/fonts"
+    install -m644 print_books/assets/fonts/*.otf \
+        "${pkgdir}/usr/share/print-books/fonts/"
+
+    install -Dm644 print_books/LICENSE \
+        "${pkgdir}/usr/share/licenses/print-books-${_v}/LICENSE"
+}
+
+# All four provide and conflict with 'print-books', so pacman refuses to hold
+# two variants at once and swapping one for another is a single -U.
+
+package_print-books-universal() {
+    pkgdesc="Turn a PDF book into a printable interleaved notebook (portable x86-64)"
+    provides=('print-books'); conflicts=('print-books')
+    _package_variant universal
+}
+
+package_print-books-v3() {
+    pkgdesc="Turn a PDF book into a printable interleaved notebook (x86-64-v3 / AVX2)"
+    provides=('print-books'); conflicts=('print-books')
+    _package_variant v3
+}
+
+package_print-books-v4() {
+    pkgdesc="Turn a PDF book into a printable interleaved notebook (x86-64-v4 / AVX-512)"
+    provides=('print-books'); conflicts=('print-books')
+    _package_variant v4
+}
+
+package_print-books-zen4() {
+    pkgdesc="Turn a PDF book into a printable interleaved notebook (AMD Zen 4 tuned)"
+    provides=('print-books'); conflicts=('print-books')
+    _package_variant zen4
+}

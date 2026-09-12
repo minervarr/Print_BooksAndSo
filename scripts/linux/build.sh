@@ -229,12 +229,13 @@ if [[ "$SHARE" -eq 1 ]]; then
         cmake --build "$variant_dir" -j"$(nproc)"
 
         if [[ "$BUILD_TYPE" == "Release" ]]; then
-            # CLI binary is not built yet; skip packaging that variant rather
-            # than fail the whole share pass. Fonts always come from assets/.
+            # Binary + fonts/ next to it: font_dir() looks at dirname(exe)/fonts
+            # before the compile-time source-tree path, so a tarball extracted
+            # on another machine works with no env vars.
             bin="$variant_dir/cli/print-books"
             if [[ ! -e "$bin" ]]; then
-                echo "==> Skipping package for '$variant': $bin not found"
-                continue
+                echo "error: $bin not found after build" >&2
+                exit 1
             fi
             pkg_name="print-books-linux-$variant"
             pkg_dir="$DIST_DIR/$pkg_name"
@@ -252,9 +253,10 @@ if [[ "$SHARE" -eq 1 ]]; then
 
     echo
     if [[ "$BUILD_TYPE" == "Release" ]]; then
-        echo "All-variant build done. Tarballs (when the CLI binary exists) in $DIST_DIR/:"
+        echo "All-variant build done. Tarballs in $DIST_DIR/:"
         for variant in universal v3 v4 zen4; do
-            echo "  $DIST_DIR/print-books-linux-$variant.tar.gz"
+            tarball="$DIST_DIR/print-books-linux-$variant.tar.gz"
+            printf '  %6s  %s\n' "$(du -h "$tarball" | cut -f1)" "$tarball"
         done
     else
         echo "All-variant build done (Debug, unpackaged). Trees:"

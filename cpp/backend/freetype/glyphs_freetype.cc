@@ -11,7 +11,10 @@
 
 #include <cstdlib>
 #include <stdexcept>
+#include <string>
+#include <sys/stat.h>
 #include <unordered_map>
+#include <unistd.h>
 #include <utility>
 
 #include <ft2build.h>
@@ -41,6 +44,39 @@ std::string join_font(const std::string& dir, const char* name) {
     if (dir.back() == '/' || dir.back() == '\\')
         return dir + name;
     return dir + "/" + name;
+}
+
+std::string g_program_path;
+
+std::string dirname_of(const std::string& path) {
+    const auto slash = path.find_last_of("/\\");
+    if (slash == std::string::npos)
+        return ".";
+    if (slash == 0)
+        return "/";
+    return path.substr(0, slash);
+}
+
+bool regular_face_exists(const std::string& dir) {
+    struct stat st;
+    const std::string path = join_font(dir, "lmroman10-regular.otf");
+    return ::stat(path.c_str(), &st) == 0 && S_ISREG(st.st_mode);
+}
+
+// Absolute dir of this process. /proc/self/exe on Linux so a PATH-invoked
+// binary still finds dirname(exe)/fonts; argv0 otherwise.
+std::string executable_dir() {
+#ifdef __linux__
+    char buf[4096];
+    const ssize_t n = ::readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+    if (n > 0) {
+        buf[n] = '\0';
+        return dirname_of(buf);
+    }
+#endif
+    if (!g_program_path.empty())
+        return dirname_of(g_program_path);
+    return {};
 }
 
 struct Decompose {
@@ -124,11 +160,25 @@ struct FreeTypeGlyphs::Impl {
     GlyphOutline load(char32_t codepoint) const;
 };
 
+void set_program_path(const char* argv0) {
+    if (argv0 != nullptr && argv0[0] != '\0')
+        g_program_path = argv0;
+}
+
 std::string font_dir() {
     if (const char* env = std::getenv("PRINT_BOOKS_FONT_DIR")) {
         if (env[0] != '\0')
             return env;
     }
+    const std::string exe_dir = executable_dir();
+    if (!exe_dir.empty()) {
+        const std::string beside = join_font(exe_dir, "fonts");
+        if (regular_face_exists(beside))
+            return beside;
+    }
+    static const char kPacman[] = "/usr/share/print-books/fonts";
+    if (regular_face_exists(kPacman))
+        return kPacman;
 #ifdef PRINTBOOKS_FONT_DIR
     return PRINTBOOKS_FONT_DIR;
 #else

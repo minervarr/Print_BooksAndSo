@@ -289,6 +289,8 @@ int cmd_build(const Args& args) {
 }  // namespace
 
 int main(int argc, char** argv) {
+    if (argc > 0)
+        pb::set_program_path(argv[0]);
     try {
         Args args;
         const int parsed = parse_args(argc, argv, &args);
