@@ -12,10 +12,9 @@ opens with a LaTeX-style portrait, and the output is shaped for the printer you
 actually own — including cheap printers with no duplex unit. Input a PDF, output a
 PDF. Fully offline: no network, no AI, no service.
 
-The **product** is the C++17 binary `print-books` under `cpp/`. A stdlib-only
-Python launcher (`python/print_books.py`) finds that binary and `os.execv`s it —
-no venv, no pikepdf, no argparse reimplementation. `prototype/` is a historical
-Python 3.13 reference kept for later golden diffs; it is not the front door.
+The **product** is the C++17 binary. `./print-books` at the repo root finds it
+and `os.execv`s it — no venv, no pikepdf. `prototype/` is a historical Python
+3.13 reference kept for later golden diffs; it is not the front door.
 
 The design lives in `docs/superpowers/specs/`. Read that before changing
 behaviour; read this before changing structure.
@@ -153,10 +152,10 @@ the same engine.
 
 ## Python: product launcher vs prototype
 
-**Product Python** (`python/print_books.py`) is stdlib only. No `requires-python`
-pin, no venv, no pikepdf, no fontTools. It searches `$PRINT_BOOKS_BIN`, then
-`PATH`, then well-known `build/linux*/cli/print-books` trees next to the repo, and
-`os.execv`s the hit.
+**Product Python** (`./print-books`, implemented in `python/print_books.py`) is
+stdlib only. No `requires-python` pin, no venv, no pikepdf, no fontTools. It
+searches `$PRINT_BOOKS_BIN`, then `PATH`, then well-known
+`build/linux*/cli/print-books` trees next to the repo, and `os.execv`s the hit.
 
 **Prototype Python** is **3.13, not 3.14**, because pikepdf ships a `cp313`
 manylinux wheel and 3.13 needs no compiler — **in a venv**, because this machine's
@@ -177,8 +176,8 @@ scripts/linux/build.sh --asan
 scripts/linux/build.sh --share      # four variants; Release tarballs in dist/linux/
 scripts/linux/build.sh --packages   # makepkg (needs packaging/arch/PKGBUILD)
 
-# Stdlib launcher (forwards to the binary)
-python3 python/print_books.py --help
+# Front door (forwards to the binary)
+./print-books --help
 
 # Prototype only (historical / goldens)
 python3.13 -m venv prototype/.venv

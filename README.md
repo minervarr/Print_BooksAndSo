@@ -7,20 +7,25 @@ including cheap printers with no duplex unit.
 
 Input a PDF. Output a PDF. No network, no AI, no service, no account.
 
-> **Status:** the product is the C++17 `print-books` binary. A stdlib-only Python
-> script (`python/print_books.py`) locates that binary and `exec`s it — no venv,
-> no pikepdf. `prototype/` is a historical reference kept for later golden diffs.
+> **Status:** the product is the C++17 `print-books` binary. `./print-books` at
+> the repo root finds it and `exec`s it — no venv, no pikepdf. `prototype/` is a
+> historical reference kept for later golden diffs.
 
 ```console
-$ python3 python/print_books.py init ~/Books/atomic_habits.pdf -o habits.toml
+$ scripts/linux/build.sh
+Binaries in build/linux/:
+  cli/print-books -- init and build a printable notebook
+
+  ./print-books init BOOK.pdf
+  ./print-books build project.toml
+
+$ ./print-books init ~/Books/atomic_habits.pdf -o habits.toml
   19 chapters from the PDF outline
-  crop box from a 16-page sample: 71.99 42.12 540.01 716.94
   wrote habits.toml
 
-$ python3 python/print_books.py build habits.toml --chapters 1
-  chapter 1 "The Mechanism of Habit Formation", pages 27-44
-  38 sides -> 19 sheets
-  wrote habits_ch01.pdf
+$ ./print-books build habits.toml --chapters 1
+  1 chapters, 38 sides -> 19 sheets
+  wrote habits.toml.pdf
 ```
 
 (`init` status about the crop box is the designed interface; sampled ink bbox is
@@ -60,8 +65,8 @@ are not searchable. The book's own pages are untouched and stay searchable.
 the page centre is marked by four small ticks at the edge midpoints instead of two
 full crosshairs. You get both axes for about eight path operators.
 
-**C++ is the engine; Python is a locator.** The CLI, probe, plan, render and emit
-path live in C++17 (`cpp/`). `python/print_books.py` only finds
+**C++ is the engine; `./print-books` is the front door.** The CLI, probe, plan,
+render and emit path live in C++17 (`cpp/`). The repo-root script only finds
 `build/*/cli/print-books` (or `$PRINT_BOOKS_BIN` / `PATH`) and replaces itself with
 it. The Python 3.13 `prototype/` tree remains on disk as the reference the golden
 tests will diff against — it is not the product front door.
@@ -69,7 +74,8 @@ tests will diff against — it is not the product front door.
 ## Layout
 
 ```
-python/       stdlib launcher only (print_books.py → exec the C++ binary).
+print-books   front door (stdlib locator → exec the C++ binary).
+python/       locator module + tests.
 cpp/          C++17 product. cpp/CMakeLists.txt is the project() root.
   core/       PURE: no OS headers, no PDF library, no I/O. Plans and decides.
   backend/    qpdf, freetype, toml++ (submodules under third_party/).
@@ -93,11 +99,9 @@ scripts/linux/build.sh --packages   # Arch makepkg (needs packaging/arch/PKGBUIL
 
 ctest --test-dir build/linux_debug --output-on-failure
 
-# Drive it (stdlib Python; no venv)
-python3 python/print_books.py init fixtures/mini_book.pdf -o /tmp/mini.toml
-python3 python/print_books.py build /tmp/mini.toml -o /tmp/mini_nb.pdf
-# or call the binary directly:
-build/linux_debug/cli/print-books --help
+# Drive it (after a build; no venv)
+./print-books init fixtures/mini_book.pdf -o /tmp/mini.toml
+./print-books build /tmp/mini.toml -o /tmp/mini_nb.pdf
 ```
 
 Optional: `PRINT_BOOKS_BIN=/path/to/print-books` overrides discovery. Prereqs for

@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""print-books — turn a PDF book into a printable notebook.
+
+Front door. After `scripts/linux/build.sh`, run this; it finds the C++ binary
+and replaces itself with it. No venv, no extra packages.
+
+Usage:
+    ./print-books init BOOK.pdf
+    ./print-books build project.toml
+"""
+
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "python"))
+from print_books import main  # noqa: E402
+
+if __name__ == "__main__":
+    main()

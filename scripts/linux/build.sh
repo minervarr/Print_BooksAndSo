@@ -293,7 +293,15 @@ cmake -S cpp -B "$BUILD_DIR" -G Ninja \
 cmake --build "$BUILD_DIR" -j"$(nproc)"
 
 echo
-echo "Done -> $BUILD_DIR/"
+echo "Binaries in $BUILD_DIR/:"
+if [[ -x "$BUILD_DIR/cli/print-books" ]]; then
+    echo "  cli/print-books -- init and build a printable notebook"
+    echo
+    echo "  ./print-books init BOOK.pdf"
+    echo "  ./print-books build project.toml"
+else
+    echo "  (cli/print-books not built)"
+fi
 if [[ "$BUILD_TYPE" == "Debug" ]]; then
     echo
     echo "  ctest --test-dir $BUILD_DIR --output-on-failure"

@@ -4,8 +4,9 @@ State of the C++ port as of this commit, for whoever picks it up next. Read the
 repo `CLAUDE.md` first (authoritative for structure); this documents the port
 specifically.
 
-The **product** is the C++ `print-books` binary. `python/print_books.py` is a
-stdlib locator that `exec`s it. `prototype/` is historical reference for goldens.
+The **product** is the C++ `print-books` binary. `./print-books` at the repo
+root is a stdlib locator that `exec`s it. `prototype/` is historical reference
+for goldens.
 
 ## What is done
 
@@ -45,7 +46,7 @@ extension `.hh`, source `.cc`, matching Economycs and archive_engine.
 | emit (Form XObject copy) | same | shared dot-grid XObject; unlinearized |
 | project TOML | `cpp/backend/project.*` | toml++ read; hand-rolled write |
 | CLI `init` / `build` | `cpp/cli/cli_main.cc` | `OUTPUT_NAME print-books` |
-| Stdlib launcher | `python/print_books.py` | `$PRINT_BOOKS_BIN` → PATH → `build/linux*/cli/` |
+| Stdlib launcher | `./print-books` (`python/print_books.py`) | `$PRINT_BOOKS_BIN` → PATH → `build/linux*/cli/` |
 | `--share` tarballs | `scripts/linux/build.sh --share` | binary + LM Roman OTFs under `dist/linux/` |
 | Arch PKGBUILD | `packaging/arch/PKGBUILD` | four variants; fonts → `/usr/share/print-books/fonts` |
 
@@ -68,7 +69,7 @@ scripts/linux/build.sh --share
 scripts/linux/build.sh --packages  # needs packaging/arch/PKGBUILD
 
 python3 -m unittest python.tests.test_launcher -q
-python3 python/print_books.py --help
+./print-books --help
 ```
 
 Build trees land at the **repo root** (`build/linux…`), not under `cpp/build/`.

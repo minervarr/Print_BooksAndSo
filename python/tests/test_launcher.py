@@ -73,6 +73,15 @@ class FindBinaryTests(unittest.TestCase):
             os.environ["PATH"] = str(decoy.parent)
             self.assertEqual(print_books.find_binary(), str(well.resolve()))
 
+    def test_path_skips_repo_root_front_door(self) -> None:
+        self._patch_roots()
+        front = self.root / "print-books"
+        front.write_text("#!/usr/bin/env python3\n", encoding="utf-8")
+        front.chmod(front.stat().st_mode | stat.S_IXUSR)
+        well = _touch_exe(self.root / "build" / "linux" / "cli" / "print-books")
+        os.environ["PATH"] = str(self.root)
+        self.assertEqual(print_books.find_binary(), str(well.resolve()))
+
     def test_well_known_linux_then_debug(self) -> None:
         self._patch_roots()
         debug = _touch_exe(self.root / "build" / "linux_debug" / "cli" / "print-books")
