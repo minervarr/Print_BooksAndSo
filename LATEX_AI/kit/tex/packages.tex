@@ -1,0 +1,31 @@
+% kit/tex/packages.tex — packages every reconstructed book needs.
+%
+% No \documentclass here. The book's main.tex / unit.tex owns the class.
+% Add a package only when it is a capability the next book will also need.
+% Author-specific macros (theorem voice, chapter openers) belong in the
+% book's style.tex, not here.
+
+% --- layout ---------------------------------------------------------------
+\usepackage[margin=2.2cm,headsep=0.6cm,footskip=1cm]{geometry}
+
+% --- typography ------------------------------------------------------------
+\usepackage{microtype}
+
+% --- mathematics -----------------------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+
+% --- lists -----------------------------------------------------------------
+\usepackage{enumitem}
+
+% --- figures ----------------------------------------------------------------
+% Semantic TikZ / pgfplots by default. graphicx is the last-resort scan embed.
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{standalone}
+
+% --- headers/footers (the book configures the marks) -----------------------
+\usepackage{fancyhdr}
+
+% --- links (digital edition is a first-class target) -----------------------
+\usepackage[hidelinks]{hyperref}

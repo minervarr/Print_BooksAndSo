@@ -47,6 +47,11 @@ git_wrapper
 # deliberately, because the golden tests are worthless without them.
 *.pdf
 !fixtures/*.pdf
+# LATEX_AI reconstruction: the source scans *are* the input, and its Makefiles
+# are source (the CMake `Makefile` ignore above would eat them otherwise).
+!LATEX_AI/Makefile
+!LATEX_AI/book/Makefile
+!LATEX_AI/sources/*.pdf
 
 # Proof renders (pdftoppm). Regenerate, never commit.
 proofs/

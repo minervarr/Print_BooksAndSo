@@ -1,0 +1,15 @@
+% kit/tex/figure-standalone.tex — compile one figure against the same
+% packages and figure style the book uses, so fonts match.
+%
+% Invoke from the book's directory:
+%   pdflatex '\def\figfile{figures/geometric/foo.tex}\input{figure-standalone}'
+%
+% \figfile is a body-only tikzpicture (or axis). Do not wrap it in
+% \includegraphics of a pre-rendered PDF: that would freeze the font.
+
+\documentclass[tikz,border=2mm]{standalone}
+\input{packages}
+\input{figure-style}
+\begin{document}
+\input{\figfile}
+\end{document}

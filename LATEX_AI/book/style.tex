@@ -1,0 +1,162 @@
+% ============================================================================
+% style.tex — the identity of this reconstructed book (Spivak, Calculus).
+%
+% Author-specific macros live here and GROW after every chapter. Packages
+% and figure style live in the kit; do not add a capability that the next
+% book will need into this file.
+%
+% Design decisions (current):
+%   * Font: Computer Modern (the classic Spivak identity — chosen by the
+%     owner over matching the 2008 Times re-typeset). No font package is
+%     loaded; CM is the LaTeX default. Figures use the document font.
+%   * Class: book, 11pt, A4, oneside, openany, moderate margins (~2.2cm).
+%     The original is a print-optimised book with huge margins that look
+%     tiny on a tablet; we target a layout that reads well on BOTH screen
+%     and paper. oneside/openany: no forced blank rectos.
+%   * Structure: \frontmatter (title–contents, roman pages) until Chapter 1,
+%     \mainmatter (Parts I–V, arabic from 1), \backmatter (reading, answers,
+%     glossary, index).
+%   * Theorem voice: Spivak labels environments in full capitals —
+%     THEOREM / DEFINITION / PROOF — statement in italics, proof upright.
+%     Numbered per chapter, no chapter prefix ("THEOREM 1", not "THEOREM 1.1").
+%   * Properties: the twelve "basic properties" are labelled (P1)..(P12).
+%   * Problems: numbered 1., 2., ...; starred (*) for hard ones; sub-parts
+%     use small roman (i)(ii) or letters (a)(b) depending on the problem.
+% ============================================================================
+
+% --- headers/footers -------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\nouppercase{\rightmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14pt}
+
+% Book class owns the chapter counter. Theorems/equations reset per chapter
+% and display their plain number (matching the book's "THEOREM 1", "(1)", ...).
+\numberwithin{equation}{chapter}
+\renewcommand{\theequation}{\arabic{equation}}
+
+% ============================================================================
+% Chapter opener. The classic Spivak chapter begins on a fresh page with a
+% large "CHAPTER n" and the title beneath it. #1 is accepted for call-site
+% compatibility and ignored — the book counter is the number.
+% ============================================================================
+\newcommand{\spivakchapter}[2]{%
+  \clearpage
+  \refstepcounter{chapter}%
+  \chaptermark{#2}%
+  \thispagestyle{plain}%
+  \vspace*{3cm}%
+  \begin{center}%
+    {\scshape\Large Chapter}\\[0.6em]%
+    {\fontsize{60}{70}\selectfont\bfseries\thechapter}\\[0.6em]%
+    {\Large\bfseries #2}%
+  \end{center}%
+  \vspace*{3cm}%
+  \clearpage
+}
+
+% Part divider (e.g. "PART I / PROLOGUE"). The source uses a sparse page
+% with the part name; we reproduce that sparseness instead of filling it.
+\newcommand{\partdivider}[2]{%
+  \clearpage
+  \thispagestyle{empty}%
+  \vspace*{6cm}%
+  \begin{center}%
+    {\scshape\LARGE Part #1}\\[1.2em]%
+    {\Huge\bfseries #2}%
+  \end{center}%
+  \vspace*{\fill}%
+  \clearpage
+}
+
+% Epigraph page (a short quote opening a part/chapter). Kept short and
+% centred, exactly as in the source — do not reflow following text into it.
+\newcommand{\epigraph}[2]{%
+  \clearpage
+  \thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{flushright}%
+    \begin{minipage}{0.6\textwidth}%
+      \itshape #1\par
+      \vspace{1em}%
+      {\upshape\scshape #2}%
+    \end{minipage}%
+  \end{flushright}%
+  \vspace*{\fill}%
+  \clearpage
+}
+
+% ============================================================================
+% Theorem-style environments in Spivak's voice: bold capitals label, no
+% trailing period (the book prints "THEOREM 1", not "THEOREM 1."), statement
+% in italics, proof body upright and closed with a solid box.
+% ============================================================================
+\newtheoremstyle{spivak}%        name
+  {12pt}%                        space above
+  {12pt}%                        space below
+  {\itshape}%                    body font
+  {}%                            indent
+  {\bfseries}%                   head font
+  {}%                            head punct (none)
+  {5pt}%                         space after head
+  {}%                            head spec
+
+\newtheoremstyle{spivakdef}%     name (upright body, for definitions)
+  {12pt}%
+  {12pt}%
+  {\normalfont}%
+  {}%
+  {\bfseries}%
+  {}%
+  {5pt}%
+  {}%
+
+\theoremstyle{spivak}
+\newtheorem{theorem}{THEOREM}[chapter]
+\newtheorem{lemma}{LEMMA}[chapter]
+\newtheorem{corollary}{COROLLARY}[chapter]
+\renewcommand{\thetheorem}{\arabic{theorem}}
+\renewcommand{\thelemma}{\arabic{lemma}}
+\renewcommand{\thecorollary}{\arabic{corollary}}
+
+\theoremstyle{spivakdef}
+\newtheorem{definition}{DEFINITION}[chapter]
+\renewcommand{\thedefinition}{\arabic{definition}}
+
+% Proof: Spivak prints "PROOF" in capitals (no period) and closes with a box.
+\renewcommand{\proofname}{PROOF}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\bfseries #1]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% ============================================================================
+% Properties (P1)..(P12). \prop{N} prints the label; the statement follows.
+% ============================================================================
+\newcommand{\prop}[1]{\textbf{(P#1)}}
+
+% ============================================================================
+% Problems. \pnum{<label>} typesets a problem number in bold at the left
+% margin; the label is written verbatim so starred problems read "*15.".
+% ============================================================================
+\newcommand{\pnum}[1]{%
+  \par\medskip\noindent
+  \hangindent=2.4em\hangafter=1%
+  \makebox[2.4em][l]{\textbf{#1}}%
+  \ignorespaces
+}
+
+% Sub-part lists: small roman "(i)(ii)" and letters "(a)(b)".
+\newlist{romans}{enumerate}{1}
+\setlist[romans]{label={(\roman*)},leftmargin=2.6em,itemsep=0pt,topsep=2pt}
+\newlist{letters}{enumerate}{1}
+\setlist[letters]{label={(\alph*)},leftmargin=2.6em,itemsep=0pt,topsep=2pt}

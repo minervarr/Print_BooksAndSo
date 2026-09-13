@@ -1,0 +1,16 @@
+% unit.tex — one-unit wrapper. The Makefile defines \unitname and
+% \unitmatter (\frontmatter / \mainmatter / \backmatter) before input.
+
+\RequirePackage{fix-cm}
+\documentclass[11pt,a4paper,oneside,openany]{book}
+\input{packages}
+\input{figure-style}
+\input{style}
+
+\providecommand{\unitname}{calcu5}
+\providecommand{\unitmattername}{mainmatter}
+
+\begin{document}
+\csname\unitmattername\endcsname
+\input{chapters/\unitname}
+\end{document}

@@ -1,0 +1,32 @@
+% kit/tex/figure-style.tex — how reconstructed pictures look.
+%
+% Labels, ticks and nodes use the document font. Changing the book's font
+% package (or leaving Computer Modern as the default) changes the pictures.
+% Book-specific plot cosmetics can add a named style on top of these.
+
+\usetikzlibrary{calc,arrows.meta,patterns,positioning}
+
+\tikzset{
+  reconstruction/.style={
+    line cap=round,
+    line join=round,
+    >=Stealth,
+    every node/.style={font=\normalsize},
+  },
+  reconstruction line/.style={line width=0.5pt, color=black},
+}
+
+\pgfplotsset{
+  compat=1.17,
+  reconstruction plot/.style={
+    axis lines=middle,
+    axis line style={-Stealth, black},
+    xlabel style={font=\normalsize},
+    ylabel style={font=\normalsize},
+    tick label style={font=\normalsize},
+    legend style={font=\normalsize},
+    every axis plot/.style={thick, black, mark=none},
+    scaled ticks=false,
+    clip=false,
+  },
+}

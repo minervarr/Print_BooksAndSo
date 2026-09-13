@@ -1,0 +1,25 @@
+% main.tex — master document for the reconstructed book.
+%
+% Compile from book/ (the Makefile sets TEXINPUTS to the kit):
+%   make book
+%   make unit UNIT=calcu5
+
+% fix-cm must load before the class so \fontsize{60}{...} is a real size.
+\RequirePackage{fix-cm}
+\documentclass[11pt,a4paper,oneside,openany]{book}
+\input{packages}
+\input{figure-style}
+\input{style}
+
+\begin{document}
+
+\frontmatter
+\input{chapters/calcu1}
+\input{chapters/calcu2}
+\input{chapters/calcu3}
+\input{chapters/calcu4}
+
+\mainmatter
+\input{chapters/calcu5}
+
+\end{document}

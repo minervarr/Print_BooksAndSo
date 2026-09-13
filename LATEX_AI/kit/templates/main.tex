@@ -1,0 +1,22 @@
+% kit/templates/main.tex — copy into the book's directory and list units.
+%
+% Compile from the book directory (Makefile sets TEXINPUTS to the kit).
+
+\RequirePackage{fix-cm}
+\documentclass[11pt,a4paper,oneside,openany]{book}
+\input{packages}
+\input{figure-style}
+\input{style}
+
+\begin{document}
+
+\frontmatter
+% \input{chapters/<front-unit>}
+
+\mainmatter
+% \input{chapters/<main-unit>}
+
+\backmatter
+% \input{chapters/<back-unit>}
+
+\end{document}

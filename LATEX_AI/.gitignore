@@ -1,0 +1,13 @@
+# LaTeX build artifacts. Compile from book/ into book/build/.
+build/
+book/build/
+*.aux
+*.toc
+*.out
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+__pycache__/

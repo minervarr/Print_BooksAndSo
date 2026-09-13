@@ -1,0 +1,76 @@
+% Figure 1 — three-spindle puzzle (Problem 2-26).
+% Semantic reconstruction of figures/scans/calcu5-fig1.png.
+% Oblique board with mild perspective (front a little wider than the back,
+% left edge more diagonal, right edge steeper). Four disks + spindle;
+% two empty pegs. Labels and caption are TeX.
+
+\begin{tikzpicture}[reconstruction, line cap=round, line join=round,
+  line width=0.9pt, x=1mm, y=1mm]
+
+  % Board corners — match the scan's nearly-horizontal front/back.
+  \coordinate (FL) at (0.0, 2.0);
+  \coordinate (FR) at (106.0, 6.0);
+  \coordinate (BL) at (18.0, 50.0);
+  \coordinate (BR) at (116.0, 52.5);
+
+  % Peg 2 sits on the back edge (scan: the edge is interrupted, not drawn through).
+  \def\pxtwo{70.0}
+  \def\pytwo{51.3}
+  \def\prad{5.5}
+  \def\pry{2.1}
+
+  \draw (FL) -- (FR) -- (BR);
+  \draw (FL) -- (BL);
+  \draw (BL) -- ({\pxtwo-\prad}, {\pytwo});
+  \draw ({\pxtwo+\prad}, {\pytwo}) -- (BR);
+
+  % Empty peg: opaque white, two ellipses, two generators.
+  \newcommand{\hanoipeg}[5]{% #1,#2 base centre; #3 rx; #4 ry; #5 height
+    \fill[white]
+      ({#1-#3}, {#2}) -- ({#1-#3}, {#2+#5})
+      arc[start angle=180, end angle=0, x radius=#3, y radius=#4]
+      -- ({#1+#3}, {#2})
+      arc[start angle=0, end angle=-180, x radius=#3, y radius=#4]
+      -- cycle;
+    \fill[white] ({#1}, {#2}) ellipse [x radius=#3, y radius=#4];
+    \fill[white] ({#1}, {#2+#5}) ellipse [x radius=#3, y radius=#4];
+    \draw ({#1}, {#2}) ellipse [x radius=#3, y radius=#4];
+    \draw ({#1-#3}, {#2}) -- ({#1-#3}, {#2+#5});
+    \draw ({#1+#3}, {#2}) -- ({#1+#3}, {#2+#5});
+    \draw ({#1}, {#2+#5}) ellipse [x radius=#3, y radius=#4];
+  }
+
+  % Disk: shaded cylindrical wall (light from the left, as in the scan),
+  % white top, full bottom ellipse.
+  \newcommand{\hanoidisk}[5]{% #1,#2 top centre; #3 rx; #4 ry; #5 thickness
+    \shade[left color=black!18, right color=black!38]
+      ({#1-#3}, {#2-#5}) -- ({#1-#3}, {#2})
+      arc[start angle=180, end angle=360, x radius=#3, y radius=#4]
+      -- ({#1+#3}, {#2-#5})
+      arc[start angle=360, end angle=180, x radius=#3, y radius=#4]
+      -- cycle;
+    \draw ({#1-#3}, {#2}) -- ({#1-#3}, {#2-#5});
+    \draw ({#1+#3}, {#2}) -- ({#1+#3}, {#2-#5});
+    \draw ({#1}, {#2-#5}) ellipse [x radius=#3, y radius=#4];
+    \fill[white] ({#1}, {#2}) ellipse [x radius=#3, y radius=#4];
+    \draw ({#1}, {#2}) ellipse [x radius=#3, y radius=#4];
+  }
+
+  % Peg 2 — on the rear edge, tall. Peg 3 is further right and forward;
+  % the scan leaves a clear gap between them.
+  \hanoipeg{\pxtwo}{\pytwo}{\prad}{\pry}{31}
+  \node[font=\large] at (\pxtwo, 41.5) {2};
+
+  \hanoipeg{98.0}{18.5}{\prad}{\pry}{28}
+  \node[font=\large] at (98.0, 9.5) {3};
+
+  % Stack, bottom disk first. Four rings + a short spindle (same radius as the pegs).
+  \hanoidisk{37}{24.0}{21.5}{8.0}{4.4}
+  \hanoidisk{37}{28.0}{17.4}{6.5}{4.0}
+  \hanoidisk{37}{31.6}{13.6}{5.05}{3.6}
+  \hanoidisk{37}{34.8}{10.0}{3.7}{3.2}
+  \hanoipeg{37}{34.8}{5.5}{2.1}{6.8}
+
+  \node[anchor=west, font=\normalsize, inner sep=0pt]
+    at (0, -3.0) {\textls[260]{FIGURE 1}};
+\end{tikzpicture}
