@@ -1,0 +1,12 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \draw[-Stealth] (-2.4,0) -- (3.15,0);
+  \draw[-Stealth] (0,-2.15) -- (0,2.85);
+  \foreach \x in {-2.1,-1.9,...,2.9} {
+    \fill (\x,0) circle[radius=0.9pt];
+  }
+  \foreach \t in {-2.05,-1.85,...,2.65} {
+    \fill (\t,\t) circle[radius=0.9pt];
+  }
+  \fill (0,0) circle[radius=1.3pt];
+  \node[right] at (0.55,1.15) {$f(x)=\begin{cases}x,&x\text{ rational}\\0,&x\text{ irrational}\end{cases}$};
+\end{tikzpicture}

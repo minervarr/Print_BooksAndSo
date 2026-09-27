@@ -1,0 +1,16 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (Q) at (-1.15,0);
+  \coordinate (X) at (1.05,1.15);
+  \coordinate (Drop) at (1.05,0);
+  \draw (-2.65,0) -- (3.15,0);
+  \draw (0,-1.15) -- (0,2.15);
+  \draw (-2.05,-0.48) -- (2.55,1.95);
+  \fill (Q) circle (1.7pt);
+  \node[below left, inner sep=4pt] at (Q) {$Q$};
+  \node[above right] at (2.25,1.72) {$L$};
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=2pt}] (Q) -- (X);
+  \node[above=13pt] at ($(Q)!0.5!(X)$) {$x$};
+  \draw[dashed] (X) -- (Drop);
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=2pt, mirror}] (Q) -- (Drop);
+  \node[below=11pt] at ($(Q)!0.22!(Drop)$) {$\alpha x+\beta$};
+\end{tikzpicture}

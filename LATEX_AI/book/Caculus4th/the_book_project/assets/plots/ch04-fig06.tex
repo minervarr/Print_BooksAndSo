@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.68\textwidth,
+  height=6.4cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.55, xmax=2.85,
+  ymin=-2.3, ymax=2.4,
+  axis equal image,
+]
+  \addplot[domain=-1.85:1.85, samples=2] {x};
+  \addplot[domain=-1.85:1.85, samples=2] {-x};
+  \addplot[domain=-2.15:2.15, samples=2] {0.5*x};
+  % Off the strokes: −x left of Q2; x right of Q1; x/2 below its ray.
+  \node[anchor=east] at (axis cs:-1.92,1.28) {$f(x)=-x$};
+  \node[anchor=west] at (axis cs:1.92,1.42) {$f(x)=x$};
+  \node[anchor=north west] at (axis cs:1.72,0.72) {$f(x)=\frac{x}{2}$};
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,21 @@
+\begin{tabular}{@{}c@{}}
+\begin{tikzpicture}[reconstruction, reconstruction line, baseline=(current bounding box.north)]
+  \draw (-1.35,0) -- (2.35,0);
+  \draw (0,-1.55) -- (0,2.15);
+  \draw (0,0) arc [start angle=180, end angle=0, radius=0.85];
+  \node[below] at (0.4,-1.75) {(a)};
+\end{tikzpicture}\\[1.0em]
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (X) at (1.2,0);
+  \coordinate (Ray) at ({1.7*cos(150)}, {1.7*sin(150)});
+  \coordinate (P) at ({0.85*cos(150)*cos(150)}, {0.85*cos(150)*sin(150)});
+  \draw (-1.85,0) -- (2.15,0);
+  \draw (0,-1.55) -- (0,2.15);
+  \draw (O) -- (Ray);
+  \draw (0,0) arc [start angle=180, end angle=360, radius=0.85];
+  \fill (P) circle (1.6pt);
+  \pic[draw, angle radius=7.2mm, angle eccentricity=1.65, "$\theta$"{right}] {angle=X--O--Ray};
+  \node[below] at (0.4,-1.75) {(b)};
+\end{tikzpicture}
+\end{tabular}

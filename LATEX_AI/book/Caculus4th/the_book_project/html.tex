@@ -1,0 +1,32 @@
+% html.tex — smoke master for make4ht + MathJax (front + chapters 1–8).
+% Figures: SVG from assets/rendered/ (export-figures-svg.py). Not 30 chapters.
+\documentclass[11pt,oneside,openany]{book}
+\usepackage{my_book}
+\title{Calculus, Fourth Edition}
+\author{Michael Spivak}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/title}
+\input{frontmatter/copyright}
+\input{frontmatter/contents}
+
+\mainmatter
+
+\partdivider{I}{Prologue}
+\epigraph{%
+  To be conscious that you are ignorant is a great step to knowledge.%
+}{Benjamin Disraeli}
+\input{chapters/chapter01}
+\input{chapters/chapter02}
+
+\partdivider{II}{Foundations}
+\input{chapters/chapter03}
+\input{chapters/chapter04}
+\input{chapters/chapter05}
+\input{chapters/chapter06}
+\input{chapters/chapter07}
+\input{chapters/chapter08}
+
+\end{document}

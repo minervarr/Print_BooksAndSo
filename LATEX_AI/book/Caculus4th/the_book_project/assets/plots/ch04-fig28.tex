@@ -1,0 +1,36 @@
+\begin{tabular}{@{}c@{\hspace{1.3em}}c@{}}
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.46\textwidth,
+  height=5.4cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.65, xmax=2.75,
+  ymin=-2.85, ymax=2.35,
+]
+  \addplot[dashed, domain=-2.15:2.15, samples=2] {x};
+  \addplot[dashed, domain=-2.15:2.15, samples=2] {-x};
+  \addplot[domain=-1.15:1.15, samples=40] ({1.15*cosh(x)}, {1.15*sinh(x)});
+  \addplot[domain=-1.15:1.15, samples=40] ({-1.15*cosh(x)}, {1.15*sinh(x)});
+  \node[anchor=north, inner sep=2pt] at (axis cs:0,-2.22) {%
+    $\bigl\{(x,y):\frac{x^2}{a^2}-\frac{y^2}{b^2}=1\bigr\}$};
+\end{axis}
+\end{tikzpicture}
+&
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.46\textwidth,
+  height=5.4cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.65, xmax=2.75,
+  ymin=-2.35, ymax=2.35,
+]
+  \addplot[domain=0.32:2.35, samples=40] {1/x};
+  \addplot[domain=-2.35:-0.32, samples=40] {1/x};
+  \node[anchor=south west, inner sep=2pt] at (axis cs:0.85,1.35) {$f(x)=\frac1x$};
+\end{axis}
+\end{tikzpicture}
+\\
+(a) & (b)
+\end{tabular}

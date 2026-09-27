@@ -1,0 +1,835 @@
+% chapter08.tex — Least Upper Bounds (source: ch08-least-upper-bounds.pdf).
+% Book pp. 133–146. Slice pp. 2 and 4 are swapped (135 before 134); typed in
+% book order. Appendix. Uniform Continuity is in this file after the problems.
+
+\spivakchapter{8}{Least Upper Bounds}
+
+This chapter reveals the most important property of the real numbers.
+Nevertheless, it is merely a sequel to Chapter~7; the path which must be
+followed has already been indicated, and further discussion would be useless
+delay.
+
+\begin{spivakdefn}
+A set $A$ of real numbers is \textbf{bounded above} if there is a number $x$
+such that
+\[
+x \geq a \qquad\text{for every $a$ in $A$.}
+\]
+Such a number $x$ is called an \textbf{upper bound} for $A$.
+\end{spivakdefn}
+
+Obviously $A$ is bounded above if and only if there is a number $x$ which is
+an upper bound for $A$ (and in this case there will be lots of upper bounds
+for $A$); we often say, as a concession to idiomatic English, that ``$A$ has
+an upper bound'' when we mean that there is a number which is an upper bound
+for $A$.
+
+Notice that the term ``bounded above'' has now been used in two ways---first,
+in Chapter~7, in reference to functions, and now in reference to sets. This
+dual usage should cause no confusion, since it will always be clear whether
+we are talking about a set of numbers or a function. Moreover, the two
+definitions are closely connected: if $A$ is the set $\{f(x) : a \leq x \leq b\}$,
+then the function $f$ is bounded above on $[a,b]$ if and only if the set $A$
+is bounded above.
+
+The entire collection $\mathbf{R}$ of real numbers, and the natural numbers
+$\mathbf{N}$, are both examples of sets which are \emph{not} bounded above.
+An example of a set which \emph{is} bounded above is
+\[
+A = \{x : 0 \leq x < 1\}.
+\]
+To show that $A$ is bounded above we need only name some upper bound for $A$,
+which is easy enough; for example, $138$ is an upper bound for $A$, and so are
+$2$, $1\frac{1}{2}$, $1\frac{1}{4}$, and $1$. Clearly, $1$ is the least upper
+bound of $A$; although the phrase just introduced is self-explanatory, in
+order to avoid any possible confusion (in particular, to ensure that we all
+know what the superlative of ``less'' means), we define this explicitly.
+
+\begin{spivakdefn}
+A number $x$ is a \textbf{least upper bound} of $A$ if
+\begin{align*}
+&(1) && \text{$x$ is an upper bound of $A$,}\\
+\text{and}\quad &(2) && \text{if $y$ is an upper bound of $A$, then $x \leq y$.}
+\end{align*}
+\end{spivakdefn}
+
+The use of the indefinite article ``a'' in this definition was merely a
+concession to temporary ignorance. Now that we have made a precise
+definition, it is easily seen that if $x$ and $y$ are both least upper bounds
+of $A$, then $x = y$. Indeed, in this case
+\begin{align*}
+x &\leq y, && \text{since $y$ is an upper bound, and $x$ is a least upper bound,}\\
+\text{and}\quad
+y &\leq x, && \text{since $x$ is an upper bound, and $y$ is a least upper bound;}
+\end{align*}
+it follows that $x = y$. For this reason we speak of \emph{the} least upper
+bound of $A$. The term \textbf{supremum} of $A$ is synonymous and has one
+advantage. It abbreviates quite nicely to
+\[
+\sup A \qquad\text{(pronounced ``soup $A$'')}
+\]
+and saves us from the abbreviation
+\[
+\operatorname{lub} A
+\]
+(which is nevertheless used by some authors).
+
+There is a series of important definitions, analogous to those just given,
+which can now be treated more briefly. A set $A$ of real numbers is
+\textbf{bounded below} if there is a number $x$ such that
+\[
+x \leq a \qquad\text{for every $a$ in $A$.}
+\]
+Such a number $x$ is called a \textbf{lower bound} for $A$. A number $x$ is
+the \textbf{greatest lower bound} of $A$ if
+\begin{align*}
+&(1) && \text{$x$ is a lower bound of $A$,}\\
+\text{and}\quad &(2) && \text{if $y$ is a lower bound of $A$, then $x \geq y$.}
+\end{align*}
+The greatest lower bound of $A$ is also called the \textbf{infimum} of $A$,
+abbreviated
+\[
+\inf A;
+\]
+some authors use the abbreviation
+\[
+\operatorname{glb} A.
+\]
+
+One detail has been omitted from our discussion so far---the question of
+which sets have at least one, and hence exactly one, least upper bound or
+greatest lower bound. We will consider only least upper bounds, since the
+question for greatest lower bounds can then be answered easily (Problem~2).
+
+If $A$ is not bounded above, then $A$ has no upper bound at all, so $A$
+certainly cannot be expected to have a least upper bound. It is tempting to
+say that $A$ does have a least upper bound if it has \emph{some} upper bound,
+but, like the principle of mathematical induction, this assertion can fail to
+be true in a rather special way. If $A = \emptyset$, then $A$ is bounded
+above. Indeed, any number $x$ is an upper bound for $\emptyset$:
+\[
+x \geq y \quad\text{for every $y$ in $\emptyset$}
+\]
+simply because there is no $y$ in $\emptyset$. Since \emph{every} number is
+an upper bound for $\emptyset$, there is surely no least upper bound for
+$\emptyset$. With this trivial exception however, our assertion is
+true---and very important, definitely important enough to warrant
+consideration of details. We are finally ready to state the last property of
+the real numbers which we need.
+
+\begin{quote}
+\prop{13}\ \ (The least upper bound property) If $A$ is a set of real
+numbers, $A \neq \emptyset$, and $A$ is bounded above, then $A$ has a least
+upper bound.
+\end{quote}
+
+Property P13 may strike you as anticlimactic, but that is actually one of its
+virtues. To complete our list of basic properties for the real numbers we
+require no particularly abstruse proposition, but only a property so simple
+that we might feel foolish for having overlooked it. Of course, the least
+upper bound property is not really so innocent as all that; after all, it
+does \emph{not} hold for the rational numbers $\mathbf{Q}$. For example, if
+$A$ is the set of all rational numbers $x$ satisfying $x^2 < 2$, then there
+is no \emph{rational} number $y$ which is an upper bound for $A$ and which is
+less than or equal to every other \emph{rational} number which is an upper
+bound for $A$. It will become clear only gradually how significant P13 is,
+but we are already in a position to demonstrate its power, by supplying the
+proofs which were omitted in Chapter~7.
+
+\medskip
+\noindent\textbf{THEOREM 7-1}\enspace
+\textit{If $f$ is continuous on $[a,b]$ and $f(a) < 0 < f(b)$, then there is
+some number $x$ in $[a,b]$ such that $f(x) = 0$.}
+
+\begin{proof}
+Our proof is merely a rigorous version of the outline developed at the end of
+Chapter~7---we will locate the smallest number $x$ in $[a,b]$ with $f(x) = 0$.
+
+Define the set $A$, shown in Figure~1, as follows:
+\[
+A = \{x : a \leq x \leq b,\ \text{and $f$ is negative on the interval $[a,x]$}\}.
+\]
+\begin{center}
+\figtex{assets/plots/ch08-fig01}\\[0.6em]
+\figlabel{1}
+\end{center}
+Clearly $A \neq \emptyset$, since $a$ is in $A$; in fact, there is some
+$\delta > 0$ such that $A$ contains all points $x$ satisfying
+$a \leq x < a + \delta$; this follows from Problem~6-16, since $f$ is
+continuous on $[a,b]$ and $f(a) < 0$. Similarly, $b$ is an upper bound for
+$A$ and, in fact, there is a $\delta > 0$ such that all points $x$ satisfying
+$b - \delta < x \leq b$ are upper bounds for $A$; this also follows from
+Problem~6-16, since $f(b) > 0$.
+
+From these remarks it follows that $A$ has a least upper bound $\alpha$ and
+that $a < \alpha < b$. We now wish to show that $f(\alpha) = 0$, by
+eliminating the possibilities $f(\alpha) < 0$ and $f(\alpha) > 0$.
+
+Suppose first that $f(\alpha) < 0$. By Theorem~6-3, there is a $\delta > 0$
+such that $f(x) < 0$ for $\alpha - \delta < x < \alpha + \delta$ (Figure~2).
+\begin{center}
+\figtex{assets/plots/ch08-fig02}\\[0.6em]
+\figlabel{2}
+\end{center}
+Now there is some number $x_0$ in $A$ which satisfies
+$\alpha - \delta < x_0 < \alpha$ (because otherwise $\alpha$ would not be the
+\emph{least} upper bound of $A$). This means that $f$ is negative on the
+whole interval $[a,x_0]$. But if $x_1$ is a number between $\alpha$ and
+$\alpha + \delta$, then $f$ is also negative on the whole interval
+$[x_0,x_1]$. Therefore $f$ is negative on the interval $[a,x_1]$, so $x_1$
+is in $A$. But this contradicts the fact that $\alpha$ is an upper bound for
+$A$; our original assumption that $f(\alpha) < 0$ must be false.
+
+Suppose, on the other hand, that $f(\alpha) > 0$. Then there is a number
+$\delta > 0$ such that $f(x) > 0$ for $\alpha - \delta < x < \alpha + \delta$
+(Figure~3).
+\begin{center}
+\figtex{assets/plots/ch08-fig03}\\[0.6em]
+\figlabel{3}
+\end{center}
+Once again we know that there is an $x_0$ in $A$ satisfying
+$\alpha - \delta < x_0 < \alpha$; but this means that $f$ is negative on
+$[a,x_0]$, which is impossible, since $f(x_0) > 0$. Thus the assumption
+$f(\alpha) > 0$ also leads to a contradiction, leaving $f(\alpha) = 0$ as the
+only possible alternative.
+\end{proof}
+
+The proofs of Theorems~2 and~3 of Chapter~7 require a simple preliminary
+result, which will play much the same role as Theorem~6-3 played in the
+previous proof.
+
+\begin{theorem}
+If $f$ is continuous at $a$, then there is a number $\delta > 0$ such that
+$f$ is bounded above on the interval $(a - \delta, a + \delta)$ (see
+Figure~4).
+\end{theorem}
+
+\begin{center}
+\figtex{assets/plots/ch08-fig04}\\[0.6em]
+\figlabel{4}
+\end{center}
+
+\begin{proof}
+Since $\lim_{x \to a} f(x) = f(a)$, there is, for every $\varepsilon > 0$, a
+$\delta > 0$ such that, for all $x$,
+\[
+\text{if }\abs{x - a} < \delta,\text{ then }\abs{f(x) - f(a)} < \varepsilon.
+\]
+It is only necessary to apply this statement to some particular $\varepsilon$
+(any one will do), for example, $\varepsilon = 1$. We conclude that there is
+a $\delta > 0$ such that, for all $x$,
+\[
+\text{if }\abs{x - a} < \delta,\text{ then }\abs{f(x) - f(a)} < 1.
+\]
+It follows, in particular, that if $\abs{x - a} < \delta$, then
+$f(x) - f(a) < 1$. This completes the proof: on the interval
+$(a - \delta, a + \delta)$ the function $f$ is bounded above by $f(a) + 1$.
+\end{proof}
+
+It should hardly be necessary to add that we can now also prove that $f$ is
+bounded below on some interval $(a - \delta, a + \delta)$, and, finally, that
+$f$ is bounded on some open interval containing $a$.
+
+A more significant point is the observation that if
+$\lim_{x \to a^{+}} f(x) = f(a)$, then there is a $\delta > 0$ such that $f$
+is bounded on the set $\{x : a \leq x < a + \delta\}$, and a similar
+observation holds if $\lim_{x \to b^{-}} f(x) = f(b)$. Having made these
+observations (and assuming that you will supply the proofs), we tackle our
+second major theorem.
+
+\medskip
+\noindent\textbf{THEOREM 7-2}\enspace
+\textit{If $f$ is continuous on $[a,b]$, then $f$ is bounded above on
+$[a,b]$.}
+
+\begin{proof}
+Let
+\[
+A = \{x : a \leq x \leq b\text{ and $f$ is bounded above on $[a,x]$}\}.
+\]
+Clearly $A \neq \emptyset$ (since $a$ is in $A$), and $A$ is bounded above
+(by $b$), so $A$ has a least upper bound $\alpha$. Notice that we are here
+applying the term ``bounded above'' both to the set $A$, which can be
+visualized as lying on the horizontal axis, and to $f$, i.e., to the sets
+$\{f(y) : a \leq y \leq x\}$, which can be visualized as lying on the
+vertical axis (Figure~5).
+\begin{center}
+\figtex{assets/plots/ch08-fig05}\\[0.6em]
+\figlabel{5}
+\end{center}
+
+Our first step is to prove that we actually have $\alpha = b$. Suppose,
+instead, that $\alpha < b$. By Theorem~1 there is $\delta > 0$ such that $f$
+is bounded on $(\alpha - \delta, \alpha + \delta)$. Since $\alpha$ is the
+least upper bound of $A$ there is some $x_0$ in $A$ satisfying
+$\alpha - \delta < x_0 < \alpha$. This means that $f$ is bounded on
+$[a,x_0]$. But if $x_1$ is any number with $\alpha < x_1 < \alpha + \delta$,
+then $f$ is also bounded on $[x_0,x_1]$. Therefore $f$ is bounded on
+$[a,x_1]$, so $x_1$ is in $A$, contradicting the fact that $\alpha$ is an
+upper bound for $A$. This contradiction shows that $\alpha = b$. One detail
+should be mentioned: this demonstration implicitly assumed that $a < \alpha$
+[so that $f$ would be defined on some interval
+$(\alpha - \delta, \alpha + \delta)$]; the possibility $a = \alpha$ can be
+ruled out similarly, using the existence of a $\delta > 0$ such that $f$ is
+bounded on $\{x : a \leq x < a + \delta\}$.
+
+The proof is not quite complete---we only know that $f$ is bounded on
+$[a,x]$ for every $x < b$, not necessarily that $f$ is bounded on $[a,b]$.
+However, only one small argument needs to be added.
+
+There is a $\delta > 0$ such that $f$ is bounded on
+$\{x : b - \delta < x \leq b\}$. There is $x_0$ in $A$ such that
+$b - \delta < x_0 < b$. Thus $f$ is bounded on $[a,x_0]$ and also on
+$[x_0,b]$, so $f$ is bounded on $[a,b]$.
+\end{proof}
+
+To prove the third important theorem we resort to a trick.
+
+\medskip
+\noindent\textbf{THEOREM 7-3}\enspace
+\textit{If $f$ is continuous on $[a,b]$, then there is a number $y$ in
+$[a,b]$ such that $f(y) \geq f(x)$ for all $x$ in $[a,b]$.}
+
+\begin{proof}
+We already know that $f$ is bounded on $[a,b]$, which means that the set
+\[
+\{f(x) : x\text{ in }[a,b]\}
+\]
+is bounded. This set is obviously not $\emptyset$, so it has a least upper
+bound $\alpha$. Since $\alpha \geq f(x)$ for $x$ in $[a,b]$ it suffices to
+show that $\alpha = f(y)$ for some $y$ in $[a,b]$.
+
+Suppose instead that $\alpha \neq f(y)$ for all $y$ in $[a,b]$. Then the
+function $g$ defined by
+\[
+g(x) = \frac{1}{\alpha - f(x)}, \qquad x\text{ in }[a,b]
+\]
+is continuous on $[a,b]$, since the denominator of the right side is never
+$0$. On the other hand, $\alpha$ is the least upper bound of
+$\{f(x) : x\text{ in }[a,b]\}$; this means that
+\[
+\text{for every $\varepsilon > 0$ there is $x$ in $[a,b]$ with
+$\alpha - f(x) < \varepsilon$.}
+\]
+This, in turn, means that
+\[
+\text{for every $\varepsilon > 0$ there is $x$ in $[a,b]$ with
+$g(x) > 1/\varepsilon$.}
+\]
+But \emph{this} means that $g$ is not bounded on $[a,b]$, contradicting the
+previous theorem.
+\end{proof}
+
+At the beginning of this chapter the set of natural numbers $\mathbf{N}$ was
+given as an example of an unbounded set. We are now going to \emph{prove}
+that $\mathbf{N}$ is unbounded. After the difficult theorems proved in this
+chapter you may be startled to find such an ``obvious'' theorem winding up
+our proceedings. If so, you are, perhaps, allowing the geometrical picture
+of $\mathbf{R}$ to influence you too strongly. ``Look,'' you may say, ``the
+real numbers look like
+\begin{center}
+\figtex{assets/geometric/ch08-fig00}
+\end{center}
+so every number $x$ is between two integers $n$, $n+1$ (unless $x$ is itself
+an integer).'' Basing the argument on a geometric picture is not a proof,
+however, and even the geometric picture contains an assumption: that if you
+place unit segments end-to-end you will eventually get a segment larger than
+any given segment. This axiom, often omitted from a first introduction to
+geometry, is usually attributed (not quite justly) to Archimedes, and the
+corresponding property for numbers, that $\mathbf{N}$ is not bounded, is
+called the \emph{Archimedean property} of the real numbers. This property is
+\emph{not} a consequence of P1--P12 (see reference [14] of the Suggested
+Reading), although it does hold for $\mathbf{Q}$, of course. Once we have
+P13 however, there are no longer any problems.
+
+\begin{theorem}
+$\mathbf{N}$ is not bounded above.
+\end{theorem}
+
+\begin{proof}
+Suppose $\mathbf{N}$ were bounded above. Since $\mathbf{N} \neq \emptyset$,
+there would be a least upper bound $\alpha$ for $\mathbf{N}$. Then
+\[
+\alpha \geq n \qquad\text{for all $n$ in $\mathbf{N}$.}
+\]
+Consequently,
+\[
+\alpha \geq n + 1 \qquad\text{for all $n$ in $\mathbf{N}$,}
+\]
+since $n+1$ is in $\mathbf{N}$ if $n$ is in $\mathbf{N}$. But this means that
+\[
+\alpha - 1 \geq n \qquad\text{for all $n$ in $\mathbf{N}$,}
+\]
+and \emph{this} means that $\alpha - 1$ is also an upper bound for
+$\mathbf{N}$, contradicting the fact that $\alpha$ is the least upper bound.
+\end{proof}
+
+There is a consequence of Theorem~2 (actually an equivalent formulation)
+which we have very often assumed implicitly.
+
+\begin{theorem}
+For any $\varepsilon > 0$ there is a natural number $n$ with $1/n < \varepsilon$.
+\end{theorem}
+
+\begin{proof}
+Suppose not; then $1/n \geq \varepsilon$ for all $n$ in $\mathbf{N}$. Thus
+$n \leq 1/\varepsilon$ for all $n$ in $\mathbf{N}$. But this means that
+$1/\varepsilon$ is an upper bound for $\mathbf{N}$, contradicting Theorem~2.
+\end{proof}
+
+A brief glance through Chapter~6 will show you that the result of Theorem~3
+was used in the discussion of many examples. Of course, Theorem~3 was not
+available at the time, but the examples were so important that in order to
+give them some cheating was tolerated. As partial justification for this
+dishonesty we can claim that this result was never used in the proof of a
+\emph{theorem}, but if your faith has been shaken, a review of all the proofs
+given so far is in order. Fortunately, such deception will not be necessary
+again. We have now stated every property of the real numbers that we will
+ever need. Henceforth, no more lies.
+
+\subsection*{PROBLEMS}
+
+\pnum{1.} Find the least upper bound and the greatest lower bound (if they
+exist) of the following sets. Also decide which sets have greatest and least
+elements (i.e., decide when the least upper bound and greatest lower bound
+happens to belong to the set).
+\begin{romans}
+\item $\displaystyle\left\{\frac{1}{n} : n\text{ in }\mathbf{N}\right\}$.
+\item $\displaystyle\left\{\frac{1}{n} : n\text{ in }\mathbf{Z}\text{ and }n \neq 0\right\}$.
+\item $\{x : x = 0\text{ or }x = 1/n\text{ for some $n$ in }\mathbf{N}\}$.
+\item $\{x : 0 \leq x \leq \sqrt{2}\text{ and $x$ is rational}\}$.
+\item $\{x : x^2 + x + 1 \geq 0\}$.
+\item $\{x : x^2 + x - 1 < 0\}$.
+\item $\{x : x < 0\text{ and }x^2 + x - 1 < 0\}$.
+\item $\displaystyle\left\{\frac{1}{n} + (-1)^n : n\text{ in }\mathbf{N}\right\}$.
+\end{romans}
+
+\pnum{2.}
+\begin{letters}
+\item Suppose $A \neq \emptyset$ is bounded below. Let $-A$ denote the set of
+  all $-x$ for $x$ in $A$. Prove that $-A \neq \emptyset$, that $-A$ is
+  bounded above, and that $-\sup(-A)$ is the greatest lower bound of $A$.
+\item If $A \neq \emptyset$ is bounded below, let $B$ be the set of all lower
+  bounds of $A$. Show that $B \neq \emptyset$, that $B$ is bounded above, and
+  that $\sup B$ is the greatest lower bound of $A$.
+\end{letters}
+
+\pnum{3.} Let $f$ be a continuous function on $[a,b]$ with
+$f(a) < 0 < f(b)$.
+\begin{letters}
+\item The proof of Theorem~7-1 showed that there is a smallest $x$ in
+  $[a,b]$ with $f(x) = 0$. If there is more than one $x$ in $[a,b]$ with
+  $f(x) = 0$, is there necessarily a second smallest? Show that there is a
+  largest $x$ in $[a,b]$ with $f(x) = 0$. (Try to give an easy proof by
+  considering a new function closely related to $f$.)
+\item The proof of Theorem~7-1 depended upon considering
+  $A = \{x : a \leq x \leq b$ and $f$ is negative on $[a,x]\}$. Give
+  another proof of Theorem~7-1, which depends upon consideration of
+  $B = \{x : a \leq x \leq b$ and $f(x) < 0\}$. Which point $x$ in
+  $[a,b]$ with $f(x) = 0$ will this proof locate? Give an example where the
+  sets $A$ and $B$ are not the same.
+\end{letters}
+
+\pnum{*4.}
+\begin{letters}
+\item Suppose that $f$ is continuous on $[a,b]$ and that $f(a) = f(b) = 0$.
+  Suppose also that $f(x_0) > 0$ for some $x_0$ in $[a,b]$. Prove that there
+  are numbers $c$ and $d$ with $a \leq c < x_0 < d \leq b$ such that
+  $f(c) = f(d) = 0$, but $f(x) > 0$ for all $x$ in $(c,d)$. Hint: The
+  previous problem can be used to good advantage.
+\item Suppose that $f$ is continuous on $[a,b]$ and that $f(a) < f(b)$.
+  Prove that there are numbers $c$ and $d$ with $a \leq c < d \leq b$ such
+  that $f(c) = f(a)$ and $f(d) = f(b)$ and $f(a) < f(x) < f(d)$ for all $x$
+  in $(c,d)$.
+\end{letters}
+
+\pnum{5.}
+\begin{letters}
+\item Suppose that $y - x > 1$. Prove that there is an integer $k$ such that
+  $x < k < y$. Hint: Let $l$ be the largest integer satisfying $l \leq x$,
+  and consider $l + 1$.
+\item Suppose $x < y$. Prove that there is a rational number $r$ such that
+  $x < r < y$. Hint: If $1/n < y - x$, then $ny - nx > 1$. (Query: Why have
+  parts (a) and (b) been postponed until this problem set?)
+\item Suppose that $r < s$ are rational numbers. Prove that there is an
+  irrational number between $r$ and $s$. Hint: As a start, you know that
+  there is an irrational number between $0$ and $1$.
+\item Suppose that $x < y$. Prove that there is an irrational number between
+  $x$ and $y$. Hint: It is unnecessary to do any more work; this follows from
+  (b) and (c).
+\end{letters}
+
+\pnum{*6.} A set $A$ of real numbers is said to be \textbf{dense} if every
+open interval contains a point of $A$. For example, Problem~5 shows that the
+set of rational numbers and the set of irrational numbers are each dense.
+\begin{letters}
+\item Prove that if $f$ is continuous and $f(x) = 0$ for all numbers $x$ in a
+  dense set $A$, then $f(x) = 0$ for all $x$.
+\item Prove that if $f$ and $g$ are continuous and $f(x) = g(x)$ for all $x$
+  in a dense set $A$, then $f(x) = g(x)$ for all $x$.
+\item If we assume instead that $f(x) \geq g(x)$ for all $x$ in $A$, show
+  that $f(x) \geq g(x)$ for all $x$. Can $\geq$ be replaced by $>$ throughout?
+\end{letters}
+
+\pnum{7.} Prove that if $f$ is continuous and $f(x+y) = f(x) + f(y)$ for all
+$x$ and $y$, then there is a number $c$ such that $f(x) = cx$ for all $x$.
+(This conclusion can be demonstrated simply by combining the results of two
+previous problems.) Point of information: There \emph{do} exist
+\emph{noncontinuous} functions $f$ satisfying $f(x+y) = f(x) + f(y)$ for all
+$x$ and $y$, but we cannot prove this now; in fact, this simple question
+involves ideas that are usually never mentioned in undergraduate courses
+(see reference [7] in the Suggested Reading).
+
+\pnum{*8.} Suppose that $f$ is a function such that $f(a) \leq f(b)$ whenever
+$a < b$ (Figure~6).
+\begin{center}
+\figtex{assets/plots/ch08-fig06}\\[0.6em]
+\figlabel{6}
+\end{center}
+\begin{letters}
+\item Prove that $\lim_{x \to a^{-}} f(x)$ and $\lim_{x \to a^{+}} f(x)$ both
+  exist. Hint: Why is this problem in this chapter?
+\item Prove that $f$ never has a removable discontinuity (this terminology
+  comes from Problem~6-17).
+\item Prove that if $f$ satisfies the conclusions of the Intermediate Value
+  Theorem, then $f$ is continuous.
+\end{letters}
+
+\pnum{*9.} If $f$ is a bounded function on $[0,1]$, let
+$\lvert\lvert\lvert f \rvert\rvert\rvert
+= \sup\{\abs{f(x)} : x\text{ in }[0,1]\}$.
+Prove analogues of the properties of $\lVert\,\rVert$ in Problem~7-14.
+
+\pnum{10.} Suppose $\alpha > 0$. Prove that every number $x$ can be written
+uniquely in the form $x = k\alpha + x'$, where $k$ is an integer, and
+$0 \leq x' < \alpha$.
+
+\pnum{11.}
+\begin{letters}
+\item Suppose that $a_1, a_2, a_3, \dots$ is a sequence of positive numbers
+  with $a_{n+1} \leq a_n/2$. Prove that for any $\varepsilon > 0$ there is
+  some $n$ with $a_n < \varepsilon$.
+\item Suppose $P$ is a regular polygon inscribed inside a circle. If $P'$ is
+  the inscribed regular polygon with twice as many sides, show that the
+  difference between the area of the circle and the area of $P'$ is less than
+  half the difference between the area of the circle and the area of $P$
+  (use Figure~7).
+\begin{center}
+\figtex{assets/geometric/ch08-fig07}\\[0.6em]
+\figlabel{7}
+\end{center}
+\item Prove that there is a regular polygon $P$ inscribed in a circle with
+  area as close as desired to the area of the circle. In order to do part~(c)
+  you will need part~(a). This was clear to the Greeks, who used part~(a) as
+  the basis for their entire treatment of proportion and area. By calculating
+  the areas of polygons, this method (``the method of exhaustion'') allows
+  computations of $\pi$ to any desired accuracy; Archimedes used it to show
+  that $\frac{223}{71} < \pi < \frac{22}{7}$. But it has far greater
+  theoretical importance:
+\item[*(d)] Using the fact that the areas of two regular polygons with the
+  same number of sides have the same ratio as the square of their sides,
+  prove that the areas of two circles have the same ratios as the square of
+  their radii. Hint: Deduce a contradiction from the assumption that the
+  ratio of the areas is greater, or less, than the ratio of the square of the
+  radii by inscribing appropriate polygons.
+\end{letters}
+
+\pnum{12.} Suppose that $A$ and $B$ are two nonempty sets of numbers such that
+$x \leq y$ for all $x$ in $A$ and all $y$ in $B$.
+\begin{letters}
+\item Prove that $\sup A \leq y$ for all $y$ in $B$.
+\item Prove that $\sup A \leq \inf B$.
+\end{letters}
+
+\pnum{13.} Let $A$ and $B$ be two nonempty sets of numbers which are bounded
+above, and let $A + B$ denote the set of all numbers $x + y$ with $x$ in $A$
+and $y$ in $B$. Prove that $\sup(A+B) = \sup A + \sup B$. Hint: The
+inequality $\sup(A+B) \leq \sup A + \sup B$ is easy. Why? To prove that
+$\sup A + \sup B \leq \sup(A+B)$ it suffices to prove that
+$\sup A + \sup B \leq \sup(A+B) + \varepsilon$ for all $\varepsilon > 0$;
+begin by choosing $x$ in $A$ and $y$ in $B$ with
+$\sup A - x < \varepsilon/2$ and $\sup B - y < \varepsilon/2$.
+
+\begin{center}
+\figtex{assets/geometric/ch08-fig08}\\[0.6em]
+\figlabel{8}
+\end{center}
+\pnum{14.}
+\begin{letters}
+\item Consider a sequence of closed intervals $I_1 = [a_1,b_1]$,
+  $I_2 = [a_2,b_2]$,~\dots. Suppose that $a_n \leq a_{n+1}$ and
+  $b_{n+1} \leq b_n$ for all $n$ (Figure~8). Prove that there is a point $x$
+  which is in every $I_n$.
+\item Show that this conclusion is false if we consider open intervals
+  instead of closed intervals.
+\end{letters}
+
+The simple result of Problem~14(a) is called the ``Nested Interval Theorem.''
+It may be used to give alternative proofs of Theorems~1 and~2. The
+appropriate reasoning, outlined in the next two problems, illustrates a
+general method, called a ``bisection argument.''
+
+\pnum{*15.} Suppose $f$ is continuous on $[a,b]$ and $f(a) < 0 < f(b)$. Then
+either $f((a+b)/2) = 0$, or $f$ has different signs at the end points of the
+interval $[a,(a+b)/2]$, or $f$ has different signs at the end points of
+$[(a+b)/2,b]$. Why? If $f((a+b)/2) \neq 0$, let $I_1$ be the interval on
+which $f$ changes sign. Now bisect $I_1$. Either $f$ is $0$ at the midpoint,
+or $f$ changes sign on one of the two intervals. Let $I_2$ be that interval.
+Continue in this way, to define $I_n$ for each $n$ (unless $f$ is $0$ at some
+midpoint). Use the Nested Interval Theorem to find a point $x$ where
+$f(x) = 0$.
+
+\pnum{*16.} Suppose $f$ were continuous on $[a,b]$, but not bounded on
+$[a,b]$. Then $f$ would be unbounded on either $[a,(a+b)/2]$ or
+$[(a+b)/2,b]$. Why? Let $I_1$ be one of these intervals on which $f$ is
+unbounded. Proceed as in Problem~15 to obtain a contradiction.
+
+\pnum{17.}
+\begin{letters}
+\item Let $A = \{x : x < \alpha\}$. Prove the following (they are all easy):
+\begin{romans}
+\item If $x$ is in $A$ and $y < x$, then $y$ is in $A$.
+\item $A \neq \emptyset$.
+\item $A \neq \mathbf{R}$.
+\item If $x$ is in $A$, then there is some number $x'$ in $A$ such that
+  $x < x'$.
+\end{romans}
+\item Suppose, conversely, that $A$ satisfies (i)--(iv). Prove that
+  $A = \{x : x < \sup A\}$.
+\end{letters}
+
+\pnum{*18.} A number $x$ is called an \textbf{almost upper bound} for $A$ if
+there are only finitely many numbers $y$ in $A$ with $y \geq x$. An
+\textbf{almost lower bound} is defined similarly.
+\begin{letters}
+\item Find all almost upper bounds and almost lower bounds of the sets in
+  Problem~1.
+\item Suppose that $A$ is a bounded infinite set. Prove that the set $B$ of
+  all almost upper bounds of $A$ is nonempty, and bounded below.
+\item It follows from part~(b) that $\inf B$ exists; this number is called
+  the \textbf{limit superior} of $A$, and denoted by $\varlimsup A$ or
+  $\limsup A$. Find $\varlimsup A$ for each set $A$ in Problem~1.
+\item Define $\varliminf A$, and find it for all $A$ in Problem~1.
+\end{letters}
+
+\pnum{*19.} If $A$ is a bounded infinite set prove
+\begin{letters}
+\item $\varliminf A \leq \varlimsup A$.
+\item $\varlimsup A \leq \sup A$.
+\item If $\varlimsup A < \sup A$, then $A$ contains a largest element.
+\item The analogues of parts (b) and (c) for $\varliminf$.
+\end{letters}
+
+\begin{center}
+\figtex{assets/plots/ch08-fig09}\\[0.6em]
+\figlabel{9}
+\end{center}
+\pnum{20.} Let $f$ be a continuous function on $\mathbf{R}$. A point $x$ is
+called a \textbf{shadow point} of $f$ if there is a number $y > x$ with
+$f(y) > f(x)$. The rationale for this terminology is indicated in Figure~9;
+the parallel lines are the rays of the sun rising in the east (you are facing
+north). Suppose that all points of $(a,b)$ are shadow points, but that $a$
+and $b$ are not shadow points. Clearly, $f(a) \geq f(b)$.
+\begin{letters}
+\item Suppose that $f(a) > f(b)$. Show that the point where $f$ takes on its
+  maximum value on $[a,b]$ must be $a$.
+\item Then show that this leads to a contradiction, so that in fact we must
+  have $f(a) = f(b)$.
+\end{letters}
+This little result, known as the Rising Sun Lemma, is instrumental in proving
+several beautiful theorems that do not appear in this book; see page~450.
+
+\subsection*{APPENDIX.\quad UNIFORM CONTINUITY}
+
+Now that we've come to the end of the ``foundations,'' it might be
+appropriate to slip in one further fundamental concept. This notion is not
+used crucially in the rest of the book, but it can help clarify many points
+later on.
+
+We know that the function $f(x) = x^2$ is continuous at $a$ for all $a$. In
+other words,
+\begin{quote}
+if $a$ is any number, then for every $\varepsilon > 0$ there is some
+$\delta > 0$ such that, for all $x$, if $\abs{x - a} < \delta$, then
+$\abs{x^2 - a^2} < \varepsilon$.
+\end{quote}
+Of course, $\delta$ depends on $\varepsilon$. But $\delta$ also \emph{depends
+on $a$}---the $\delta$ that works at $a$ might not work at $b$ (Figure~1).
+\begin{center}
+\figtex{assets/plots/ch08-fig10}\\[0.6em]
+\figlabel{1}
+\end{center}
+Indeed, it's clear that given $\varepsilon > 0$ there is no one $\delta > 0$
+that works for all $a$, or even for all positive $a$. In fact, the number
+$a + \delta/2$ will certainly satisfy $\abs{x - a} < \delta$, but if
+$a > 0$, then
+\[
+\abs[\bigg]{\biggl(a + \frac{\delta}{2}\biggr)^2 - a^2}
+= \abs[\bigg]{a\delta + \frac{\delta^2}{4}} \geq a\delta,
+\]
+and this won't be $< \varepsilon$ once $a > \varepsilon/\delta$. (This is
+just an admittedly confusing computational way of saying that $f$ is growing
+faster and faster!)
+
+On the other hand, for any $\varepsilon > 0$ there \emph{will} be one
+$\delta > 0$ that works for all $a$ in any interval $[-N,N]$. In fact, the
+$\delta$ which works at $N$ or $-N$ will also work everywhere else in the
+interval.
+
+As a final example, consider the function $f(x) = \sin 1/x$, or the function
+whose graph appears in Figure~18 on page~62. It is easy to see that, so long
+as $\varepsilon < 1$, there will not be one $\delta > 0$ that works for these
+functions at all points $a$ in the open interval $(0,1)$.
+
+These examples illustrate important distinctions between the behavior of
+various continuous functions on certain intervals, and there is a special
+term to signal this distinction.
+
+\begin{spivakdefn}
+The function $f$ is \textbf{uniformly continuous on an interval $A$} if for
+every $\varepsilon > 0$ there is some $\delta > 0$ such that, for all $x$ and
+$y$ in $A$,
+\[
+\text{if }\abs{x - y} < \delta,\text{ then }\abs{f(x) - f(y)} < \varepsilon.
+\]
+\end{spivakdefn}
+
+We've seen that a function can be continuous on the whole line, or on an open
+interval, without being uniformly continuous there. On the other hand, the
+function $f(x) = x^2$ did turn out to be uniformly continuous on any closed
+interval. This shouldn't be too surprising---it's the same sort of thing that
+occurs when we ask whether a function is bounded on an interval---and we
+would be led to suspect that any continuous function on a closed interval is
+also uniformly continuous on that interval. In order to prove this, we'll
+need to deal first with one subtle point.
+
+Suppose that we have two intervals $[a,b]$ and $[b,c]$ with the common
+end-point $b$, and a function $f$ that is continuous on $[a,c]$. Let
+$\varepsilon > 0$ and suppose that the following two statements hold:
+\begin{romans}
+\item if $x$ and $y$ are in $[a,b]$ and $\abs{x - y} < \delta_1$, then
+  $\abs{f(x) - f(y)} < \varepsilon$,
+\item if $x$ and $y$ are in $[b,c]$ and $\abs{x - y} < \delta_2$, then
+  $\abs{f(x) - f(y)} < \varepsilon$.
+\end{romans}
+We'd like to know if there is some $\delta > 0$ such that
+$\abs{f(x) - f(y)} < \varepsilon$ whenever $x$ and $y$ are points in $[a,c]$
+with $\abs{x - y} < \delta$. Our first inclination might be to choose
+$\delta$ as the minimum of $\delta_1$ and $\delta_2$. But it is easy to see
+what goes wrong (Figure~2): we might have $x$ in $[a,b]$ and $y$ in $[b,c]$,
+and then neither (i) nor (ii) tells us anything about $\abs{f(x) - f(y)}$.
+So we have to be a little more cagey, and also use continuity of $f$ at $b$.
+\begin{center}
+\figtex{assets/geometric/ch08-fig11}\\[0.6em]
+\figlabel{2}
+\end{center}
+
+\medskip
+\noindent\textbf{LEMMA}\enspace
+\textit{Let $a < b < c$ and let $f$ be continuous on the interval $[a,c]$.
+Let $\varepsilon > 0$, and suppose that statements \textup{(i)} and
+\textup{(ii)} hold. Then there is a $\delta > 0$ such that, if $x$ and $y$
+are in $[a,c]$ and $\abs{x - y} < \delta$, then
+$\abs{f(x) - f(y)} < \varepsilon$.}
+
+\begin{proof}
+Since $f$ is continuous at $b$, there is a $\delta_3 > 0$ such that,
+\[
+\text{if }\abs{x - b} < \delta_3,\text{ then }
+\abs{f(x) - f(b)} < \frac{\varepsilon}{2}.
+\]
+It follows that
+\begin{quote}
+(iii)\quad if $\abs{x - b} < \delta_3$ and $\abs{y - b} < \delta_3$, then
+$\abs{f(x) - f(y)} < \varepsilon$.
+\end{quote}
+Choose $\delta$ to be the minimum of $\delta_1$, $\delta_2$, and $\delta_3$.
+We claim that this $\delta$ works. In fact, suppose that $x$ and $y$ are any
+two points in $[a,c]$ with $\abs{x - y} < \delta$. If $x$ and $y$ are both in
+$[a,b]$, then $\abs{f(x) - f(y)} < \varepsilon$ by (i); and if $x$ and $y$
+are both in $[b,c]$, then $\abs{f(x) - f(y)} < \varepsilon$ by (ii). The only
+other possibility is that
+\[
+x < b < y \qquad\text{or}\qquad y < b < x.
+\]
+In either case, since $\abs{x - y} < \delta$, we also have
+$\abs{x - b} < \delta$ and $\abs{y - b} < \delta$. So
+$\abs{f(x) - f(y)} < \varepsilon$ by (iii).
+\end{proof}
+
+\setcounter{theorem}{0}
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then $f$ is uniformly continuous on
+$[a,b]$.
+\end{theorem}
+
+\begin{proof}
+It's the usual trick, but we've got to be a little bit careful about the
+mechanism of the proof. For $\varepsilon > 0$ let's say that $f$ is
+\emph{$\varepsilon$-good} on $[a,b]$ if there is some $\delta > 0$ such that,
+for all $y$ and $z$ in $[a,b]$,
+\[
+\text{if }\abs{y - z} < \delta,\text{ then }\abs{f(y) - f(z)} < \varepsilon.
+\]
+Then we're trying to prove that $f$ is $\varepsilon$-good on $[a,b]$ for all
+$\varepsilon > 0$.
+
+Consider any particular $\varepsilon > 0$. Let
+\[
+A = \{x : a \leq x \leq b\text{ and $f$ is $\varepsilon$-good on $[a,x]$}\}.
+\]
+Then $A \neq \emptyset$ (since $a$ is in $A$), and $A$ is bounded above (by
+$b$), so $A$ has a least upper bound $\alpha$. We really should write
+$\alpha_{\varepsilon}$, since $A$ and $\alpha$ might depend on $\varepsilon$.
+But we won't since we intend to prove that $\alpha = b$, no matter what
+$\varepsilon$ is.
+
+Suppose that we had $\alpha < b$. Since $f$ is continuous at $\alpha$, there
+is some $\delta_0 > 0$ such that, if $\abs{y - \alpha} < \delta_0$, then
+$\abs{f(y) - f(\alpha)} < \varepsilon/2$. Consequently, if
+$\abs{y - \alpha} < \delta_0$ and $\abs{z - \alpha} < \delta_0$, then
+$\abs{f(y) - f(z)} < \varepsilon$. So $f$ is surely $\varepsilon$-good on the
+interval $[\alpha - \delta_0, \alpha + \delta_0]$. On the other hand, since
+$\alpha$ is the least upper bound of $A$, it is also clear that $f$ is
+$\varepsilon$-good on $[a, \alpha - \delta_0]$. Then the Lemma implies that
+$f$ is $\varepsilon$-good on $[a, \alpha + \delta_0]$, so $\alpha + \delta_0$
+is in $A$, contradicting the fact that $\alpha$ is an upper bound.
+
+To complete the proof we just have to show that $\alpha = b$ is actually in
+$A$. The argument for this is practically the same: Since $f$ is continuous
+at $b$, there is some $\delta_0 > 0$ such that, if $b - \delta_0 < y < b$,
+then $\abs{f(y) - f(b)} < \varepsilon/2$. So $f$ is $\varepsilon$-good on
+$[b - \delta_0, b]$. But $f$ is also $\varepsilon$-good on
+$[a, b - \delta_0]$, so the Lemma implies that $f$ is $\varepsilon$-good on
+$[a,b]$.
+\end{proof}
+
+\subsection*{PROBLEMS}
+
+\pnum{1.}
+\begin{letters}
+\item For which of the following values of $\alpha$ is the function
+  $f(x) = x^{\alpha}$ uniformly continuous on $[0,\infty)$:
+  $\alpha = 1/3$, $1/2$, $2$, $3$?
+\item Find a function $f$ that is continuous and bounded on $(0,1]$, but not
+  uniformly continuous on $(0,1]$.
+\item Find a function $f$ that is continuous and bounded on $[0,\infty)$ but
+  which is not uniformly continuous on $[0,\infty)$.
+\end{letters}
+
+\pnum{2.}
+\begin{letters}
+\item Prove that if $f$ and $g$ are uniformly continuous on $A$, then so is
+  $f + g$.
+\item Prove that if $f$ and $g$ are uniformly continuous and bounded on $A$,
+  then $fg$ is uniformly continuous on $A$.
+\item Show that this conclusion does not hold if one of them isn't bounded.
+\item Suppose that $f$ is uniformly continuous on $A$, that $g$ is uniformly
+  continuous on $B$, and that $f(x)$ is in $B$ for all $x$ in $A$. Prove that
+  $g \circ f$ is uniformly continuous on $A$.
+\end{letters}
+
+\pnum{3.} Use a ``bisection argument'' (page~142) to give another proof of
+Theorem~1.
+
+\pnum{4.} Derive Theorem~7-2 as a consequence of Theorem~1.

@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=8.6cm,
+  height=7.2cm,
+  xtick=\empty,
+  ytick=\empty,
+  xmin=-2.4, xmax=3.6,
+  ymin=-2.6, ymax=3.15,
+]
+  \addplot[domain=0.28:3.15, samples=80] {1/x};
+  \addplot[domain=-2.15:-0.28, samples=80] {1/x};
+  \draw[dashed] (axis cs:0,1.85) -- (axis cs:3.4,1.85);
+  \node[left] at (axis cs:0,1.85) {$N$};
+  \fill (axis cs:0,0) circle[radius=1.5pt];
+  \draw (axis cs:0.55,0.08) -- (axis cs:0.55,-0.08);
+  \node[below] at (axis cs:0.55,0) {$\dfrac{1}{2N}$};
+  \node[right] at (axis cs:1.55,0.85) {$f(x)=\dfrac{1}{x}$};
+\end{axis}
+\end{tikzpicture}

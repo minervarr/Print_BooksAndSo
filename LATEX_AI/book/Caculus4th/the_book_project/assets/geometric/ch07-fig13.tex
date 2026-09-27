@@ -1,0 +1,23 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.55,0) -- (6.55,0);
+  \draw (0,-1.75) -- (0,2.85);
+  \draw[line width=0.8pt]
+    (1.05,-1.35) .. controls (1.85,-0.75) and (2.45,-0.15) .. (2.85,0.15)
+    .. controls (3.15,1.55) and (3.35,1.85) .. (3.55,1.45)
+    .. controls (3.72,1.15) and (3.85,0.55) .. (4.05,0.35);
+  \fill (1.05,-1.35) circle[radius=1.55pt];
+  \draw[line width=2.1pt, line cap=butt] (1.15,0) -- (2.55,0);
+  \draw (1.15,0.18) -- (1.15,-0.18);
+  \draw (2.55,0.18) -- (2.55,-0.18);
+  \draw (3.05,0.12) -- (3.05,-0.12);
+  \draw (5.85,0.12) -- (5.85,-0.12);
+  \node[below] at (1.15,-0.22) {$a$};
+  \node[below] at (3.05,-0.16) {$\alpha$};
+  \node[below] at (5.85,-0.16) {$b$};
+  \node[align=left, anchor=east] at (2.85,2.15)
+    {$A$ could really be\\only this big};
+  \draw[-{Stealth[length=1.8mm]}] (1.85,1.65) -- (1.85,0.22);
+  \node[align=left, anchor=west] at (3.55,-1.25)
+    {$f(x)>0$ for all $x$\\in this interval};
+  \draw[-{Stealth[length=1.8mm]}] (3.45,-0.85) -- (3.08,-0.22);
+\end{tikzpicture}

@@ -1,0 +1,20 @@
+% kit/tex/fonts.tex — the family selection for a reconstructed book.
+%
+% The capability (fontspec, unicode-math) is in packages.tex; the typeface
+% is chosen here so every build — book and standalone figures — agrees on
+% what a glyph looks like. Change the names below to re-brand a book.
+%
+% New Computer Modern (regular weight) is the classic Computer Modern look
+% re-engraved as OpenType; NewCMMath covers the glyphs this book needs
+% (blackboard R/Q, script P, bold math via version=bold).
+
+% The EPUB build (book/ebook.tex defines \ifebook) runs pdfLaTeX and Latin
+% Modern from packages.tex instead; readers substitute their own typefaces.
+% The PDF, unit and figure-standalone builds never define \ifebook, so the
+% NewCM lock-in never leaks to them.
+\ifdefined\ifebook\else
+\setmainfont{NewCM10-Regular}
+\setmonofont{NewCMMono10-Regular}
+\setmathfont{NewCMMath-Regular.otf}
+\setmathfont[version=bold]{NewCMMath-Bold.otf}
+\fi

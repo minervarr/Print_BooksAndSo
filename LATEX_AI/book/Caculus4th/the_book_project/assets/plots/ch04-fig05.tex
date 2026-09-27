@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.62\textwidth,
+  height=5.1cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.4, xmax=2.6,
+  ymin=-1.35, ymax=1.65,
+]
+  \addplot[domain=-2.15:2.15, samples=2] {1};
+  \addplot[domain=-2.15:2.15, samples=2] {-0.5};
+  % labels sit beside the horizontals, not on them (scan: Q1 / Q4)
+  \node[anchor=south west, inner sep=2pt] at (axis cs:0.22,1.14) {$f(x)=1$};
+  \node[anchor=north west, inner sep=2pt] at (axis cs:0.22,-0.64) {$f(x)=-\frac12$};
+\end{axis}
+\end{tikzpicture}

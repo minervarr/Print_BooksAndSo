@@ -1,0 +1,11 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \draw (3.9,-0.55) -- (3.9,2.35);
+  \foreach \x in {0,0.12,...,9.0} {
+    \fill (\x,0) circle (0.58pt);
+  }
+  \foreach \x in {0,0.16,...,8.7} {
+    \fill (\x,1.15) circle (0.72pt);
+  }
+  \node[anchor=south west] at (4.15,1.55) {%
+    $f(x)=\begin{cases}1,&x\text{ rational}\\0,&x\text{ irrational}\end{cases}$};
+\end{tikzpicture}

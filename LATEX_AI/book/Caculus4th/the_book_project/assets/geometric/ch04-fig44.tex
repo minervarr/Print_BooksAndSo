@@ -1,0 +1,27 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \def\H{2.20}
+  \def\Rx{1.15}
+  \def\Ry{0.32}
+  % plane parallelogram (behind / through)
+  \fill[white] (-2.05,0.55) -- (0.15,1.85) -- (2.55,0.55) -- (0.35,-0.75) -- cycle;
+  \draw (-2.05,0.55) -- (0.15,1.85) -- (2.55,0.55) -- (0.35,-0.75) -- cycle;
+  % cone
+  \fill[white] (-\Rx,\H) -- (\Rx,-\H) -- (\Rx,\H) -- (-\Rx,-\H) -- cycle;
+  \draw (-\Rx,\H) -- (\Rx,-\H);
+  \draw (\Rx,\H) -- (-\Rx,-\H);
+  \fill[white] (0,\H) ellipse ({\Rx} and {\Ry});
+  \draw (0,\H) ellipse ({\Rx} and {\Ry});
+  \fill[white] (0,-\H) ellipse ({\Rx} and {\Ry});
+  \draw (0,-\H) ellipse ({\Rx} and {\Ry});
+  % intersection ellipse (tilted), hidden back dashed
+  \begin{scope}
+    \clip (-2.2,-0.2) rectangle (2.6,2.4);
+    \draw[dashed] (0.05,0.95) ellipse [x radius=0.82, y radius=0.22, rotate=28];
+  \end{scope}
+  \begin{scope}
+    \clip (-2.2,0.95) rectangle (2.6,-2.5);
+    \draw (0.05,0.95) ellipse [x radius=0.82, y radius=0.22, rotate=28];
+  \end{scope}
+  \node[above right] at (1.15,1.95) {cone};
+  \node[below right] at (1.55,0.15) {plane $P$};
+\end{tikzpicture}

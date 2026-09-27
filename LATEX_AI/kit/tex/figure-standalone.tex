@@ -2,13 +2,14 @@
 % packages and figure style the book uses, so fonts match.
 %
 % Invoke from the book's directory:
-%   pdflatex '\def\figfile{figures/geometric/foo.tex}\input{figure-standalone}'
+%   lualatex '\def\figfile{figures/geometric/foo.tex}\input{figure-standalone}'
 %
 % \figfile is a body-only tikzpicture (or axis). Do not wrap it in
 % \includegraphics of a pre-rendered PDF: that would freeze the font.
 
 \documentclass[tikz,border=2mm]{standalone}
 \input{packages}
+\input{fonts}
 \input{figure-style}
 \begin{document}
 \input{\figfile}

@@ -1,0 +1,13 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1.05cm]
+  \fill[black!18] (-4.05,-0.16) rectangle (-0.12,0.16);
+  \fill[black!18] (0.12,-0.16) rectangle (4.05,0.16);
+  \draw (-4.2,0) -- (4.2,0);
+  \draw (-2.05,0.28) -- (-2.05,-0.28);
+  \draw (2.05,0.28) -- (2.05,-0.28);
+  \node[below] at (-2.05,-0.32) {$l$};
+  \node[below] at (2.05,-0.32) {$m$};
+  \draw (-2.05,-0.92) to[bend right=22] (-1.08,-1.22) to[bend right=22] (-0.12,-0.92);
+  \draw (0.12,-0.92) to[bend right=22] (1.08,-1.22) to[bend right=22] (2.05,-0.92);
+  \node[below] at (-1.08,-1.38) {length $\frac{\abs{l-m}}{2}$};
+  \node[below] at (1.08,-1.38) {length $\frac{\abs{l-m}}{2}$};
+\end{tikzpicture}

@@ -1,0 +1,41 @@
+\begin{tabular}{@{}ccc@{}}
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.72cm, y=0.72cm]
+  \draw (-0.55,0) -- (3.55,0);
+  \draw (0,-0.7) -- (0,3.15);
+  \draw[-{Stealth[length=1.8mm]}]
+    (-0.35,-0.28) .. controls (0.55,0.05) and (1.15,0.55) .. (1.72,1.15);
+  \fill (1.95,1.72) circle[radius=1.45pt];
+  \draw[-{Stealth[length=1.8mm]}]
+    (3.25,2.85) .. controls (2.75,2.35) and (2.35,1.95) .. (2.12,1.62);
+  \draw (1.95,0.12) -- (1.95,-0.12);
+  \node[below] at (1.95,-0.14) {$a$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.72cm, y=0.72cm]
+  \draw (-0.55,0) -- (3.55,0);
+  \draw (0,-0.7) -- (0,3.15);
+  \draw[-{Stealth[length=1.8mm]}]
+    (-0.35,-0.35) .. controls (0.45,-0.05) and (1.05,0.35) .. (1.72,0.85);
+  \fill (1.95,1.35) circle[radius=1.45pt];
+  \draw (1.95,1.35) .. controls (2.45,1.75) and (2.95,2.25) .. (3.35,2.75);
+  \draw (1.95,0.12) -- (1.95,-0.12);
+  \node[below] at (1.95,-0.14) {$a$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.72cm, y=0.72cm]
+  \draw (-0.55,0) -- (3.85,0);
+  \draw (0,-0.7) -- (0,3.15);
+  \draw[-{Stealth[length=1.8mm]}]
+    (-0.35,-0.32) .. controls (0.55,0.05) and (1.15,0.45) .. (1.72,0.92);
+  \fill (1.95,1.55) circle[radius=1.45pt];
+  \draw plot[smooth, tension=0.35] coordinates {
+    (2.08,2.45) (2.16,0.55) (2.24,2.35) (2.32,0.65)
+    (2.42,2.15) (2.55,0.85) (2.72,1.95) (2.95,1.15)
+    (3.18,1.85) (3.42,1.55)
+  };
+  \draw (1.95,0.12) -- (1.95,-0.12);
+  \node[below] at (1.95,-0.14) {$a$};
+\end{tikzpicture}
+\\[0.35em]
+(a) & (b) & (c)
+\end{tabular}

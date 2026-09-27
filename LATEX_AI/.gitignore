@@ -1,6 +1,12 @@
-# LaTeX build artifacts. Compile from book/ into book/build/.
+# LaTeX aux (keep named share PDFs out of git too — they are build products).
 build/
 book/build/
+book/Caculus4th/the_book_project/build/
+book/Caculus4th/pdf/*.pdf
+book/Caculus4th/html/*
+!book/Caculus4th/html/README.md
+book/Caculus4th/sources/chapters/
+book/Caculus4th/the_book_project/assets/ai-preview/*.jpg
 *.aux
 *.toc
 *.out

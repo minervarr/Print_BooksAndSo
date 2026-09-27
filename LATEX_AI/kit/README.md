@@ -1,70 +1,37 @@
 # Reconstruction kit
 
-Copy this `kit/` directory next to a new book. It does not know the author.
-The book folder holds the author's voice (`style.tex`), the chapters, and
-the figures.
+Reusable tools. A book folder holds voice (`my_book.sty`), chapters, and
+figures. Copy `kit/` next to a new title; do not fork the scripts inside
+the book except as a thin shim.
 
-## Layout of a new book
+## Tools (`kit/tools/`)
 
-```
-<project>/
-  kit/                 this directory
-  book/
-    style.tex          author identity (theorems, openers, lists)
-    main.tex           \frontmatter / \mainmatter / \backmatter + \input units
-    unit.tex           one-unit wrapper (copy kit/templates/unit.tex)
-    Makefile           include ../kit/make/latex.mk; set FRONT MAIN BACK
-    chapters/<slug>N.tex
-    figures/geometric/ semantic TikZ
-    figures/plots/     pgfplots (expression or .dat)
-    figures/scans/     reference crops, not shipped
-  sources/
-    original.pdf
-    <slug>N.pdf        one scan per unit; no number = 0
-```
-
-Start from `kit/templates/`.
-
-## Figures (three kinds)
-
-| Kind | How | Fonts |
-|---|---|---|
-| Function graph | pgfplots, `reconstruction plot` style, expression or table | ticks/labels are TeX |
-| Geometric line art | hand TikZ, `reconstruction` style, `\node` for numbers | nodes are TeX |
-| Unique ink | last resort: `\includegraphics` of a crop, or `tools/trace_figure.py` | will **not** follow the book font |
-
-Do not trace lettering. Captions (`FIGURE 1`) are TeX. A picture is
-`\input` into the chapter, never a pre-rendered PDF, so a preface/style
-font change rebuilds the labels.
-
-Standalone review (same packages, same style):
+| Script | What |
+|---|---|
+| `crop-scan.py` | Crop one **FIGURE** from a scan PDF → `scans/chNN-figMM.png` |
+| `figure_render.py` | Shared compile (TikZ → PDF) plus JPEG/SVG writers |
+| `preview-figures.py` | TikZ + FreeCAD SVG → 300 dpi JPEG in `ai-preview/` (AI only, not the book) |
+| `export-figures-svg.py` | TikZ → `assets/rendered/<stem>.svg` for HTML (skip if up to date) |
+| `design-figures.sh` | Run every `assets/generators/*.py` through FreeCAD |
 
 ```
-make figures          # from the book directory
+python3 kit/tools/crop-scan.py --pdf BOOK.pdf --scans book/.../scans \
+  --page 55 --x 24 --y 618 --width 242 --height 228 --name ch02-fig01
+
+python3 kit/tools/preview-figures.py --assets book/.../assets
+python3 kit/tools/preview-figures.py --assets book/.../assets ch04-fig07
+python3 kit/tools/export-figures-svg.py --assets book/.../assets
+python3 kit/tools/export-figures-svg.py --assets book/.../assets ch04-fig07
 ```
 
-## Tools
+Coordinates for `crop-scan` are 72 dpi, origin top-left (`pdftoppm -r 72`).
 
-```
-tools/extract_figure.py SOURCE.pdf PAGE OUT.png     # look at a page
-tools/extract_figure.py SOURCE.pdf PAGE prefix --pdfimages
-tools/trace_figure.py IN.png OUT.tex --method centerline   # last-resort line art
-tools/validate_figure.py ORIG.png PAGE.pdf [PAGE]          # structural IoU
-```
+## TeX (`kit/tex/`)
 
-Pixel IoU is a check, not the ship criterion. Beauty and font inheritance
-beat a photocopy of the scan.
+`figure-style.tex` — `reconstruction` / `reconstruction plot` (black line art).
+`fonts.tex` / `packages.tex` / `figure-standalone.tex` — starting point for a
+new title; this Calculus book inlines the styles in `my_book.sty`.
 
-## Build
-
-From the book directory:
-
-```
-make book                 # build/book.pdf
-make units                # build/units/<name>.pdf for every listed unit
-make unit UNIT=<name>
-make figures
-```
-
-Unit PDFs restart at page 1 (roman in front matter, arabic otherwise).
-The combined book is the only running sequence.
+No EPUB. No Makefile. The book’s `build.py` is the front door. HTML for
+a title is `make4ht` + MathJax from that book’s `build.py html`, not a
+kit ebook pipeline.

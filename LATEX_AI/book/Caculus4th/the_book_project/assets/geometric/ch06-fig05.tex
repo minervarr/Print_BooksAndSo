@@ -1,0 +1,25 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.55,0) -- (5.15,0);
+  \draw (0,-1.15) -- (0,3.55);
+  \draw[dashed] (-0.15,3.05) -- (5.15,3.05);
+  \draw[dashed] (-0.15,2.05) -- (5.15,2.05);
+  \draw[dashed] (-0.15,1.05) -- (5.15,1.05);
+  \node[left] at (-0.12,3.05) {$f(a)+\varepsilon=\tfrac32 f(a)$};
+  \node[left] at (-0.12,2.05) {$f(a)$};
+  \node[left] at (-0.12,1.05) {$f(a)-\varepsilon=\tfrac12 f(a)$};
+  \draw[line width=0.8pt]
+    (2.15,-1.05) .. controls (2.28,0.35) and (2.42,3.15) .. (2.62,2.95)
+    .. controls (2.78,2.78) and (2.95,2.15) .. (3.22,2.05)
+    .. controls (3.42,1.95) and (3.55,2.15) .. (3.72,1.85)
+    .. controls (3.95,1.45) and (4.15,0.15) .. (4.55,-0.85);
+  \fill (3.22,2.05) circle[radius=1.55pt];
+  \node[above right] at (3.38,2.12) {$f$};
+  \draw (2.55,0.12) -- (2.55,-0.12);
+  \draw (3.22,0.12) -- (3.22,-0.12);
+  \draw (3.95,0.12) -- (3.95,-0.12);
+  \node[below left] at (2.55,-0.22) {$a-\delta$};
+  \draw[-{Stealth[length=1.6mm]}] (2.15,-0.55) -- (2.52,-0.18);
+  \node[below] at (3.22,-0.14) {$a$};
+  \node[below right] at (3.95,-0.22) {$a+\delta$};
+  \draw[-{Stealth[length=1.6mm]}] (4.35,-0.55) -- (3.98,-0.18);
+\end{tikzpicture}

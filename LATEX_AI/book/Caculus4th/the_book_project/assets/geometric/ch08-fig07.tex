@@ -1,0 +1,20 @@
+% One side of inscribed $P$, and two sides of $P'$ with twice as many sides.
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \def\R{4.15}
+  \def\ang{24}
+  \coordinate (O) at (0,0);
+  \coordinate (A) at ({\R*cos(\ang)}, {\R*sin(\ang)});
+  \coordinate (B) at ({\R*cos(\ang)}, {-\R*sin(\ang)});
+  \coordinate (M) at (\R, 0);
+  \draw ({\R*cos(62)}, {\R*sin(62)}) arc[start angle=62, end angle=-62, radius=\R];
+  \draw (O) -- (A);
+  \draw (O) -- (B);
+  \draw (A) -- (B);
+  \draw (A) -- (M) -- (B);
+  \draw[dashed] (O) -- (M);
+  \node at (1.95,0.58) {\small one side of $P$};
+  \draw[->] (3.12,0.50) -- ($($(A)!0.5!(B)$)+(-0.12,0.08)$);
+  \node at (1.95,-0.70) {\small sides of $P'$};
+  \draw[->] (3.20,-0.52) -- ($(A)!0.62!(M)$);
+  \draw[->] (3.20,-0.88) -- ($(B)!0.55!(M)$);
+\end{tikzpicture}

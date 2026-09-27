@@ -1,0 +1,16 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (L) at (-2.15,0);
+  \coordinate (R) at (2.15,0);
+  \coordinate (P) at (1.05,1.65);
+  \draw (-2.85,0) -- (2.85,0);
+  \draw (0,-1.15) -- (0,2.15);
+  \fill (L) circle (1.6pt);
+  \fill (R) circle (1.6pt);
+  \fill (P) circle (1.6pt);
+  \draw (L) -- (P) -- (R);
+  \node[below] at (L) {$(-a,0)$};
+  \node[below] at (R) {$(a,0)$};
+  \node[above right] at (P) {$P$};
+  \node[above=5pt] at ($(L)!0.42!(P)$) {$d_1$};
+  \node[above right] at ($(P)!0.5!(R)$) {$d_2$};
+\end{tikzpicture}

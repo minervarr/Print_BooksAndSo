@@ -1,0 +1,63 @@
+\begin{tabular}{@{}ccc@{}}
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw plot[smooth] coordinates {(-0.55,0.28) (0.15,0.48) (0.7,0.7) (1.2,1.05) (1.75,1.55)};
+  \node[right] at (1.55,1.55) {$f$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw[-Stealth] plot[smooth] coordinates {(-0.55,0.28) (0.15,0.48) (0.7,0.7) (1.05,0.95)};
+  \draw[Stealth-] plot[smooth] coordinates {(1.38,1.18) (1.75,1.55)};
+  \node[right] at (1.55,1.55) {$g$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw[-Stealth] plot[smooth] coordinates {(-0.45,-0.22) (0.1,0.35) (0.7,0.72) (1.05,0.95)};
+  \draw[Stealth-] plot[smooth] coordinates {(1.38,1.18) (1.75,1.55)};
+  \fill (0.95,1.22) circle[radius=1.5pt];
+  \node[right] at (1.55,1.55) {$h$};
+\end{tikzpicture}
+\\[0.85em]
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw plot[smooth] coordinates {(-0.55,0.28) (0.15,0.48) (0.7,0.7) (1.2,1.05)};
+  \fill (1.2,1.05) circle[radius=1.5pt];
+  \draw[Stealth-] plot[smooth] coordinates {(1.42,1.28) (1.75,1.58)};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw[-Stealth] plot[smooth] coordinates {(-0.5,0.12) (0.15,0.32) (0.75,0.72) (1.02,0.95)};
+  \draw plot[smooth] coordinates {
+    (1.08,1.02) (1.14,1.48) (1.22,0.62) (1.30,1.52) (1.38,0.58)
+    (1.46,1.48) (1.54,0.62) (1.62,1.42) (1.72,1.55)
+  };
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.92]
+  \draw (-0.7,0) -- (2.05,0);
+  \draw (0,-0.55) -- (0,1.85);
+  \draw (1.2,0.08) -- (1.2,-0.08) node[below] {$a$};
+  \draw (0.08,1.05) -- (-0.08,1.05) node[left] {$l$};
+  \draw plot[smooth] coordinates {(-0.45,-0.22) (0.15,0.28) (0.7,0.62) (1.2,1.05) (1.75,1.55)};
+  \draw[dashed] (0,1.05) -- (1.2,1.05);
+  \draw[dashed] (1.2,0) -- (1.2,1.05);
+\end{tikzpicture}
+\end{tabular}

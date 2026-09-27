@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.78\textwidth,
+  height=7.2cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.15, xmax=2.85,
+  ymin=-2.35, ymax=3.55,
+]
+  \addplot[domain=-2:2.35, samples=2] {x};
+  \addplot[dashed, domain=-1.55:1.55, samples=70] {x^2};
+  \addplot[domain=-1.35:1.45, samples=80] {x^3};
+  \addplot[dashed, domain=-1.35:1.35, samples=70] {x^4};
+  \fill (axis cs:1,1) circle (1.5pt);
+  \fill (axis cs:-1,1) circle (1.5pt);
+  \fill (axis cs:-1,-1) circle (1.5pt);
+  \node[anchor=east, inner sep=5pt] at (axis cs:-1.08,1.08) {$(-1,1)$};
+  \node[anchor=north west, inner sep=3pt] at (axis cs:1.05,0.92) {$(1,1)$};
+  \node[anchor=east, inner sep=4pt] at (axis cs:-1,-1) {$(-1,-1)$};
+  \node[anchor=east] at (axis cs:0.72,2.72) {$f(x)=x^3$};
+  \node[anchor=west] at (axis cs:1.72,2.85) {$f(x)=x^2$};
+  \node[anchor=south] at (axis cs:0.42,1.72) {$f(x)=x^4$};
+  \node[anchor=north west] at (axis cs:2.15,1.92) {$f(x)=x$};
+\end{axis}
+\end{tikzpicture}

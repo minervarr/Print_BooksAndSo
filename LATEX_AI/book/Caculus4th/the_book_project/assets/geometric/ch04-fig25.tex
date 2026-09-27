@@ -1,0 +1,13 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1.05cm, y=1.05cm]
+  \draw (-0.7,0) -- (6.4,0);
+  \draw (0,-0.55) -- (0,4.55);
+  \coordinate (C) at (3.35,2.15);
+  \fill (C) circle (1.4pt);
+  \draw[thick] (C) circle [radius=1.55];
+  \coordinate (P) at ($(C)+(140:1.55)$);
+  \fill (P) circle (1.4pt);
+  \draw[-Stealth, thick] (C) -- (P);
+  \node[below right] at (C) {$(a,b)$};
+  \node[above left] at (P) {$(x,y)$};
+  \node at ($(C)!0.52!(P) + (0.28,0.22)$) {$r$};
+\end{tikzpicture}

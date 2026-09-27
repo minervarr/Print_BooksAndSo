@@ -1,0 +1,14 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (4.35,0);
+  \coordinate (W) at (1.15,1.85);
+  \coordinate (S) at ($(V)+(W)$);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.55, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (W)
+    node[pos=0.55, left] {$w$};
+  \draw (W) -- (S) -- (V);
+  \draw[dashed] (W) -- (1.15,0);
+  \node[right] at (1.15,0.95) {$\lVert w\rVert\cdot\sin\theta$};
+  \pic[draw, angle radius=5.5mm, angle eccentricity=1.45, "$\theta$"] {angle=V--O--W};
+\end{tikzpicture}

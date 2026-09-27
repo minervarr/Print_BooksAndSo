@@ -1,0 +1,20 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.7,0) -- (6.35,0);
+  \draw (0,-2.15) -- (0,3.55);
+  \draw[dashed] (0,3.15) -- (6.35,3.15);
+  \node[left] at (0,3.15) {$N$};
+  \draw[line width=0.8pt]
+    (1.25,0.55) .. controls (1.45,0.35) and (1.52,-0.35) .. (1.72,-0.22)
+    .. controls (1.95,1.55) and (2.05,1.85) .. (2.25,1.55)
+    .. controls (2.45,-1.15) and (2.55,-1.35) .. (2.85,-0.95)
+    .. controls (3.15,2.85) and (3.25,2.95) .. (3.55,2.45)
+    .. controls (3.85,-2.05) and (4.05,-2.15) .. (4.35,-1.65)
+    .. controls (4.75,3.05) and (5.05,3.05) .. (5.35,2.75)
+    .. controls (5.55,2.55) and (5.65,1.85) .. (5.95,1.55);
+  \fill (1.25,0.55) circle[radius=1.55pt];
+  \fill (5.95,1.55) circle[radius=1.55pt];
+  \draw (1.25,0.12) -- (1.25,-0.12);
+  \draw (5.95,0.12) -- (5.95,-0.12);
+  \node[below] at (1.25,-0.14) {$a$};
+  \node[below] at (5.95,-0.14) {$b$};
+\end{tikzpicture}

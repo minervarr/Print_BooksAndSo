@@ -1,0 +1,26 @@
+% Set $A$ on the $x$-axis; $\{f(y):a\leq y\leq x\}$ on the $y$-axis.
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.95cm, y=0.72cm]
+  \draw (0,-0.35) -- (0,4.55);
+  \draw (-0.45,0) -- (6.15,0);
+  \draw (1.25,0.14) -- (1.25,-0.14);
+  \draw (2.85,0.14) -- (2.85,-0.14);
+  \draw (5.55,0.14) -- (5.55,-0.14);
+  \node[below] at (1.25,-0.16) {$a$};
+  \node[below] at (2.85,-0.16) {$x$};
+  \node[below] at (5.55,-0.16) {$b$};
+  \draw[line width=1.7pt] (1.25,0) -- (2.85,0);
+  \node[above] at (2.05,0.06) {$A$};
+  \draw[thick] plot[smooth, tension=0.7] coordinates {
+    (1.25,0.70) (1.85,1.15) (2.45,1.95) (2.85,2.85) (3.15,4.45)
+  };
+  \draw[thick] plot[smooth, tension=0.7] coordinates {
+    (3.45,4.45) (3.85,2.85) (4.55,1.85) (5.35,1.55)
+  };
+  \fill (1.25,0.70) circle[radius=1.5pt];
+  \fill (5.35,1.55) circle[radius=1.5pt];
+  \draw[dashed] (2.85,0) -- (2.85,2.85);
+  \draw[dashed] (0,2.85) -- (2.85,2.85);
+  \draw[line width=2.1pt] (0,0.70) -- (0,2.85);
+  \node[left, align=right] at (-0.12,1.75)
+    {\small $\{f(y):a\leq y\leq x\}$};
+\end{tikzpicture}

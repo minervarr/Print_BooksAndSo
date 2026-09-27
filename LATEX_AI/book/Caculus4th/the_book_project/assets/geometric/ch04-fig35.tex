@@ -1,0 +1,14 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.25,0.70);
+  \coordinate (S) at (3.20,2.40);
+  \draw (-1.45,0) -- (2.85,0);
+  \draw (0,-0.55) -- (0,2.65);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.62, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (V) -- (S)
+    node[pos=0.55, right] {``$w$''};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (S)
+    node[pos=0.48, above left] {$v+w$};
+\end{tikzpicture}

@@ -1,0 +1,24 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \def\H{2.35}
+  \def\Rx{1.35}
+  \def\Ry{0.38}
+  \draw (-2.85,0) -- (3.35,0);
+  \draw (0,-\H-0.55) -- (0,\H+0.85);
+  % cone body (white) then rims
+  \fill[white] (-\Rx,\H) -- (\Rx,-\H) -- (\Rx,\H) -- (-\Rx,-\H) -- cycle;
+  \draw (-\Rx,\H) -- (\Rx,-\H);
+  \draw (\Rx,\H) -- (-\Rx,-\H);
+  \fill[white] (0,\H) ellipse ({\Rx} and {\Ry});
+  \draw (0,\H) ellipse ({\Rx} and {\Ry});
+  \fill[white] (0,-\H) ellipse ({\Rx} and {\Ry});
+  \draw (0,-\H) ellipse ({\Rx} and {\Ry});
+  % generating line of slope C, through origin, slightly to the right of the right generator
+  \draw (-1.55,-1.85) -- (2.15,2.55);
+  \node[right, inner sep=3pt] at (2.15,2.55) {slope $C$};
+  \draw (-2.85,0) -- (3.35,0);
+  \draw (0,-\H-0.55) -- (0,\H+0.85);
+  \fill (1.05,1.25) circle (1.5pt);
+  \node[right] at (1.12,1.25) {$(x,y,z)$};
+  \fill (1.55,0) circle (1.5pt);
+  \node[below right] at (1.55,0) {$(x,y,0)$};
+\end{tikzpicture}

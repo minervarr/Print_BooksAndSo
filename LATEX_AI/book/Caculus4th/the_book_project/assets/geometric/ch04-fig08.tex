@@ -1,0 +1,20 @@
+\usetikzlibrary{decorations.pathreplacing}
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1.05cm, y=1.05cm]
+  \draw (-0.7,0) -- (6.9,0);
+  \draw (0,-0.55) -- (0,4.35);
+  \coordinate (P) at (2.15,1.35);
+  \coordinate (Q) at (5.55,3.35);
+  \coordinate (R) at (5.55,1.35);
+  \draw[thick] (P) -- (Q) -- (R) -- cycle;
+  \fill (P) circle (1.45pt);
+  \fill (Q) circle (1.45pt);
+  \draw (R) ++(-0.22,0) -- ++(0,0.22) -- ++(0.22,0);
+  \node[left, inner sep=3pt] at (P) {$(a,b)$};
+  \node[above right, inner sep=3pt] at (Q) {$(c,d)$};
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=3pt}]
+    (R) -- (P);
+  \node[below] at (3.85,1.12) {length $c-a$};
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=3pt}]
+    (Q) -- (R);
+  \node[right] at (5.85,2.35) {length $d-b$};
+\end{tikzpicture}

@@ -1,0 +1,8 @@
+% Nested closed intervals $I_n=[a_n,b_n]$.
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1.05cm]
+  \draw (0,0) -- (8.6,0);
+  \foreach \x/\lab in {0/a_1, 1.55/a_2, 3.05/a_3, 5.95/b_3, 7.25/b_2, 8.6/b_1} {
+    \draw (\x,0.20) -- (\x,-0.20);
+    \node[below] at (\x,-0.20) {$\lab$};
+  }
+\end{tikzpicture}

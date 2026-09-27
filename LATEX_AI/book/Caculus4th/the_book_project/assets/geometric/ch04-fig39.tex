@@ -1,0 +1,15 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.15,0.85);
+  \coordinate (R) at (1.35,1.85);
+  \draw (-0.85,0) -- (2.75,0);
+  \draw (0,-0.45) -- (0,2.45);
+  \draw[dashed] (O) -- (V);
+  \draw[dashed] (O) -- (R);
+  \fill (V) circle (1.6pt);
+  \fill (R) circle (1.6pt);
+  \node[right] at (V) {$v$};
+  \node[above right] at (R) {$R_{\theta}(v)$};
+  \pic[draw, -{Stealth[length=1.6mm, width=1.3mm]}, angle radius=7.2mm,
+       angle eccentricity=1.35, "$\theta$"] {angle=V--O--R};
+\end{tikzpicture}

@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  ticks=none,
+  xmin=-1.2, xmax=7.4,
+  ymin=-3.2, ymax=20.5,
+  width=8.4cm, height=7.2cm,
+]
+  \addplot[domain=-0.9:6.4, samples=20] {3*x};
+  \draw[dashed] (0,13.2) -- (6.6,13.2);
+  \draw[dashed] (0,16.8) -- (6.6,16.8);
+  \draw[line width=2.6pt] (0,13.2) -- (0,16.8);
+  \draw[line width=2.2pt] (4.4,13.2) -- (5.6,16.8);
+  \draw (5,0.22) -- (5,-0.22);
+  \node[below] at (5,-0.22) {$5$};
+  \draw[-Stealth] (1.35,17.6) to[bend left=18] (0.22,15.1);
+  \node[left] at (1.35,17.7) {$15$};
+  \node[right] at (5.55,9.2) {$f(x)=3x$};
+\end{axis}
+\end{tikzpicture}

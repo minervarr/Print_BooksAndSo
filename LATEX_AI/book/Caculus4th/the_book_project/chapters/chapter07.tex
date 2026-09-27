@@ -1,0 +1,711 @@
+% chapter07.tex — Three Hard Theorems
+% Source: sources/chapters/ch07-three-hard-theorems.pdf (book pp. 122–132).
+% Chapter-PDF leaves 127/128 and 131/132 are swapped; transcribed in book order.
+
+\spivakchapter{7}{Three Hard Theorems}
+
+This chapter is devoted to three theorems about continuous functions, and some
+of their consequences. The proofs of the three theorems themselves will not be
+given until the next chapter, for reasons which are explained at the end of this
+chapter.
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$ and $f(a)<0<f(b)$, then there is some $x$ in
+$[a,b]$ such that $f(x)=0$.
+\end{theorem}
+
+(Geometrically, this means that the graph of a continuous function which starts
+below the horizontal axis and ends above it must cross this axis at some point,
+as in Figure~1.)
+\begin{center}
+\figtex{assets/geometric/ch07-fig01}\\[0.6em]
+\figlabel{1}
+\end{center}
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then $f$ is bounded above on $[a,b]$, that is,
+there is some number $N$ such that $f(x)\leq N$ for all $x$ in $[a,b]$.
+\end{theorem}
+
+(Geometrically, this theorem means that the graph of $f$ lies below some line
+parallel to the horizontal axis, as in Figure~2.)
+\begin{center}
+\figtex{assets/geometric/ch07-fig02}\\[0.6em]
+\figlabel{2}
+\end{center}
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then there is some number $y$ in $[a,b]$ such
+that $f(y)\geq f(x)$ for all $x$ in $[a,b]$ (Figure~3).
+\end{theorem}
+\begin{center}
+\figtex{assets/geometric/ch07-fig03}\\[0.6em]
+\figlabel{3}
+\end{center}
+
+These three theorems differ markedly from the theorems of Chapter~6. The
+hypotheses of those theorems always involved continuity at a single point, while
+the hypotheses of the present theorems require continuity on a whole interval
+$[a,b]$---if continuity fails to hold at a single point, the conclusions may fail.
+For example, let $f$ be the function shown in Figure~4,
+\[
+f(x)=\begin{cases}
+-1, & 0\leq x<\sqrt{2}\\
+1,  & \sqrt{2}\leq x\leq 2.
+\end{cases}
+\]
+\begin{center}
+\figtex{assets/geometric/ch07-fig04}\\[0.6em]
+\figlabel{4}
+\end{center}
+Then $f$ is continuous at every point of $[0,2]$ except $\sqrt{2}$, and
+$f(0)<0<f(2)$, but there is no point $x$ in $[0,2]$ such that $f(x)=0$; the
+discontinuity at the single point $\sqrt{2}$ is sufficient to destroy the
+conclusion of Theorem~1.
+
+Similarly, suppose that $f$ is the function shown in Figure~5,
+\[
+f(x)=\begin{cases}
+1/x, & x\neq 0\\
+0,   & x=0.
+\end{cases}
+\]
+\begin{center}
+\figtex{assets/plots/ch07-fig05}\\[0.6em]
+\figlabel{5}
+\end{center}
+Then $f$ is continuous at every point of $[0,1]$ except $0$, but $f$ is not
+bounded above on $[0,1]$. In fact, for any number $N>0$ we have
+$f(1/2N)=2N>N$.
+
+This example also shows that the closed interval $[a,b]$ in Theorem~2 cannot be
+replaced by the open interval $(a,b)$, for the function $f$ is continuous on
+$(0,1)$, but is not bounded there.
+
+Finally, consider the function shown in Figure~6,
+\[
+f(x)=\begin{cases}
+x^2, & x<1\\
+0,   & x\geq 1.
+\end{cases}
+\]
+\begin{center}
+\figtex{assets/geometric/ch07-fig06}\\[0.6em]
+\figlabel{6}
+\end{center}
+On the interval $[0,1]$ the function $f$ is bounded above, so $f$ does satisfy
+the conclusion of Theorem~2, even though $f$ is not continuous on $[0,1]$. But
+$f$ does not satisfy the conclusion of Theorem~3---there is no $y$ in $[0,1]$
+such that $f(y)\geq f(x)$ for all $x$ in $[0,1]$; in fact, it is certainly not
+true that $f(1)\geq f(x)$ for all $x$ in $[0,1]$ so we cannot choose $y=1$, nor
+can we choose $0\leq y<1$ because $f(y)<f(x)$ if $x$ is any number with
+$y<x<1$.
+
+This example shows that Theorem~3 is considerably stronger than Theorem~2.
+Theorem~3 is often paraphrased by saying that a continuous function on a closed
+interval ``takes on its maximum value'' on that interval.
+
+As a compensation for the stringency of the hypotheses of our three theorems,
+the conclusions are of a totally different order than those of previous
+theorems. They describe the behavior of a function, not just near a point, but
+on a whole interval; such ``global'' properties of a function are always
+significantly more difficult to prove than ``local'' properties, and are
+correspondingly of much greater power. To illustrate the usefulness of
+Theorems~1, 2, and~3, we will soon deduce some important consequences, but it
+will help to first mention some simple generalizations of these theorems.
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$ and $f(a)<c<f(b)$, then there is some $x$ in
+$[a,b]$ such that $f(x)=c$.
+\end{theorem}
+
+\begin{proof}
+Let $g=f-c$. Then $g$ is continuous, and $g(a)<0<g(b)$. By Theorem~1, there is
+some $x$ in $[a,b]$ such that $g(x)=0$. But this means that $f(x)=c$.
+\end{proof}
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$ and $f(a)>c>f(b)$, then there is some $x$ in
+$[a,b]$ such that $f(x)=c$.
+\end{theorem}
+
+\begin{proof}
+The function $-f$ is continuous on $[a,b]$ and $-f(a)<-c<-f(b)$. By Theorem~4
+there is some $x$ in $[a,b]$ such that $-f(x)=-c$, which means that $f(x)=c$.
+\end{proof}
+
+Theorems~4 and~5 together show that $f$ takes on any value between $f(a)$ and
+$f(b)$. We can do even better than this: if $c$ and $d$ are in $[a,b]$, then
+$f$ takes on any value between $f(c)$ and $f(d)$. The proof is simple: if, for
+example, $c<d$, then just apply Theorems~4 and~5 to the interval $[c,d]$.
+Summarizing, if a continuous function on an interval takes on two values, it
+takes on every value in between; this slight generalization of Theorem~1 is
+often called the Intermediate Value Theorem.
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then $f$ is bounded below on $[a,b]$, that is,
+there is some number $N$ such that $f(x)\geq N$ for all $x$ in $[a,b]$.
+\end{theorem}
+
+\begin{proof}
+The function $-f$ is continuous on $[a,b]$, so by Theorem~2 there is a number
+$M$ such that $-f(x)\leq M$ for all $x$ in $[a,b]$. But this means that
+$f(x)\geq -M$ for all $x$ in $[a,b]$, so we can let $N=-M$.
+\end{proof}
+
+Theorems~2 and~6 together show that a continuous function $f$ on $[a,b]$ is
+bounded on $[a,b]$, that is, there is a number $N$ such that $\abs{f(x)}\leq N$
+for all $x$ in $[a,b]$. In fact, since Theorem~2 ensures the existence of a
+number $N_1$ such that $f(x)\leq N_1$ for all $x$ in $[a,b]$, and Theorem~6
+ensures the existence of a number $N_2$ such that $f(x)\geq N_2$ for all $x$ in
+$[a,b]$, we can take $N=\max(\abs{N_1},\abs{N_2})$.
+
+\begin{theorem}
+If $f$ is continuous on $[a,b]$, then there is some $y$ in $[a,b]$ such that
+$f(y)\leq f(x)$ for all $x$ in $[a,b]$.
+(A continuous function on a closed interval takes on its minimum value on that
+interval.)
+\end{theorem}
+
+\begin{proof}
+The function $-f$ is continuous on $[a,b]$; by Theorem~3 there is some $y$ in
+$[a,b]$ such that $-f(y)\geq -f(x)$ for all $x$ in $[a,b]$, which means that
+$f(y)\leq f(x)$ for all $x$ in $[a,b]$.
+\end{proof}
+
+Now that we have derived the trivial consequences of Theorems~1, 2, and~3, we
+can begin proving a few interesting things.
+
+\begin{theorem}
+Every positive number has a square root. In other words, if $\alpha>0$, then
+there is some number $x$ such that $x^2=\alpha$.
+\end{theorem}
+
+\begin{proof}
+Consider the function $f(x)=x^2$, which is certainly continuous. Notice that the
+statement of the theorem can be expressed in terms of $f$: ``the number $\alpha$
+has a square root'' means that $f$ takes on the value $\alpha$. The proof of
+this fact about $f$ will be an easy consequence of Theorem~4.
+
+There is obviously a number $b>0$ such that $f(b)>\alpha$ (as illustrated in
+Figure~7); in fact, if $\alpha>1$ we can take $b=\alpha$, while if $\alpha<1$ we
+can take $b=1$. Since $f(0)<\alpha<f(b)$, Theorem~4 applied to $[0,b]$ implies
+that for some $x$ (in $[0,b]$), we have $f(x)=\alpha$, i.e., $x^2=\alpha$.
+\end{proof}
+\begin{center}
+\figtex{assets/plots/ch07-fig07}\\[0.6em]
+\figlabel{7}
+\end{center}
+
+Precisely the same argument can be used to prove that a positive number has an
+$n$th root, for any natural number $n$. If $n$ happens to be odd, one can do
+better: \emph{every} number has an $n$th root. To prove this we just note that
+if the positive number $\alpha$ has the $n$th root $x$, i.e., if $x^n=\alpha$,
+then $(-x)^n=-\alpha$ (since $n$ is odd), so $-\alpha$ has the $n$th root $-x$.
+The assertion, that for odd $n$ any number $\alpha$ has an $n$th root, is
+equivalent to the statement that the equation
+\[
+x^n-\alpha=0
+\]
+has a root if $n$ is odd. Expressed in this way the result is susceptible of
+great generalization.
+
+\begin{theorem}
+If $n$ is odd, then any equation
+\[
+x^n + a_{n-1}x^{n-1} + \cdots + a_0 = 0
+\]
+has a root.
+\end{theorem}
+
+\begin{proof}
+We obviously want to consider the function
+\[
+f(x)=x^n + a_{n-1}x^{n-1} + \cdots + a_0;
+\]
+we would like to prove that $f$ is sometimes positive and sometimes negative.
+The intuitive idea is that for large $\abs{x}$, the function is very much like
+$g(x)=x^n$ and, since $n$ is odd, this function is positive for large positive
+$x$ and negative for large negative $x$. A little algebra is all we need to
+make this intuitive idea work.
+
+The proper analysis of the function $f$ depends on writing
+\[
+f(x)=x^n + a_{n-1}x^{n-1} + \cdots + a_0
+= x^n\Bigl(1 + \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n}\Bigr).
+\]
+Note that
+\[
+\Biggl\lvert \frac{a_{n-1}}{x} + \frac{a_{n-2}}{x^2} + \cdots + \frac{a_0}{x^n}
+\Biggr\rvert
+\leq \frac{\abs{a_{n-1}}}{\abs{x}} + \cdots + \frac{\abs{a_0}}{\abs{x^n}}.
+\]
+Consequently, if we choose $x$ satisfying
+\begin{equation*}
+\abs{x}>1,\ 2n\abs{a_{n-1}},\ \dots,\ 2n\abs{a_0}, \tag{$*$}
+\end{equation*}
+then $\abs{x^k}>\abs{x}$ and
+\[
+\frac{\abs{a_{n-k}}}{\abs{x^k}}
+< \frac{\abs{a_{n-k}}}{\abs{x}}
+< \frac{\abs{a_{n-k}}}{2n\abs{a_{n-k}}}
+= \frac{1}{2n},
+\]
+so
+\[
+\Biggl\lvert \frac{a_{n-1}}{x} + \frac{a_{n-2}}{x^2} + \cdots + \frac{a_0}{x^n}
+\Biggr\rvert
+\leq \underbrace{\frac{1}{2n}+\cdots+\frac{1}{2n}}_{n\text{ terms}}
+= \frac12.
+\]
+In other words,
+\[
+-\frac12 \leq \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n} \leq \frac12,
+\]
+which implies that
+\[
+\frac12 \leq 1 + \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n}.
+\]
+Therefore, if we choose an $x_1>0$ which satisfies ($*$), then
+\[
+\frac{(x_1)^n}{2}
+\leq (x_1)^n\Biggl(1 + \frac{a_{n-1}}{x_1} + \cdots + \frac{a_0}{(x_1)^n}\Biggr)
+= f(x_1),
+\]
+so that $f(x_1)>0$. On the other hand, if $x_2<0$ satisfies ($*$), then
+$(x_2)^n<0$ and
+\[
+\frac{(x_2)^n}{2}
+\geq (x_2)^n\Biggl(1 + \frac{a_{n-1}}{x_2} + \cdots + \frac{a_0}{(x_2)^n}\Biggr)
+= f(x_2),
+\]
+so that $f(x_2)<0$.
+
+Now applying Theorem~1 to the interval $[x_2,x_1]$ we conclude that there is an
+$x$ in $[x_2,x_1]$ such that $f(x)=0$.
+\end{proof}
+
+Theorem~9 disposes of the problem of odd degree equations so happily that it
+would be frustrating to leave the problem of even degree equations completely
+undiscussed. At first sight, however, the problem seems insuperable. Some
+equations, like $x^2-1=0$, have a solution, and some, like $x^2+1=0$, do
+not---what more is there to say? If we are willing to consider a more general
+question, however, something interesting \emph{can} be said. Instead of trying
+to solve the equation
+\[
+x^n + a_{n-1}x^{n-1} + \cdots + a_0 = 0,
+\]
+let us ask about the possibility of solving the equations
+\[
+x^n + a_{n-1}x^{n-1} + \cdots + a_0 = c
+\]
+for all possible numbers $c$. This amounts to allowing the constant term $a_0$
+to vary. The information which can be given concerning the solution of these
+equations depends on a fact which is illustrated in Figure~8.
+\begin{center}
+\figtex{assets/geometric/ch07-fig08}\\[0.6em]
+\figlabel{8}
+\end{center}
+The graph of the function $f(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$, with $n$ even,
+contains, at least the way we have drawn it, a lowest point. In other words,
+there is a number $y$ such that $f(y)\leq f(x)$ for all numbers $x$---the
+function $f$ takes on a minimum value, not just on each closed interval, but on
+the whole line. (Notice that this is false if $n$ is odd.) The proof depends on
+Theorem~7, but a tricky application will be required. We can apply Theorem~7 to
+any interval $[a,b]$, and obtain a point $y_0$ such that $f(y_0)$ is the
+minimum value of $f$ on $[a,b]$; but if $[a,b]$ happens to be the interval
+shown in Figure~8, for example, then the point $y_0$ will not be the place
+where $f$ has its minimum value for the whole line. In the next theorem the
+entire point of the proof is to choose an interval $[a,b]$ in such a way that
+this cannot happen.
+
+\begin{theorem}
+If $n$ is even and $f(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$, then there is a number
+$y$ such that $f(y)\leq f(x)$ for all $x$.
+\end{theorem}
+
+\begin{proof}
+As in the proof of Theorem~9, if
+\[
+M=\max\bigl(1,\ 2n\abs{a_{n-1}},\ \dots,\ 2n\abs{a_0}\bigr),
+\]
+then for all $x$ with $\abs{x}\geq M$, we have
+\[
+\frac12 \leq 1 + \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n}.
+\]
+Since $n$ is even, $x^n\geq 0$ for all $x$, so
+\[
+\frac{x^n}{2}
+\leq x^n\Biggl(1 + \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n}\Biggr)
+= f(x),
+\]
+provided that $\abs{x}\geq M$. Now consider the number $f(0)$. Let $b>0$ be a
+number such that $b^n\geq 2f(0)$ and also $b>M$. Then, if $x\geq b$, we have
+(Figure~9)
+\[
+f(x)\geq \frac{x^n}{2}\geq \frac{b^n}{2}\geq f(0).
+\]
+\begin{center}
+\figtex{assets/geometric/ch07-fig09}\\[0.6em]
+\figlabel{9}
+\end{center}
+Similarly, if $x\leq -b$, then
+\[
+f(x)\geq \frac{x^n}{2}\geq \frac{(-b)^n}{2}=\frac{b^n}{2}\geq f(0).
+\]
+Summarizing:
+\[
+\text{if } x\geq b \text{ or } x\leq -b, \text{ then } f(x)\geq f(0).
+\]
+Now apply Theorem~7 to the function $f$ on the interval $[-b,b]$. We conclude
+that there is a number $y$ such that
+\begin{align*}
+&(1) & &\text{if } -b\leq x\leq b, \text{ then } f(y)\leq f(x).
+\end{align*}
+In particular, $f(y)\leq f(0)$. Thus
+\begin{align*}
+&(2) & &\text{if } x\leq -b \text{ or } x\geq b, \text{ then }
+  f(x)\geq f(0)\geq f(y).
+\end{align*}
+Combining (1) and (2) we see that $f(y)\leq f(x)$ for all $x$.
+\end{proof}
+
+Theorem~10 now allows us to prove the following result.
+
+\begin{theorem}
+Consider the equation
+\begin{equation*}
+x^n + a_{n-1}x^{n-1} + \cdots + a_0 = c, \tag{$*$}
+\end{equation*}
+and suppose $n$ is even. Then there is a number $m$ such that ($*$) has a
+solution for $c\geq m$ and has no solution for $c<m$.
+\end{theorem}
+
+\begin{proof}
+Let $f(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$ (Figure~10).
+\begin{center}
+\figtex{assets/geometric/ch07-fig10}\\[0.6em]
+\figlabel{10}
+\end{center}
+According to Theorem~10 there is a number $y$ such that $f(y)\leq f(x)$ for all
+$x$. Let $m=f(y)$. If $c<m$, then the equation ($*$) obviously has no
+solution, since the left side always has a value $\geq m$. If $c=m$, then
+($*$) has $y$ as a solution. Finally, suppose $c>m$. Let $b$ be a number such
+that $b>y$ and $f(b)>c$. Then $f(y)=m<c<f(b)$. Consequently, by Theorem~4,
+there is some number $x$ in $[y,b]$ such that $f(x)=c$, so $x$ is a solution of
+($*$).
+\end{proof}
+
+These consequences of Theorems~1, 2, and~3 are the only ones we will derive now
+(these theorems will play a fundamental role in everything we do later,
+however). Only one task remains---to prove Theorems~1, 2, and~3.
+Unfortunately, we cannot hope to do this---on the basis of our present
+knowledge about the real numbers (namely, P1--P12) a proof is
+\emph{impossible}. There are several ways of convincing ourselves that this
+gloomy conclusion is actually the case. For example, the proof of Theorem~8
+relies only on the proof of Theorem~1; if we could prove Theorem~1, then the
+proof of Theorem~8 would be complete, and we would have a proof that every
+positive number has a square root. As pointed out in Part~I, it is impossible
+to prove this on the basis of P1--P12. Again, suppose we consider the function
+\[
+f(x)=\frac{1}{x^2-2}.
+\]
+If there were no number $x$ with $x^2=2$, then $f$ would be continuous, since
+the denominator would never $=0$. But $f$ is not bounded on $[0,2]$. So
+Theorem~2 depends essentially on the existence of numbers other than rational
+numbers, and therefore on some property of the real numbers other than
+P1--P12.
+
+Despite our inability to prove Theorems~1, 2, and~3, they are certainly results
+which we want to be true. If the pictures we have been drawing have any
+connection with the mathematics we are doing, if our notion of continuous
+function corresponds to any degree with our intuitive notion, Theorems~1, 2,
+and~3 have got to be true. Since a proof of any of these theorems must require
+some new property of $\mathbf{R}$ which has so far been overlooked, our present
+difficulties suggest a way to discover that property: let us try to construct a
+proof of Theorem~1, for example, and see what goes wrong.
+
+One idea which seems promising is to locate the first point where $f(x)=0$,
+that is, the smallest $x$ in $[a,b]$ such that $f(x)=0$. To find this point,
+first consider the set $A$ which contains all numbers $x$ in $[a,b]$ such that
+$f$ is negative on $[a,x]$. In Figure~11, $x$ is such a point, while $x'$ is
+not. The set $A$ itself is indicated by a heavy line. Since $f$ is negative at
+$a$, and positive at $b$, the set $A$ contains some points greater than $a$,
+while all points sufficiently close to $b$ are not in $A$. (We are here using
+the continuity of $f$ on $[a,b]$, as well as Problem~6-16.)
+\begin{center}
+\figtex{assets/geometric/ch07-fig11}\\[0.6em]
+\figlabel{11}
+\end{center}
+
+Now suppose $\alpha$ is the smallest number which is greater than all members
+of $A$; clearly $a<\alpha<b$. We claim that $f(\alpha)=0$, and to prove this we
+only have to eliminate the possibilities $f(\alpha)<0$ and $f(\alpha)>0$.
+
+Suppose first that $f(\alpha)<0$. Then, by Theorem~6-3, $f(x)$ would be less
+than $0$ for all $x$ in a small interval containing $\alpha$, in particular for
+some numbers bigger than $\alpha$ (Figure~12); but this contradicts the fact
+that $\alpha$ is bigger than every member of $A$, since the larger numbers
+would also be in $A$. Consequently, $f(\alpha)<0$ is false.
+\begin{center}
+\figtex{assets/geometric/ch07-fig12}\\[0.6em]
+\figlabel{12}
+\end{center}
+
+On the other hand, suppose $f(\alpha)>0$. Again applying Theorem~6-3, we see
+that $f(x)$ would be positive for all $x$ in a small interval containing
+$\alpha$, in particular for some numbers smaller than $\alpha$ (Figure~13).
+This means that these smaller numbers are all \emph{not} in $A$. Consequently,
+one could have chosen an even smaller $\alpha$ which would be greater than all
+members of $A$. Once again we have a contradiction; $f(\alpha)>0$ is also
+false. Hence $f(\alpha)=0$ and, we are tempted to say, Q.E.D.
+\begin{center}
+\figtex{assets/geometric/ch07-fig13}\\[0.6em]
+\figlabel{13}
+\end{center}
+
+We know, however, that something must be wrong, since no new properties of
+$\mathbf{R}$ were ever used, and it does not require much scrutiny to find the
+dubious point. It is clear that we can choose a number $\alpha$ which is
+greater than all members of $A$ (for example, we can choose $\alpha=b$), but it
+is not so clear that we can choose a \emph{smallest} one. In fact, suppose $A$
+consists of all numbers $x\geq 0$ such that $x^2<2$. If the number $\sqrt{2}$
+did not exist, there would not be a least number greater than all the members
+of $A$; for any $y>\sqrt{2}$ we chose, we could always choose a still smaller
+one.
+
+Now that we have discovered the fallacy, it is almost obvious what additional
+property of the real numbers we need. All we must do is say it properly and use
+it. That is the business of the next chapter.
+
+\subsection*{PROBLEMS}
+
+\pnum{1.} For each of the following functions, decide which are bounded above
+or below on the indicated interval, and which take on their maximum or minimum
+value. (Notice that $f$ \emph{might} have these properties even if $f$ is not
+continuous, and even if the interval is not a closed interval.)
+\begin{romans}
+\item $f(x)=x^2$ on $(-1,1)$.
+\item $f(x)=x^3$ on $(-1,1)$.
+\item $f(x)=x^2$ on $\mathbf{R}$.
+\item $f(x)=x^2$ on $[0,\infty)$.
+\item $\displaystyle f(x)=\begin{cases}
+  x^2, & x\leq a\\
+  a+2, & x>a
+\end{cases}$
+on $(-a-1,a+1)$. (We assume $a>-1$, so that $-a-1<a+1$; it will be necessary
+to consider several possibilities for $a$.)
+\item $\displaystyle f(x)=\begin{cases}
+  x^2, & x<a\\
+  a+2, & x\geq a
+\end{cases}$
+on $[-a-1,a+1]$. (Again assume $a>-1$.)
+\item $\displaystyle f(x)=\begin{cases}
+  0, & x\text{ irrational}\\
+  1/q, & x=p/q\text{ in lowest terms}
+\end{cases}$
+on $[0,1]$.
+\item $\displaystyle f(x)=\begin{cases}
+  1, & x\text{ irrational}\\
+  1/q, & x=p/q\text{ in lowest terms}
+\end{cases}$
+on $[0,1]$.
+\item $\displaystyle f(x)=\begin{cases}
+  1, & x\text{ irrational}\\
+  -1/q, & x=p/q\text{ in lowest terms}
+\end{cases}$
+on $[0,1]$.
+\item $\displaystyle f(x)=\begin{cases}
+  x, & x\text{ rational}\\
+  0, & x\text{ irrational}
+\end{cases}$
+on $[0,a]$.
+\item $f(x)=\sin^2\bigl(\cos x+\sqrt{a+a^2}\bigr)$ on $[0,a^3]$.
+\item $f(x)=[x]$ on $[0,a]$.
+\end{romans}
+
+\pnum{2.} For each of the following polynomial functions $f$, find an integer
+$n$ such that $f(x)=0$ for some $x$ between $n$ and $n+1$.
+\begin{romans}
+\item $f(x)=x^3-x+3$.
+\item $f(x)=x^5+5x^4+2x+1$.
+\item $f(x)=x^5+x+1$.
+\item $f(x)=4x^2-4x+1$.
+\end{romans}
+
+\pnum{3.} Prove that there is some number $x$ such that
+\begin{romans}
+\item $\displaystyle x^{179}+\frac{163}{1+x^2+\sin^2 x}=119$.
+\item $\sin x=x-1$.
+\end{romans}
+
+\pnum{4.} This problem is a continuation of Problem~3-7.
+\begin{letters}
+\item If $n-k$ is even, and $\geq 0$, find a polynomial function of degree $n$
+with exactly $k$ roots.
+\item A root $a$ of the polynomial function $f$ is said to have
+\textbf{multiplicity $m$} if $f(x)=(x-a)^m g(x)$, where $g$ is a polynomial
+function that does \emph{not} have $a$ as a root. Let $f$ be a polynomial
+function of degree $n$. Suppose that $f$ has $k$ roots, counting
+multiplicities, i.e., suppose that $k$ is the sum of the multiplicities of all
+the roots. Show that $n-k$ is even.
+\end{letters}
+
+\pnum{5.} Suppose that $f$ is continuous on $[a,b]$ and that $f(x)$ is always
+rational. What can be said about $f$?
+
+\pnum{6.} Suppose that $f$ is a \emph{continuous} function on $[-1,1]$ such that
+$x^2+(f(x))^2=1$ for all $x$. (This means that $(x,f(x))$ always lies on the
+unit circle.) Show that either $f(x)=\sqrt{1-x^2}$ for all $x$, or else
+$f(x)=-\sqrt{1-x^2}$ for all $x$.
+
+\pnum{7.} How many continuous functions $f$ are there which satisfy
+$(f(x))^2=x^2$ for all $x$?
+
+\pnum{8.} Suppose that $f$ and $g$ are continuous, that $f^2=g^2$, and that
+$f(x)\neq 0$ for all $x$. Prove that either $f(x)=g(x)$ for all $x$, or else
+$f(x)=-g(x)$ for all $x$.
+
+\pnum{9.}
+\begin{letters}
+\item Suppose that $f$ is continuous, that $f(x)=0$ only for $x=a$, and that
+$f(x)>0$ for some $x>a$ as well as for some $x<a$. What can be said about
+$f(x)$ for all $x\neq a$?
+\item Again assume that $f$ is continuous and that $f(x)=0$ only for $x=a$, but
+suppose, instead, that $f(x)>0$ for some $x>a$ and $f(x)<0$ for some $x<a$. Now
+what can be said about $f(x)$ for $x\neq a$?
+\item[\textbf{*(c)}] Discuss the sign of $x^3+x^2 y+xy^2+y^3$ when $x$ and $y$
+are not both $0$.
+\end{letters}
+
+\pnum{10.} Suppose $f$ and $g$ are continuous on $[a,b]$ and that $f(a)<g(a)$,
+but $f(b)>g(b)$. Prove that $f(x)=g(x)$ for some $x$ in $[a,b]$. (If your proof
+isn't very short, it's not the right one.)
+
+\pnum{11.} Suppose that $f$ is a continuous function on $[0,1]$ and that
+$f(x)$ is in $[0,1]$ for each $x$ (draw a picture). Prove that $f(x)=x$ for
+some number $x$.
+
+\pnum{12.}
+\begin{letters}
+\item Problem~11 shows that $f$ intersects the diagonal of the square in
+Figure~14 (solid line). Show that $f$ must also intersect the other (dashed)
+diagonal.
+\begin{center}
+\figtex{assets/geometric/ch07-fig14}\\[0.6em]
+\figlabel{14}
+\end{center}
+\item Prove the following more general fact: If $g$ is continuous on $[0,1]$
+and $g(0)=0$, $g(1)=1$ or $g(0)=1$, $g(1)=0$, then $f(x)=g(x)$ for some $x$.
+\end{letters}
+
+\pnum{13.}
+\begin{letters}
+\item Let $f(x)=\sin 1/x$ for $x\neq 0$ and let $f(0)=0$. Is $f$ continuous on
+$[-1,1]$? Show that $f$ satisfies the conclusion of the Intermediate Value
+Theorem on $[-1,1]$; in other words, if $f$ takes on two values somewhere on
+$[-1,1]$, it also takes on every value in between.
+\item[\textbf{*(b)}] Suppose that $f$ satisfies the conclusion of the
+Intermediate Value Theorem, and that $f$ takes on each value \emph{only once}.
+Prove that $f$ is continuous.
+\item[\textbf{*(c)}] Generalize to the case where $f$ takes on each value only
+finitely many times.
+\end{letters}
+
+\pnum{14.} If $f$ is a continuous function on $[0,1]$, let $\lVert f\rVert$ be
+the maximum value of $\abs{f}$ on $[0,1]$.
+\begin{letters}
+\item Prove that for any number $c$ we have $\lVert cf\rVert=\abs{c}\cdot\lVert f\rVert$.
+\item[\textbf{*(b)}] Prove that $\lVert f+g\rVert\leq\lVert f\rVert+\lVert g\rVert$.
+Give an example where $\lVert f+g\rVert\neq\lVert f\rVert+\lVert g\rVert$.
+\item Prove that $\lVert h-f\rVert\leq\lVert h-g\rVert+\lVert g-f\rVert$.
+\end{letters}
+
+\pnum{*15.} Suppose that $\phi$ is continuous and
+\[
+\lim_{x\to\infty}\phi(x)/x^n=0=\lim_{x\to-\infty}\phi(x)/x^n.
+\]
+\begin{letters}
+\item Prove that if $n$ is odd, then there is a number $x$ such that
+$x^n+\phi(x)=0$.
+\item Prove that if $n$ is even, then there is a number $y$ such that
+$y^n+\phi(y)\leq x^n+\phi(x)$ for all $x$.
+\end{letters}
+Hint: Of which proofs does this problem test your understanding?
+
+\pnum{*16.}
+\begin{letters}
+\item Suppose that $f$ is continuous on $(a,b)$ and
+$\lim_{x\to a^+}f(x)=\lim_{x\to b^-}f(x)=\infty$. Prove that $f$ has a minimum
+on all of $(a,b)$.
+\item Prove the corresponding result when $a=-\infty$ and/or $b=\infty$.
+\end{letters}
+
+\pnum{*17.} Let $f$ be any polynomial function. Prove that there is some number
+$y$ such that $\abs{f(y)}\leq\abs{f(x)}$ for all $x$.
+
+\pnum{*18.} Suppose that $f$ is a continuous function with $f(x)>0$ for all
+$x$, and $\lim_{x\to\infty}f(x)=0=\lim_{x\to-\infty}f(x)$. (Draw a picture.)
+Prove that there is some number $y$ such that $f(y)\geq f(x)$ for all $x$.
+
+\pnum{*19.}
+\begin{letters}
+\item Suppose that $f$ is continuous on $[a,b]$, and let $x$ be any number.
+Prove that there is a point on the graph of $f$ which is closest to $(x,0)$; in
+other words there is some $y$ in $[a,b]$ such that the distance from $(x,0)$ to
+$(y,f(y))$ is $\leq$ distance from $(x,0)$ to $(z,f(z))$ for all $z$ in
+$[a,b]$. (See Figure~15.)
+\begin{center}
+\figtex{assets/geometric/ch07-fig15}\\[0.6em]
+\figlabel{15}
+\end{center}
+\item Show that this same assertion is not necessarily true if $[a,b]$ is
+replaced by $(a,b)$ throughout.
+\item Show that the assertion \emph{is} true if $[a,b]$ is replaced by
+$\mathbf{R}$ throughout.
+\item In cases (a) and (c), let $g(x)$ be the minimum distance from $(x,0)$ to
+a point on the graph of $f$. Prove that $g(y)\leq g(x)+\abs{x-y}$, and conclude
+that $g$ is continuous.
+\item Prove that there are numbers $x_0$ and $x_1$ in $[a,b]$ such that the
+distance from $(x_0,0)$ to $(x_1,f(x_1))$ is $\leq$ the distance from
+$(x_0',0)$ to $(x_1',f(x_1'))$ for any $x_0'$, $x_1'$ in $[a,b]$.
+\end{letters}
+
+\pnum{20.}
+\begin{letters}
+\item Suppose that $f$ is continuous on $[0,1]$ and $f(0)=f(1)$. Let $n$ be any
+natural number. Prove that there is some number $x$ such that
+$f(x)=f(x+1/n)$, as shown in Figure~16 for $n=4$. Hint: Consider the function
+$g(x)=f(x)-f(x+1/n)$; what would be true if $g(x)\neq 0$ for all $x$?
+\begin{center}
+\figtex{assets/geometric/ch07-fig16}\\[0.6em]
+\figlabel{16}
+\end{center}
+\item[\textbf{*(b)}] Suppose $0<a<1$, but that $a$ is not equal to $1/n$ for
+any natural number $n$. Find a function $f$ which is continuous on $[0,1]$ and
+which satisfies $f(0)=f(1)$, but which does not satisfy $f(x)=f(x+a)$ for any
+$x$.
+\end{letters}
+
+\pnum{*21.}
+\begin{letters}
+\item Prove that there does not exist a continuous function $f$ defined on
+$\mathbf{R}$ which takes on every value exactly twice. Hint: If $f(a)=f(b)$ for
+$a<b$, then either $f(x)>f(a)$ for all $x$ in $(a,b)$ or $f(x)<f(a)$ for all
+$x$ in $(a,b)$. Why? In the first case all values close to $f(a)$, but slightly
+larger than $f(a)$, are taken on somewhere in $(a,b)$; this implies that
+$f(x)<f(a)$ for $x<a$ and $x>b$.
+\item Refine part (a) by proving that there is no continuous function $f$ which
+takes on each value either $0$ times or $2$ times, i.e., which takes on exactly
+twice each value that it does take on. Hint: The previous hint implies that $f$
+has either a maximum or a minimum value (which must be taken on twice). What
+can be said about values close to the maximum value?
+\item Find a continuous function $f$ which takes on every value exactly $3$
+times. More generally, find one which takes on every value exactly $n$ times,
+if $n$ is odd.
+\item Prove that if $n$ is even, then there is no continuous $f$ which takes on
+every value exactly $n$ times. Hint: To treat the case $n=4$, for example, let
+$f(x_1)=f(x_2)=f(x_3)=f(x_4)$. Then either $f(x)>0$ for all $x$ in two of the
+three intervals $(x_1,x_2)$, $(x_2,x_3)$, $(x_3,x_4)$, or else $f(x)<0$ for all
+$x$ in two of these three intervals.
+\end{letters}

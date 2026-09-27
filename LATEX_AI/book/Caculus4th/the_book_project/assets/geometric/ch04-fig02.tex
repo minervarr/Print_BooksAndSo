@@ -1,0 +1,7 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=2.15cm]
+  \draw (-1.85,0) -- (1.85,0);
+  \foreach \x/\lab in {-1/{a-\varepsilon}, 0/{a}, 1/{a+\varepsilon}} {
+    \draw (\x,0.16) -- (\x,-0.16);
+    \node[below] at (\x,-0.18) {$\lab$};
+  }
+\end{tikzpicture}

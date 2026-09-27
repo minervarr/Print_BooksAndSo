@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  trig format plots=rad,
+  ticks=none,
+  xmin=-0.95, xmax=1.05,
+  ymin=-1.45, ymax=1.45,
+  width=12.4cm, height=6.4cm,
+  clip=false,
+]
+  \addplot[dashed, thin, domain=-0.82:0.92, samples=2] {0.5};
+  \addplot[dashed, thin, domain=-0.82:0.92, samples=2] {-0.5};
+  \addplot[variable=\t, domain=1.15:55, samples=1100] ({1/\t}, {sin(\t)});
+  \addplot[variable=\t, domain=1.15:55, samples=1100] ({-1/\t}, {-sin(\t)});
+  \draw[line width=2.5pt] (-0.16,0) -- (0.16,0);
+  \node[below] at (0.28,-0.14) {$A$};
+  \node at (0.13,0.68) {$\frac{1}{2}$};
+  \node at (0.13,-0.68) {$-\frac{1}{2}$};
+  \node[right] at (0.52,0.72) {$f(x)=\sin\dfrac{1}{x}$};
+\end{axis}
+\end{tikzpicture}

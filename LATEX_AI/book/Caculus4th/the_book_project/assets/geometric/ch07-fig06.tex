@@ -1,0 +1,14 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1.15cm, y=1.15cm]
+  \draw (-1.85,0) -- (3.65,0);
+  \draw (0,-0.55) -- (0,2.85);
+  \draw[line width=0.8pt, -{Stealth[length=2.2mm]}]
+    plot[domain=-1.55:0.92, samples=60] (\x,{\x*\x});
+  \fill (1,0) circle[radius=1.5pt];
+  \draw[line width=0.8pt] (1,0) -- (3.55,0);
+  \draw (0.48,0.12) -- (0.48,-0.12);
+  \draw (0.72,0.12) -- (0.72,-0.12);
+  \draw (1,0.12) -- (1,-0.12);
+  \node[below] at (0.48,-0.14) {$y$};
+  \node[below] at (0.72,-0.14) {$x$};
+  \node[below right] at (1,-0.14) {$1$};
+\end{tikzpicture}

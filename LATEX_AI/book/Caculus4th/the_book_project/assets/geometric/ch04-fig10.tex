@@ -1,0 +1,41 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  % (a)
+  \begin{scope}[shift={(3.3,10.6)}, x=0.95cm, y=0.95cm]
+    \draw (-2.35,0) -- (2.45,0);
+    \draw (0,-1.55) -- (0,2.05);
+    \draw[thick] plot[smooth] coordinates {
+      (-2.15,0.55) (-1.55,-0.15) (-0.95,-0.85) (-0.25,-0.15)
+      (0.35,0.75) (1.05,0.15) (1.65,-0.85) (2.2,-0.35)
+    };
+    \fill (0.85,1.35) circle (1.5pt);
+    \node[below] at (0,-1.85) {(a)};
+  \end{scope}
+  % (b) lemniscate of Gerono
+  \begin{scope}[shift={(3.3,6.35)}, x=1.15cm, y=1.15cm]
+    \draw (-2.05,0) -- (2.15,0);
+    \draw (0,-1.15) -- (0,1.35);
+    \draw[thick, variable=\t, domain=0:360, samples=80]
+      plot ({1.35*cos(\t)}, {0.85*sin(\t)*cos(\t)});
+    \node[below] at (0,-1.45) {(b)};
+  \end{scope}
+  % (c)
+  \begin{scope}[shift={(0.15,2.15)}, x=0.85cm, y=0.85cm]
+    \draw (-2.35,0) -- (2.55,0);
+    \draw (0,-1.45) -- (0,2.25);
+    \draw[thick] plot[smooth] coordinates {
+      (-2.2,-1.15) (-1.55,0.15) (-0.95,0.85) (-0.35,0.25)
+      (0.15,-0.35) (0.75,-0.15) (1.45,0.85) (1.95,1.95)
+    };
+    \node[below] at (0,-1.75) {(c)};
+  \end{scope}
+  % (d)
+  \begin{scope}[shift={(6.35,2.15)}, x=0.85cm, y=0.85cm]
+    \draw (-2.15,0) -- (2.55,0);
+    \draw (0,-1.45) -- (0,2.25);
+    \draw[thick] plot[smooth] coordinates {(-1.55,0.15) (-1.15,0.55) (-0.75,0.15)};
+    \fill (-0.55,-0.95) circle (1.5pt);
+    \fill (1.15,1.15) circle (1.5pt);
+    \draw[thick] plot[smooth] coordinates {(1.55,0.85) (1.95,1.25) (2.25,1.55)};
+    \node[below] at (0,-1.75) {(d)};
+  \end{scope}
+\end{tikzpicture}

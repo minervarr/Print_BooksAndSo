@@ -1,0 +1,313 @@
+% my_book.sty — packages, fonts, geometry, and Spivak voice for Calculus 4e.
+%
+% Self-contained: nothing is pulled from kit/ via TEXINPUTS. LuaLaTeX only.
+% Geometry is a variant switch, not a second book. Macros grow after chapters.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{my_book}[2026/09/19 Calculus reconstruction style]
+
+% A plain `lualatex main.tex` still works; build.py overrides this with
+% `\def\BookVariant{...}` before `\input{main.tex}`.
+\providecommand{\BookVariant}{print-v}
+
+% ---------------------------------------------------------------------------
+% Paper: print only (A4 portrait or landscape). HTML is a second engine
+% (make4ht), not a geometry. \HCode is defined by tex4ht.
+% ---------------------------------------------------------------------------
+\RequirePackage{geometry}
+
+\newif\ifmybook@html
+\ifdefined\HCode
+  \mybook@htmltrue
+\fi
+
+\edef\mybook@variant{\BookVariant}
+\def\mybook@printh{print-h}
+\ifmybook@html
+  \geometry{a4paper,margin=2.2cm}
+\else
+  \ifx\mybook@variant\mybook@printh
+    \geometry{
+      a4paper,
+      landscape,
+      margin=2.2cm,
+      headheight=14pt,
+      headsep=0.6cm,
+      footskip=1cm
+    }
+  \else
+    \geometry{
+      a4paper,
+      margin=2.2cm,
+      headheight=14pt,
+      headsep=0.6cm,
+      footskip=1cm
+    }
+  \fi
+\fi
+
+% ---------------------------------------------------------------------------
+% Packages. PDF: LuaLaTeX + unicode-math + NewCM. HTML: tex4ht (\HCode);
+% MathJax owns equations, so skip unicode-math / OpenType math.
+% ---------------------------------------------------------------------------
+\RequirePackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\ifmybook@html
+  \RequirePackage{graphicx}
+  % svg.sty is PDF-only (Inkscape). HTML: the SVG file as a graphic.
+  \newcommand{\includesvg}[2][]{\includegraphics[width=0.95\textwidth]{#2.svg}}
+\else
+  \RequirePackage{fontspec}
+  \RequirePackage{microtype}
+  \RequirePackage{unicode-math}
+  \setmainfont{NewCM10-Regular}
+  \setmonofont{NewCMMono10-Regular}
+  \setmathfont{NewCMMath-Regular.otf}
+  \setmathfont[version=bold]{NewCMMath-Bold.otf}
+  % ActualText on math (copy/paste). accsupp, not the tagpdf option.
+  % axessibility still writes pdfTeX primitives; map them for LuaTeX.
+  \RequirePackage{luatex85}
+  \protected\def\pdfoptionpdfminorversion{\pdfvariable minorversion}
+  \protected\def\pdfgentounicode{\pdfvariable gentounicode}
+  \RequirePackage[accsupp]{axessibility}
+  \RequirePackage{svg}
+\fi
+
+\RequirePackage{enumitem}
+\RequirePackage{booktabs}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\RequirePackage{standalone}
+\RequirePackage{fancyhdr}
+\RequirePackage{polynom}
+
+% Figure reconstruction styles (from kit/tex/figure-style.tex).
+\usetikzlibrary{calc,arrows.meta,patterns,positioning,decorations.pathreplacing,angles,quotes}
+
+\tikzset{
+  reconstruction/.style={
+    line cap=round,
+    line join=round,
+    >=Stealth,
+    every node/.style={font=\normalsize},
+  },
+  reconstruction line/.style={line width=0.5pt, color=black},
+}
+
+\pgfplotsset{
+  compat=1.17,
+  reconstruction plot/.style={
+    axis lines=middle,
+    axis line style={-Stealth, black},
+    xlabel style={font=\normalsize},
+    ylabel style={font=\normalsize},
+    tick label style={font=\normalsize},
+    legend style={font=\normalsize},
+    every axis plot/.style={thick, black, mark=none},
+    cycle list={{black, mark=none, thick}},
+    scaled ticks=false,
+    clip=false,
+  },
+}
+
+% ---------------------------------------------------------------------------
+% Headers: print PDF only.
+% ---------------------------------------------------------------------------
+\ifmybook@html
+  \pagestyle{plain}
+\else
+  \pagestyle{fancy}
+  \fancyhf{}
+  \fancyhead[L]{\nouppercase{\leftmark}}
+  \fancyhead[R]{\nouppercase{\rightmark}}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \setlength{\headheight}{14pt}
+\fi
+
+% Book class owns the chapter counter. Theorems/equations reset per chapter
+% and display their plain number (matching the book's "THEOREM 1", "(1)", ...).
+\numberwithin{equation}{chapter}
+\renewcommand{\theequation}{\arabic{equation}}
+
+% Spivak's theorem statements are italic prose full of inline math; give the
+% closing glyph its italic correction (mathtools manual, "mathic").
+\mathtoolsset{mathic}
+
+% ============================================================================
+% Chapter opener. The classic Spivak chapter begins on a fresh page with a
+% large "CHAPTER n" and the title beneath it. #1 is accepted for call-site
+% compatibility and ignored — the book counter is the number.
+% ============================================================================
+\newcommand{\spivakchapter}[2]{%
+  \clearpage
+  \refstepcounter{chapter}%
+  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#2}%
+  \chaptermark{#2}%
+  \thispagestyle{plain}%
+  \vspace*{3cm}%
+  \begin{center}%
+    {\scshape\Large Chapter}\\[0.6em]%
+    {\fontsize{60}{70}\selectfont\bfseries\thechapter}\\[0.6em]%
+    {\Large\bfseries #2}%
+  \end{center}%
+  \vspace*{3cm}%
+  \clearpage
+}
+
+% Part divider (e.g. "PART I / PROLOGUE"). The source uses a sparse page
+% with the part name; we reproduce that sparseness instead of filling it.
+\newcommand{\partdivider}[2]{%
+  \clearpage
+  \refstepcounter{part}%
+  \addcontentsline{toc}{part}{\texorpdfstring{#1\quad #2}{#1 #2}}%
+  \thispagestyle{empty}%
+  \vspace*{6cm}%
+  \begin{center}%
+    {\scshape\LARGE Part #1}\\[1.2em]%
+    {\Huge\bfseries #2}%
+  \end{center}%
+  \vspace*{\fill}%
+  \clearpage
+}
+
+% Epigraph page (a short quote opening a part/chapter). Kept short and
+% centred, exactly as in the source — do not reflow following text into it.
+\newcommand{\epigraph}[2]{%
+  \clearpage
+  \thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{flushright}%
+    \begin{minipage}{0.6\textwidth}%
+      \itshape #1\par
+      \vspace{1em}%
+      {\upshape\scshape #2}%
+    \end{minipage}%
+  \end{flushright}%
+  \vspace*{\fill}%
+  \clearpage
+}
+
+% ============================================================================
+% Theorem-style environments in Spivak's voice: bold capitals label, no
+% trailing period (the book prints "THEOREM 1", not "THEOREM 1."), statement
+% in italics, proof body upright and closed with a solid box.
+% ============================================================================
+\newtheoremstyle{spivak}%        name
+  {12pt}%                        space above
+  {12pt}%                        space below
+  {\itshape}%                    body font
+  {}%                            indent
+  {\bfseries}%                   head font
+  {}%                            head punct (none)
+  {5pt}%                         space after head
+  {}%                            head spec
+
+\newtheoremstyle{spivakdef}%     name (upright body, for definitions)
+  {12pt}%
+  {12pt}%
+  {\normalfont}%
+  {}%
+  {\bfseries}%
+  {}%
+  {5pt}%
+  {}%
+
+\theoremstyle{spivak}
+\newtheorem{theorem}{THEOREM}[chapter]
+\newtheorem{lemma}{LEMMA}[chapter]
+\newtheorem{corollary}{COROLLARY}[chapter]
+\renewcommand{\thetheorem}{\arabic{theorem}}
+\renewcommand{\thelemma}{\arabic{lemma}}
+\renewcommand{\thecorollary}{\arabic{corollary}}
+
+\theoremstyle{spivakdef}
+\newtheorem{definition}{DEFINITION}[chapter]
+\renewcommand{\thedefinition}{\arabic{definition}}
+
+% Proof: Spivak prints "PROOF" in capitals (no period) and closes with a box.
+\renewcommand{\proofname}{PROOF}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\bfseries #1]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+
+% ============================================================================
+% Definitions in Spivak's voice: bold "DEFINITION" run-in head, upright body,
+% one paragraph of its own. The book does NOT number its definitions, so this
+% is unnumbered (the `definition` newtheorem above is unused for now).
+% WHY: chapter 3 opens with a PROVISIONAL DEFINITION and two unnumbered
+% DEFINITIONs; a numbered one would not match the source.
+% ============================================================================
+\newenvironment{spivakdefn}[1][DEFINITION]{%
+  \par\medskip\noindent\textbf{#1}\ \ignorespaces
+}{\par\medskip}
+
+% ============================================================================
+% Properties (P1)..(P12). \prop{N} prints the label; the statement follows.
+% ============================================================================
+\newcommand{\prop}[1]{\textbf{(P#1)}}
+
+% ============================================================================
+% Problems. \pnum{<label>} typesets a problem number in bold at the left
+% margin; the label is written verbatim so starred problems read "*15.".
+% ============================================================================
+\newcommand{\pnum}[1]{%
+  \par\medskip\noindent
+  \hangindent=2.4em\hangafter=1%
+  \makebox[2.4em][l]{\textbf{#1}}%
+  \ignorespaces
+}
+
+% Sub-part lists: small roman "(i)(ii)" and letters "(a)(b)".
+\newlist{romans}{enumerate}{1}
+\setlist[romans]{label={(\roman*)},leftmargin=2.6em,itemsep=0pt,topsep=2pt}
+\newlist{letters}{enumerate}{1}
+\setlist[letters]{label={(\alph*)},leftmargin=2.6em,itemsep=0pt,topsep=2pt}
+
+% Numbered "(1)(2)" sub-stepping used by induction-style arguments.
+\newlist{steps}{enumerate}{1}
+\setlist[steps]{label={(\arabic*)},leftmargin=2.6em,itemsep=0pt,topsep=2pt}
+
+% Mathematics voice -----------------------------------------------------------
+% \abs is Spivak's absolute value everywhere: \abs{x}, \abs*{...} auto-sizes,
+% \abs[\Big]{...} sizes by hand. \dom is the domain operator of chapter 3;
+% the book writes "domain", not "dom".
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclareMathOperator{\dom}{domain}
+
+% Figure captions. The book prints "FIGURE 1" centred below the picture in
+% tracked capitals; \textls comes from microtype.
+% The number is passed by hand: figures reset per chapter, so an automatic
+% counter would lie while chapters are still being transcribed.
+% TikZ/pgfplots snippet. Print: \\input the TeX. HTML: SVG from
+% kit/tools/export-figures-svg.py → assets/rendered/<stem>.svg.
+\newcommand{\figtex}[1]{%
+  \ifmybook@html
+    \filename@parse{#1}%
+    \includegraphics[width=0.95\textwidth]{assets/rendered/\filename@base.svg}%
+  \else
+    \input{#1}%
+  \fi
+}
+
+\newcommand{\figlabel}[1]{%
+  \ifdefined\textls
+    \textls[260]{FIGURE #1}%
+  \else
+    FIGURE #1%
+  \fi
+}
+
+% hyperref last; bookmark immediately after (PDF outline).
+\RequirePackage[hidelinks,pdftitle={Calculus},pdfauthor={Michael Spivak}]{hyperref}
+\ifmybook@html
+\else
+  \RequirePackage{bookmark}
+\fi
+
+\endinput

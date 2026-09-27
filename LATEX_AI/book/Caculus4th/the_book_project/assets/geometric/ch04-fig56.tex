@@ -1,0 +1,23 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  % foci at f=(-2εa,0) and O=(0,0); centre -εa.
+  \def\aa{2.55}
+  \def\ee{0.62}
+  \pgfmathsetmacro{\cc}{\ee*\aa}
+  \pgfmathsetmacro{\bb}{\aa*sqrt(1-\ee*\ee)}
+  \coordinate (C) at (-\cc,0);
+  \coordinate (O) at (0,0);
+  \coordinate (F) at ({-2*\cc},0);
+  \coordinate (P) at ({-\cc+0.35*\aa}, {0.78*\bb});
+  \draw ({-2*\cc-1.15},0) -- (1.55,0);
+  \draw (0,-1.45) -- (0,1.75);
+  \draw (C) ellipse ({\aa} and {\bb});
+  \fill (O) circle (1.6pt);
+  \fill (F) circle (1.6pt);
+  \fill (P) circle (1.5pt);
+  \draw (F) -- (P) -- (O);
+  \node[below right, inner sep=4pt] at (O) {$O$};
+  \node[below=8pt] at (F) {$\mathbf{f}=(-2\varepsilon a,0)$};
+  \node[above=8pt] at (P) {$(x,y)$};
+  \node[above left] at ($(F)!0.55!(P)$) {$2a-r$};
+  \node[above right] at ($(P)!0.45!(O)$) {$r$};
+\end{tikzpicture}

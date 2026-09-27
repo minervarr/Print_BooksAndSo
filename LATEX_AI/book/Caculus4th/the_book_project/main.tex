@@ -1,0 +1,82 @@
+% main.tex — master for Calculus, 4th Edition (Spivak).
+% Geometry is selected by \BookVariant (see my_book.sty / build.py).
+\documentclass[11pt,oneside,openany]{book}
+\usepackage{my_book}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/title}
+\input{frontmatter/copyright}
+\input{frontmatter/preface}
+\input{frontmatter/contents}
+
+\mainmatter
+
+\partdivider{I}{Prologue}
+\epigraph{%
+  To be conscious that you are ignorant is a great step to knowledge.%
+}{Benjamin Disraeli}
+\input{chapters/chapter01}
+\input{chapters/chapter02}
+
+\partdivider{II}{Foundations}
+\epigraph{%
+  The statement is so frequently made that the differential calculus deals
+  with continuous magnitude, and yet an explanation of this continuity is
+  nowhere given; even the most rigorous expositions of the differential
+  calculus do not base their proofs upon continuity but, with more or less
+  consciousness of the fact, they either appeal to geometric notions or those
+  suggested by geometry, or depend upon theorems which are never established
+  in a purely arithmetic manner. Among these, for example, belongs the
+  above-mentioned theorem, and a more careful investigation convinced me that
+  this theorem, or any one equivalent to it, can be regarded in some way as a
+  sufficient basis for infinitesimal analysis. It then only remained to
+  discover its true origin in the elements of arithmetic and thus at the same
+  time to secure a real definition of the essence of continuity. I succeeded
+  Nov.~24, 1858, and a few days afterward I communicated the results of my
+  meditations to my dear friend Dur\`ege with whom I had a long and lively
+  discussion.%
+}{Richard Dedekind}
+\input{chapters/chapter03}
+\input{chapters/chapter04}
+\input{chapters/chapter05}
+\input{chapters/chapter06}
+\input{chapters/chapter07}
+\input{chapters/chapter08}
+
+\partdivider{III}{Derivatives and Integrals}
+\input{chapters/chapter09}
+\input{chapters/chapter10}
+\input{chapters/chapter11}
+\input{chapters/chapter12}
+\input{chapters/chapter13}
+\input{chapters/chapter14}
+\input{chapters/chapter15}
+\input{chapters/chapter16}
+\input{chapters/chapter17}
+\input{chapters/chapter18}
+\input{chapters/chapter19}
+
+\partdivider{IV}{Infinite Sequences and Infinite Series}
+\input{chapters/chapter20}
+\input{chapters/chapter21}
+\input{chapters/chapter22}
+\input{chapters/chapter23}
+\input{chapters/chapter24}
+\input{chapters/chapter25}
+\input{chapters/chapter26}
+\input{chapters/chapter27}
+
+\partdivider{V}{Epilogue}
+\input{chapters/chapter28}
+\input{chapters/chapter29}
+\input{chapters/chapter30}
+
+\backmatter
+\input{backmatter/suggested-reading}
+\input{backmatter/answers}
+\input{backmatter/glossary}
+\input{backmatter/index}
+
+\end{document}

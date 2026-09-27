@@ -1,0 +1,23 @@
+% $f(\alpha)<0$: $f$ stays negative on $(x_0,x_1)$.
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.95cm, y=0.72cm]
+  \draw (0,-2.25) -- (0,3.25);
+  \draw (-0.35,0) -- (6.85,0);
+  \draw (1.15,0.14) -- (1.15,-0.14);
+  \node[below] at (1.15,-0.16) {$a$};
+  \draw (2.05,0.14) -- (2.05,-0.14);
+  \node[below] at (2.05,-0.16) {$x_0$};
+  \draw (2.55,0.14) -- (2.55,-0.14);
+  \node[below] at (2.55,-0.16) {$\alpha$};
+  \draw (3.10,0.14) -- (3.10,-0.14);
+  \node[below] at (3.10,-0.16) {$x_1$};
+  \draw (6.35,0.14) -- (6.35,-0.14);
+  \node[below] at (6.35,-0.16) {$b$};
+  \draw[thick] plot[smooth, tension=0.7] coordinates {
+    (1.15,-2.00) (1.85,-1.40) (2.55,-0.70) (3.10,-0.22)
+    (3.55,0.55) (3.95,1.85) (4.25,2.45) (4.55,1.70)
+  };
+  \fill (1.15,-2.00) circle[radius=1.6pt];
+  \node[align=left, anchor=west] at (3.70,2.95)
+    {\small $f(x)<0$ for all $x$\\[-0.1em]\small in this interval};
+  \draw[->] (3.60,2.65) to[out=180, in=90] (2.55,0.22);
+\end{tikzpicture}

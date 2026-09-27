@@ -1,0 +1,489 @@
+% chapter06.tex — Continuous Functions
+% Book pp. 115–121. Scan: sources/chapters/ch06-continuous-functions.pdf
+% (slice of original pp. 136–142). PDF pages 4 and 5 are swapped
+% (book 119 then 118); this file is in printed order.
+
+\spivakchapter{6}{Continuous Functions}
+
+If $f$ is an arbitrary function, it is not necessarily true that
+\[
+\lim_{x \to a} f(x) = f(a).
+\]
+In fact, there are many ways this can fail to be true. For example, $f$
+might not even be defined at $a$, in which case the equation makes no
+sense (Figure~1).
+
+\begin{center}
+\figtex{assets/geometric/ch06-fig01}\\[0.6em]
+\figlabel{1}
+\end{center}
+
+Again, $\lim_{x \to a} f(x)$ might not exist (Figure~2). Finally, as
+illustrated in Figure~3, even if $f$ is defined at $a$ and
+$\lim_{x \to a} f(x)$ exists, the limit might not equal $f(a)$.
+
+\begin{center}
+\figtex{assets/geometric/ch06-fig02}\\[0.6em]
+\figlabel{2}
+\end{center}
+
+\begin{center}
+\figtex{assets/geometric/ch06-fig03}\\[0.6em]
+\figlabel{3}
+\end{center}
+
+We would like to regard all behavior of this type as abnormal and honor,
+with some complimentary designation, functions which do not exhibit such
+peculiarities. The term which has been adopted is ``continuous.''
+Intuitively, a function $f$ is continuous if the graph contains no
+breaks, jumps, or wild oscillations. Although this description will
+usually enable you to decide whether a function is continuous simply by
+looking at its graph (a skill well worth cultivating) it is easy to be
+fooled, and the precise definition is \emph{very} important.
+
+\begin{spivakdefn}
+The function $f$ is \textbf{continuous at $a$} if
+\[
+\lim_{x \to a} f(x) = f(a).
+\]
+\end{spivakdefn}
+
+We will have no difficulty finding many examples of functions which are,
+or are not, continuous at some number $a$---every example involving
+limits provides an example about continuity, and Chapter~5 certainly
+provides enough of these.
+
+The function $f(x) = \sin 1/x$ is not continuous at $0$, because it is
+not even defined at $0$, and the same is true of the function
+$g(x) = x \sin 1/x$. On the other hand, if we are willing to extend the
+second of these functions, that is, if we wish to define a new function
+$G$ by
+\[
+G(x) =
+\begin{cases}
+x \sin 1/x, & x \neq 0 \\
+a,          & x = 0,
+\end{cases}
+\]
+then the choice of $a = G(0)$ can be made in such a way that $G$ will be
+continuous at $0$---to do this we can (if fact, we must) define
+$G(0) = 0$ (Figure~4). This sort of extension is not possible for $f$;
+if we define
+\[
+F(x) =
+\begin{cases}
+\sin 1/x, & x \neq 0 \\
+a,        & x = 0,
+\end{cases}
+\]
+then $F$ will not be continuous at $0$, no matter what $a$ is, because
+$\lim_{x \to 0} f(x)$ does not exist.
+
+\begin{center}
+\figtex{assets/plots/ch06-fig04}\\[0.6em]
+\figlabel{4}
+\end{center}
+
+The function
+\[
+f(x) =
+\begin{cases}
+x, & x \text{ rational} \\
+0, & x \text{ irrational}
+\end{cases}
+\]
+is not continuous at $a$, if $a \neq 0$, since $\lim_{x \to a} f(x)$
+does not exist. However, $\lim_{x \to 0} f(x) = 0 = f(0)$, so $f$ is
+continuous at precisely one point, $0$.
+
+The functions $f(x) = c$, $g(x) = x$, and $h(x) = x^2$ are continuous at
+all numbers $a$, since
+\begin{align*}
+\lim_{x \to a} f(x) &= \lim_{x \to a} c = c = f(a), \\
+\lim_{x \to a} g(x) &= \lim_{x \to a} x = a = g(a), \\
+\lim_{x \to a} h(x) &= \lim_{x \to a} x^2 = a^2 = h(a).
+\end{align*}
+
+Finally, consider the function
+\[
+f(x) =
+\begin{cases}
+0,    & x \text{ irrational} \\
+1/q,  & x = p/q \text{ in lowest terms.}
+\end{cases}
+\]
+In Chapter~5 we showed that $\lim_{x \to a} f(x) = 0$ for all $a$
+(actually, only for $0 < a < 1$, but you can easily see that this is
+true for all $a$). Since $0 = f(a)$ only when $a$ is irrational, this
+function is continuous at $a$ if $a$ is irrational, but not if $a$ is
+rational.
+
+It is even easier to give examples of continuity if we prove two simple
+theorems.
+
+\begin{theorem}
+If $f$ and $g$ are continuous at $a$, then
+\begin{steps}
+\item $f + g$ is continuous at $a$,
+\item $f \cdot g$ is continuous at $a$.
+\end{steps}
+Moreover, if $g(a) \neq 0$, then
+\begin{steps}[start=3]
+\item $1/g$ is continuous at $a$.
+\end{steps}
+\end{theorem}
+
+\begin{proof}
+Since $f$ and $g$ are continuous at $a$,
+\[
+\lim_{x \to a} f(x) = f(a)
+\quad\text{and}\quad
+\lim_{x \to a} g(x) = g(a).
+\]
+By Theorem~2(1) of Chapter~5 this implies that
+\[
+\lim_{x \to a} (f + g)(x) = f(a) + g(a) = (f + g)(a),
+\]
+which is just the assertion that $f + g$ is continuous at $a$. The
+proofs of parts~(2) and~(3) are left to you.
+\end{proof}
+
+Starting with the functions $f(x) = c$ and $f(x) = x$, which are
+continuous at $a$, for every $a$, we can use Theorem~1 to conclude that
+a function
+\[
+f(x) = \frac{b_n x^n + b_{n-1} x^{n-1} + \cdots + b_0}
+{c_m x^m + c_{m-1} x^{m-1} + \cdots + c_0}
+\]
+is continuous at every point in its domain. But it is harder to get
+much further than that. When we discuss the sine function in detail it
+will be easy to prove that $\sin$ is continuous at $a$ for all $a$; let
+us assume this fact meanwhile. A function like
+\[
+f(x) = \frac{\sin^2 x + x^2 + x^4 \sin x}
+{\sin^{27} x + 4x^2 \sin^2 x}
+\]
+can now be proved continuous at every point in its domain. But we are
+still unable to prove the continuity of a function like
+$f(x) = \sin(x^2)$; we obviously need a theorem about the composition of
+continuous functions. Before stating this theorem, the following point
+about the definition of continuity is worth noting. If we translate the
+equation $\lim_{x \to a} f(x) = f(a)$ according to the definition of
+limits, we obtain
+\begin{quote}
+for every $\varepsilon > 0$ there is $\delta > 0$ such that, for all
+$x$,\\
+if $0 < \abs{x - a} < \delta$, then $\abs{f(x) - f(a)} < \varepsilon$.
+\end{quote}
+But in this case, where the limit is $f(a)$, the phrase
+\[
+0 < \abs{x - a} < \delta
+\]
+may be changed to the simpler condition
+\[
+\abs{x - a} < \delta,
+\]
+since if $x = a$ it is certainly true that
+$\abs{f(x) - f(a)} < \varepsilon$.
+
+\begin{theorem}
+If $g$ is continuous at $a$, and $f$ is continuous at $g(a)$, then
+$f \circ g$ is continuous at $a$. (Notice that $f$ is required to be
+continuous at $g(a)$, not at $a$.)
+\end{theorem}
+
+\begin{proof}
+Let $\varepsilon > 0$. We wish to find a $\delta > 0$ such that for all
+$x$,
+\begin{align*}
+&\text{if } \abs{x - a} < \delta, \text{ then }
+  \abs{(f \circ g)(x) - (f \circ g)(a)} < \varepsilon, \\
+&\qquad\text{i.e., } \abs{f(g(x)) - f(g(a))} < \varepsilon.
+\end{align*}
+We first use continuity of $f$ to estimate how close $g(x)$ must be to
+$g(a)$ in order for this inequality to hold. Since $f$ is continuous at
+$g(a)$, there is a $\delta' > 0$ such that for all $y$,
+\[
+(1)\qquad
+\text{if } \abs{y - g(a)} < \delta',\ \text{then }
+\abs{f(y) - f(g(a))} < \varepsilon.
+\]
+In particular, this means that
+\[
+(2)\qquad
+\text{if } \abs{g(x) - g(a)} < \delta',\ \text{then }
+\abs{f(g(x)) - f(g(a))} < \varepsilon.
+\]
+We now use continuity of $g$ to estimate how close $x$ must be to $a$
+in order for the inequality $\abs{g(x) - g(a)} < \delta'$ to hold. The
+number $\delta'$ is a positive number just like any other positive
+number; we can therefore take $\delta'$ as the $\varepsilon$~(!) in the
+definition of continuity of $g$ at $a$. We conclude that there is a
+$\delta > 0$ such that, for all $x$,
+\[
+(3)\qquad
+\text{if } \abs{x - a} < \delta,\ \text{then }
+\abs{g(x) - g(a)} < \delta'.
+\]
+Combining~(2) and~(3) we see that for all $x$,
+\[
+\text{if } \abs{x - a} < \delta,\ \text{then }
+\abs{f(g(x)) - f(g(a))} < \varepsilon.
+\]
+\end{proof}
+
+We can now reconsider the function
+\[
+f(x) =
+\begin{cases}
+x \sin 1/x, & x \neq 0 \\
+0,          & x = 0.
+\end{cases}
+\]
+We have already noted that $f$ is continuous at $0$. A few applications
+of Theorems~1 and~2, together with the continuity of $\sin$, show that
+$f$ is also continuous at $a$, for $a \neq 0$. Functions like
+$f(x) = \sin\bigl(x^2 + \sin(x + \sin^2(x^3))\bigr)$ should be equally
+easy for you to analyze.
+
+The few theorems of this chapter have all been related to continuity of
+functions at a single point, but the concept of continuity doesn't
+begin to be really interesting until we focus our attention on functions
+which are continuous at all points of some interval. If $f$ is
+continuous at $x$ for all $x$ in $(a,b)$, then $f$ is called
+\textbf{continuous on $(a,b)$}; as a ``special case'', $f$ is
+\textbf{continuous on $\mathbf{R} = (-\infty,\infty)$} [see page~57] if
+it is continuous at $x$ for all $x$ in $\mathbf{R}$. Continuity on a
+closed interval must be defined a little differently; a function $f$ is
+called \textbf{continuous on $[a,b]$} if
+\begin{steps}
+\item $f$ is continuous at $x$ for all $x$ in $(a,b)$,
+\item $\lim_{x \to a^+} f(x) = f(a)$ and $\lim_{x \to b^-} f(x) = f(b)$.
+\end{steps}
+(We also often simply say that a function is continuous if it is
+continuous at $x$ for all $x$ in its domain.)
+
+Functions which are continuous on an interval are usually regarded as
+especially well behaved; indeed continuity might be specified as the
+first condition which a ``reasonable'' function ought to satisfy. A
+continuous function is sometimes described, intuitively, as one whose
+graph can be drawn without lifting your pencil from the paper.
+Consideration of the function
+\[
+f(x) =
+\begin{cases}
+x \sin 1/x, & x \neq 0 \\
+0,          & x = 0
+\end{cases}
+\]
+shows that this description is a little too optimistic, but it is
+nevertheless true that there are many important results involving
+functions which are continuous on an interval. There theorems are
+generally much harder than the ones in this chapter, but there is a
+simple theorem which forms a bridge between the two kinds of results.
+The hypothesis of this theorem requires continuity at only a single
+point, but the conclusion describes the behavior of the function on some
+interval containing the point. Although this theorem is really a lemma
+for later arguments, it is included here as a preview of things to come.
+
+\begin{theorem}
+Suppose $f$ is continuous at $a$, and $f(a) > 0$. Then $f(x) > 0$ for
+all $x$ in some interval containing $a$; more precisely, there is a
+number $\delta > 0$ such that $f(x) > 0$ for all $x$ satisfying
+$\abs{x - a} < \delta$. Similarly, if $f(a) < 0$, then there is a
+number $\delta > 0$ such that $f(x) < 0$ for all $x$ satisfying
+$\abs{x - a} < \delta$.
+\end{theorem}
+
+\begin{proof}
+Consider the case $f(a) > 0$. Since $f$ is continuous at $a$, for every
+$\varepsilon > 0$ there is a $\delta > 0$ such that, for all $x$,
+\begin{align*}
+&\text{if } \abs{x - a} < \delta, \text{ then }
+  \abs{f(x) - f(a)} < \varepsilon, \\
+&\qquad\text{i.e., } {-\varepsilon} < f(x) - f(a) < \varepsilon.
+\end{align*}
+In particular, this must hold for $\varepsilon = \frac12 f(a)$, since
+$\frac12 f(a) > 0$ (Figure~5). Thus there is $\delta > 0$ so that for
+all $x$,
+\[
+\text{if } \abs{x - a} < \delta, \text{ then }
+{-\tfrac12 f(a)} < f(x) - f(a) < \tfrac12 f(a),
+\]
+and this implies that $f(x) > \frac12 f(a) > 0$. (We could even have
+picked $\varepsilon$ to be $f(a)$ itself, leading to a proof that is
+more elegant, but more confusing to picture.)
+
+\begin{center}
+\figtex{assets/geometric/ch06-fig05}\\[0.6em]
+\figlabel{5}
+\end{center}
+
+A similar proof can be given in the case $f(a) < 0$; take
+$\varepsilon = -\frac12 f(a)$. Or one can apply the first case to the
+function $-f$.
+\end{proof}
+
+\subsection*{PROBLEMS}
+
+\pnum{1.}
+For which of the following functions $f$ is there a continuous function
+$F$ with domain $\mathbf{R}$ such that $F(x) = f(x)$ for all $x$ in the
+domain of $f$?
+\begin{romans}
+\item $f(x) = \dfrac{x^2 - 4}{x - 2}$.
+\item $f(x) = \dfrac{\abs{x}}{x}$.
+\item $f(x) = 0$, $x$ irrational.
+\item $f(x) = 1/q$, $x = p/q$ rational in lowest terms.
+\end{romans}
+
+\pnum{2.}
+At which points are the functions of Problems~4-17 and~4-19 continuous?
+
+\pnum{3.}
+\begin{letters}
+\item Suppose that $f$ is a function satisfying $\abs{f(x)} \leq \abs{x}$
+  for all $x$. Show that $f$ is continuous at $0$. (Notice that $f(0)$
+  must equal $0$.)
+\item Give an example of such a function $f$ which is not continuous at
+  any $a \neq 0$.
+\item Suppose that $g$ is continuous at $0$ and $g(0) = 0$, and
+  $\abs{f(x)} \leq \abs{g(x)}$. Prove that $f$ is continuous at $0$.
+\end{letters}
+
+\pnum{4.}
+Give an example of a function $f$ such that $f$ is continuous nowhere,
+but $\abs{f}$ is continuous everywhere.
+
+\pnum{5.}
+For each number $a$, find a function which is continuous at $a$, but not
+at any other points.
+
+\pnum{6.}
+\begin{letters}
+\item Find a function $f$ which is discontinuous at
+  $1, \frac12, \frac13, \frac14, \dots$ but continuous at all other
+  points.
+\item Find a function $f$ which is discontinuous at
+  $1, \frac12, \frac13, \frac14, \dots$, and at $0$, but continuous at
+  all other points.
+\end{letters}
+
+\pnum{7.}
+Suppose that $f$ satisfies $f(x + y) = f(x) + f(y)$, and that $f$ is
+continuous at $0$. Prove that $f$ is continuous at $a$ for all $a$.
+
+\pnum{8.}
+Suppose that $f$ is continuous at $a$ and $f(a) = 0$. Prove that if
+$\alpha \neq 0$, then $f + \alpha$ is nonzero in some open interval
+containing $a$.
+
+\pnum{9.}
+\begin{letters}
+\item Suppose $f$ is defined at $a$ but is not continuous at $a$. Prove
+  that for some number $\varepsilon > 0$ there are numbers $x$
+  arbitrarily close to $a$ with $\abs{f(x) - f(a)} > \varepsilon$.
+  Illustrate graphically.
+\item Conclude that for some number $\varepsilon > 0$ \emph{either}
+  there are numbers $x$ arbitrarily close to $a$ with
+  $f(x) < f(a) - \varepsilon$ \emph{or} there are numbers $x$
+  arbitrarily close to $a$ with $f(x) > f(a) + \varepsilon$.
+\end{letters}
+
+\pnum{10.}
+\begin{letters}
+\item Prove that if $f$ is continuous at $a$, then so is $\abs{f}$.
+\item Prove that every function $f$ continuous on $\mathbf{R}$ can be
+  written $f = E + O$, where $E$ is even and continuous and $O$ is odd
+  and continuous.
+\item Prove that if $f$ and $g$ are continuous, then so are
+  $\max(f,g)$ and $\min(f,g)$.
+\item Prove that every continuous $f$ can be written $f = g - h$, where
+  $g$ and $h$ are nonnegative and continuous.
+\end{letters}
+
+\pnum{11.}
+Prove Theorem~1(3) by using Theorem~2 and continuity of the function
+$f(x) = 1/x$.
+
+\pnum{*12.}
+\begin{letters}
+\item Prove that if $f$ is continuous at $l$ and
+  $\lim_{x \to a} g(x) = l$, then $\lim_{x \to a} f(g(x)) = f(l)$. (You
+  can go right back to the definitions, but it is easier to consider the
+  function $G$ with $G(x) = g(x)$ for $x \neq a$, and $G(a) = l$.)
+\item Show that if continuity of $f$ at $l$ is not assumed, then it is
+  not generally true that
+  \[
+  \lim_{x \to a} f(g(x)) = f\bigl(\lim_{x \to a} g(x)\bigr).
+  \]
+  \textit{Hint:} Try $f(x) = 0$ for $x \neq l$, and $f(l) = 1$.
+\end{letters}
+
+\pnum{13.}
+\begin{letters}
+\item Prove that if $f$ is continuous on $[a,b]$, then there is a
+  function $g$ which is continuous on $\mathbf{R}$, and which satisfies
+  $g(x) = f(x)$ for all $x$ in $[a,b]$. \textit{Hint:} Since you
+  obviously have a great deal of choice, try making $g$ constant on
+  $(-\infty, a]$ and $[b, \infty)$.
+\item Give an example to show that this assertion is false if $[a,b]$
+  is replaced by $(a,b)$.
+\end{letters}
+
+\pnum{14.}
+\begin{letters}
+\item Suppose that $g$ and $h$ are continuous at $a$, and that
+  $g(a) = h(a)$. Define $f(x)$ to be $g(x)$ if $x \geq a$ and $h(x)$ if
+  $x \leq a$. Prove that $f$ is continuous at $a$.
+\item Suppose $g$ is continuous on $[a,b]$ and $h$ is continuous on
+  $[b,c]$ and $g(b) = h(b)$. Let $f(x)$ be $g(x)$ for $x$ in $[a,b]$ and
+  $h(x)$ for $x$ in $[b,c]$. Show that $f$ is continuous on $[a,c]$.
+  (Thus, continuous functions can be ``pasted together''.)
+\end{letters}
+
+\pnum{15.}
+Prove that if $f$ is continuous at $a$, then for any $\varepsilon > 0$
+there is a $\delta > 0$ so that whenever $\abs{x - a} < \delta$ and
+$\abs{y - a} < \delta$, we have $\abs{f(x) - f(y)} < \varepsilon$.
+
+\pnum{16.}
+\begin{letters}
+\item Prove the following version of Theorem~3 for ``right-hand
+  continuity'': Suppose that
+  \[
+  \lim_{x \to a^+} f(x) = f(a),
+  \]
+  and $f(a) > 0$. Then there is a number $\delta > 0$ such that
+  $f(x) > 0$ for all $x$ satisfying $0 \leq x - a < \delta$. Similarly,
+  if $f(a) < 0$, then there is a number $\delta > 0$ such that
+  $f(x) < 0$ for all $x$ satisfying $0 \leq x - a < \delta$.
+\item Prove a version of Theorem~3 when $\lim_{x \to b^-} f(x) = f(b)$.
+\end{letters}
+
+\pnum{17.}
+If $\lim_{x \to a} f(x)$ exists, but is $\neq f(a)$, then $f$ is said to
+have a \textbf{removable discontinuity} at $a$.
+\begin{letters}
+\item If $f(x) = \sin 1/x$ for $x \neq 0$ and $f(0) = 1$, does $f$ have
+  a removable discontinuity at $0$? What if $f(x) = x \sin 1/x$ for
+  $x \neq 0$, and $f(0) = 1$?
+\item Suppose $f$ has a removable discontinuity at $a$. Let
+  $g(x) = f(x)$ for $x \neq a$, and let $g(a) = \lim_{x \to a} f(x)$.
+  Prove that $g$ is continuous at $a$. (Don't work very hard; this is
+  quite easy.)
+\item Let $f(x) = 0$ if $x$ is irrational, and let $f(p/q) = 1/q$ if
+  $p/q$ is in lowest terms. What is the function $g$ defined by
+  $g(x) = \lim_{y \to x} f(y)$?
+\item[*(d)] Let $f$ be a function with the property that every point of
+  discontinuity is a removable discontinuity. This means that
+  $\lim_{y \to x} f(y)$ exists for all $x$, but $f$ may be discontinuous
+  at some (even infinitely many) numbers $x$. Define
+  $g(x) = \lim_{y \to x} f(y)$. Prove that $g$ is continuous. (This is
+  not quite so easy as part~(b).)
+\item[**(e)] Is there a function $f$ which is discontinuous at every
+  point, and which has only removable discontinuities? (It is worth
+  thinking about this problem now, but mainly as a test of intuition;
+  even if you suspect the correct answer, you will almost certainly be
+  unable to prove it at the present time. See Problem~22-33.)
+\end{letters}

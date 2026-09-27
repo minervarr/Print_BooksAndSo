@@ -1,0 +1,21 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.65,0) -- (7.15,0);
+  \draw (0,-0.55) -- (0,3.15);
+  \draw[line width=0.8pt]
+    (1.35,1.15) .. controls (1.65,1.85) and (1.95,1.85) .. (2.25,1.55)
+    .. controls (2.55,1.25) and (2.75,0.85) .. (3.15,0.95)
+    .. controls (3.55,1.05) and (3.75,1.45) .. (4.05,1.55)
+    .. controls (4.35,1.65) and (4.65,2.45) .. (4.95,2.55);
+  \fill (1.35,1.15) circle[radius=1.55pt];
+  \fill (4.05,1.55) circle[radius=1.55pt];
+  \fill (4.95,2.55) circle[radius=1.55pt];
+  \draw[dashed] (4.05,1.55) -- (6.25,0);
+  \fill (6.25,0) circle[radius=1.55pt];
+  \node[above left] at (3.55,1.72) {$(y,f(y))$};
+  \node[above right] at (4.85,2.55) {$f$};
+  \draw (1.35,0.12) -- (1.35,-0.12);
+  \draw (4.95,0.12) -- (4.95,-0.12);
+  \node[below] at (1.35,-0.14) {$a$};
+  \node[below] at (4.95,-0.14) {$b$};
+  \node[below] at (6.25,-0.14) {$(x,0)$};
+\end{tikzpicture}

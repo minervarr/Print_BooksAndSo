@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  xmin=-0.12, xmax=1.38,
+  ymin=-0.08, ymax=0.72,
+  width=12.6cm, height=6.8cm,
+  xtick={0.2,0.25,0.3333,0.4,0.5,0.6,0.6667,0.75,0.8,1},
+  xticklabels={$\frac{1}{5}$,$\frac{1}{4}$,$\frac{1}{3}$,$\frac{2}{5}$,$\frac{1}{2}$,
+    $\frac{3}{5}$,$\frac{2}{3}$,$\frac{3}{4}$,$\frac{4}{5}$,$1$},
+  ytick={0.5,0.3333,0.25,0.2,0.1667,0.1429},
+  yticklabels={$\frac{1}{2}$,$\frac{1}{3}$,$\frac{1}{4}$,$\frac{1}{5}$,$\frac{1}{6}$,$\frac{1}{7}$},
+  tick label style={font=\small},
+  clip=false,
+]
+  \pgfplotsinvokeforeach{0.02,0.04,...,0.98}{
+    \fill (axis cs:#1,0) circle[radius=0.6pt];
+  }
+  \fill (axis cs:0.5,0.5) circle[radius=2.1pt];
+  \fill (axis cs:0.3333,0.3333) circle[radius=1.9pt];
+  \fill (axis cs:0.6667,0.3333) circle[radius=1.9pt];
+  \fill (axis cs:0.25,0.25) circle[radius=1.7pt];
+  \fill (axis cs:0.75,0.25) circle[radius=1.7pt];
+  \fill (axis cs:0.2,0.2) circle[radius=1.6pt];
+  \fill (axis cs:0.4,0.2) circle[radius=1.6pt];
+  \fill (axis cs:0.6,0.2) circle[radius=1.6pt];
+  \fill (axis cs:0.8,0.2) circle[radius=1.6pt];
+  \fill (axis cs:0.1667,0.1667) circle[radius=1.4pt];
+  \fill (axis cs:0.8333,0.1667) circle[radius=1.4pt];
+  \fill (axis cs:0.1429,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.2857,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.4286,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.5714,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.7143,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.8571,0.1429) circle[radius=1.3pt];
+  \fill (axis cs:0.125,0.125) circle[radius=1.15pt];
+  \fill (axis cs:0.375,0.125) circle[radius=1.15pt];
+  \fill (axis cs:0.625,0.125) circle[radius=1.15pt];
+  \fill (axis cs:0.875,0.125) circle[radius=1.15pt];
+  \node[anchor=west, align=left] at (axis cs:0.58,0.58) {%
+    $f(x)=\begin{cases}
+      0, & x\text{ irrational}\\
+      \frac{1}{q}, & x=\frac{p}{q}\text{ in lowest terms}
+    \end{cases}$};
+\end{axis}
+\end{tikzpicture}

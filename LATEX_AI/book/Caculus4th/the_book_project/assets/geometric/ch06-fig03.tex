@@ -1,0 +1,12 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.85,0) -- (4.35,0);
+  \draw (0,-0.85) -- (0,3.35);
+  \draw (-0.55,-0.32) .. controls (0.15,-0.02) and (0.85,0.42) .. (1.55,0.95);
+  \draw[-{Stealth[length=2.1mm]}]
+    (1.55,0.95) .. controls (1.85,1.15) and (2.05,1.32) .. (2.28,1.52);
+  \draw[-{Stealth[length=2.1mm]}]
+    (3.85,2.95) .. controls (3.15,2.15) and (2.75,1.78) .. (2.48,1.58);
+  \fill (2.38,2.55) circle[radius=1.6pt];
+  \draw (2.38,0.12) -- (2.38,-0.12);
+  \node[below] at (2.38,-0.14) {$a$};
+\end{tikzpicture}

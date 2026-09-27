@@ -1,0 +1,23 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.15,0.55);
+  \coordinate (W) at (0.85,1.65);
+  \coordinate (Z) at (-0.70,1.55);
+  \coordinate (VW) at ($(V)+(W)$);
+  \coordinate (VWZ) at ($(V)+(W)+(Z)$);
+  \draw (-1.15,0) -- (2.55,0);
+  \draw (0,-0.55) -- (0,2.85);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.62, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (W)
+    node[pos=0.62, left] {$w$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (Z)
+    node[pos=0.58, left] {$z$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (V) -- (VW)
+    node[pos=0.55, right] {``$w$''};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (VW) -- (VWZ)
+    node[pos=0.50, right] {``$z$''};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (VWZ)
+    node[pos=0.68, above left, inner sep=3.5pt] {$v+w+z$};
+\end{tikzpicture}

@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.62\textwidth,
+  height=6.6cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.35, xmax=2.55,
+  ymin=-0.55, ymax=4.6,
+]
+  \addplot[domain=-2.1:2.1, samples=80] {x^2};
+  \node[anchor=west] at (axis cs:0.22,2.85) {$f(x)=x^2$};
+\end{axis}
+\end{tikzpicture}

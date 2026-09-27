@@ -1,0 +1,16 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.7,0) -- (6.2,0);
+  \draw (0,-1.85) -- (0,2.55);
+  \draw[line width=0.8pt]
+    (1.15,-1.45) .. controls (1.65,-0.55) and (2.05,0.85) .. (2.45,0.72)
+    .. controls (2.75,0.62) and (2.85,0.12) .. (3.05,0.08)
+    .. controls (3.45,-0.02) and (3.55,1.55) .. (3.95,1.42)
+    .. controls (4.35,1.28) and (4.45,-1.05) .. (4.95,-0.85)
+    .. controls (5.25,-0.72) and (5.45,1.55) .. (5.85,1.85);
+  \fill (1.15,-1.45) circle[radius=1.55pt];
+  \fill (5.85,1.85) circle[radius=1.55pt];
+  \draw (1.15,0.12) -- (1.15,-0.12);
+  \draw (5.85,0.12) -- (5.85,-0.12);
+  \node[below] at (1.15,-0.14) {$a$};
+  \node[below] at (5.85,-0.14) {$b$};
+\end{tikzpicture}

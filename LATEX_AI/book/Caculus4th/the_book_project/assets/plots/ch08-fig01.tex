@@ -1,0 +1,21 @@
+% IVT: set $A$ on $[a,b]$, first zero at $\alpha$.
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.95cm, y=0.72cm]
+  \draw (0,-2.35) -- (0,3.05);
+  \draw (-0.35,0) -- (6.85,0);
+  \draw (1.15,0.14) -- (1.15,-0.14);
+  \draw (2.95,0.14) -- (2.95,-0.14);
+  \draw (6.35,0.14) -- (6.35,-0.14);
+  \node[below] at (1.15,-0.16) {$a$};
+  \node[below right] at (2.95,-0.10) {$\alpha$};
+  \node[below] at (6.35,-0.16) {$b$};
+  \draw[line width=1.7pt] (1.15,0) -- (2.95,0);
+  \node[above] at (2.05,0.06) {$A$};
+  \draw[thick] plot[smooth, tension=0.55] coordinates {
+    (1.15,-2.05) (1.70,-1.45) (2.25,-0.75) (2.95,0.00)
+    (3.35,1.15) (3.70,2.25) (4.05,1.15) (4.40,-0.70)
+    (4.75,-0.05) (5.05,0.55) (5.35,-0.12) (5.65,0.20)
+    (6.00,1.15) (6.35,2.55)
+  };
+  \fill (1.15,-2.05) circle[radius=1.5pt];
+  \fill (6.35,2.55) circle[radius=1.5pt];
+\end{tikzpicture}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.88\textwidth,
+  height=6.8cm,
+  trig format plots=rad,
+  xtick=\empty, ytick=\empty,
+  xmin=-0.58, xmax=0.72,
+  ymin=-0.32, ymax=0.32,
+]
+  \addplot[dashed, domain=-0.52:0.52, samples=50] {x^2};
+  \addplot[dashed, domain=-0.52:0.52, samples=50] {-x^2};
+  \addplot[domain=0.016:0.52, samples=1200] {x^2*sin(1/x)};
+  \addplot[domain=-0.52:-0.016, samples=1200] {x^2*sin(1/x)};
+  \node[anchor=west] at (axis cs:0.08,0.22) {$f(x)=x^2\sin\dfrac{1}{x}$};
+\end{axis}
+\end{tikzpicture}

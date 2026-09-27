@@ -1,0 +1,12 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, scale=0.42]
+  \draw (-7.2,0) -- (8.4,0);
+  \draw (0,-7.6) -- (0,8.2);
+  \foreach \x in {1,2,3} {\draw (\x,-0.18) -- (\x,0.18);}
+  \foreach \y in {-1,-2} {\draw (-0.18,\y) -- (0.18,\y);}
+  \fill (0,0) circle (2.4pt);
+  \draw[thick, smooth, samples=180, domain=0:2.55*pi]
+    plot ({(\x)*cos(\x r)}, {(\x)*sin(\x r)});
+  \draw[thick, dashed, smooth, samples=180, domain=0:-2.55*pi]
+    plot ({(\x)*cos(\x r)}, {(\x)*sin(\x r)});
+  \node[font=\normalsize] at (0,-8.6) {Spiral of Archimedes};
+\end{tikzpicture}

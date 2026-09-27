@@ -1,0 +1,30 @@
+\begin{tabular}{@{}c@{}}
+\begin{tikzpicture}[reconstruction, reconstruction line, baseline=(current bounding box.north)]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.15,0.55);
+  \coordinate (W) at (2.85,2.35);
+  \draw (-1.25,0) -- (2.55,0);
+  \draw (0,-0.45) -- (0,2.15);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.55, above] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (V) -- (W)
+    node[pos=0.62, right] {``$w-v$''};
+  \node[below] at (0.35,-0.55) {(a)};
+\end{tikzpicture}\\[1.1em]
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.15,0.55);
+  \coordinate (W) at (2.85,2.35);
+  \draw (-1.25,0) -- (2.55,0);
+  \draw (0,-0.45) -- (0,2.15);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.58, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (V) -- (W)
+    node[pos=0.58, right] {``$w-v$''};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (W)
+    node[pos=0.48, above left] {$w$};
+  \node[below] at (0.35,-0.55) {(b)};
+\end{tikzpicture}
+\end{tabular}

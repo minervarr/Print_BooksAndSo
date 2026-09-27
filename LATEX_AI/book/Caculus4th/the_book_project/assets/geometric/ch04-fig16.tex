@@ -1,0 +1,28 @@
+\begin{tabular}{@{}c@{\hspace{1.4em}}c@{}}
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.72cm, y=0.62cm]
+  \draw (-3.15,0) -- (3.25,0);
+  \draw (0,-0.35) -- (0,4.15);
+  \draw[thick] plot[smooth] coordinates {
+    (-3.05,3.55) (-2.45,1.15) (-1.85,0.55) (-1.15,3.35)
+    (-0.45,1.85) (0.35,0.95) (1.15,2.85) (1.85,1.45) (2.55,1.15) (3.05,3.55)
+  };
+  \fill (-1.15,3.35) circle (1.45pt);
+  \fill (0.35,0.95) circle (1.45pt);
+  \draw[dashed] (-1.15,3.35) -- (-1.15,0);
+  \draw[dashed] (0.35,0.95) -- (0.35,0);
+  \node[below, inner sep=2pt] at (-1.15,-0.14) {$x$};
+  \node[below, inner sep=2pt] at (0.48,-0.14) {$y$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.72cm, y=0.62cm]
+  \draw (-2.85,0) -- (3.15,0);
+  \draw (0,-2.55) -- (0,4.15);
+  \draw[thick] plot[smooth] coordinates {
+    (-2.45,-2.35) (-1.65,-0.15) (-0.85,1.85) (-0.25,1.45)
+    (0.35,0.75) (1.05,2.65) (1.75,1.55) (2.45,3.75)
+  };
+\end{tikzpicture}
+\\[0.35em]
+$n$ even & $n$ odd \\
+(a) & (b)
+\end{tabular}

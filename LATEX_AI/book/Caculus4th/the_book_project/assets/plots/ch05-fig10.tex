@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  trig format plots=rad,
+  ticks=none,
+  xmin=-1.05, xmax=1.45,
+  ymin=-1.15, ymax=1.15,
+  width=11.2cm, height=6.2cm,
+  clip=true,
+]
+  \addplot[dashed, thin, domain=0.001:0.95, samples=40] {sqrt(x)};
+  \addplot[dashed, thin, domain=0.001:0.95, samples=40] {-sqrt(x)};
+  \addplot[dashed, thin, domain=-0.95:-0.001, samples=40] {sqrt(-x)};
+  \addplot[dashed, thin, domain=-0.95:-0.001, samples=40] {-sqrt(-x)};
+  \addplot[variable=\t, domain=1.15:42, samples=900] ({1/\t}, {sin(\t)/sqrt(\t)});
+  \addplot[variable=\t, domain=1.15:42, samples=900] ({-1/\t}, {-sin(\t)/sqrt(\t)});
+  \node[right] at (0.38,-0.42) {$f(x)=\sqrt{\abs{x}}\sin\dfrac{1}{x}$};
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,23 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.45,1.05);
+  \coordinate (W) at (0.95,2.25);
+  \coordinate (S) at (3.70,3.30);
+  \coordinate (R) at (3.70,1.05);
+  \draw (0,-0.85) -- (0,3.65);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.52, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (W)
+    node[pos=0.58, left] {$w$};
+  \fill (V) circle (1.5pt);
+  \fill (S) circle (1.5pt);
+  \node[above left] at (V) {$(v_1,v_2)$};
+  \node[above left] at (S) {$(v_1+w_1,\,v_2+w_2)$};
+  \draw ($ (V)!-0.55!(S) $) -- ($ (S)!-0.45!(V) $);
+  \node[above right] at ($ (S)!-0.18!(V) $) {$L$};
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=4pt}] (R) -- (S);
+  \node[right=13pt] at ($(R)!0.5!(S)$) {$(v_2+w_2)-v_2$};
+  \draw[decorate, decoration={brace, amplitude=5pt, raise=4pt, mirror}] (V) -- (R);
+  \node[anchor=north, inner sep=2pt] at ($(V)!0.62!(R)+(0.10,-0.50)$) {$(v_1+w_1)-v_1$};
+\end{tikzpicture}

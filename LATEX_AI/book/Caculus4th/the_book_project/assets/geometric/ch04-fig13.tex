@@ -1,0 +1,37 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \begin{scope}[shift={(0,11.2)}, x=0.72cm, y=0.72cm]
+    \draw (-2.55,0) -- (2.85,0);
+    \draw (0,-0.35) -- (0,3.35);
+    \draw[thick] plot[smooth] coordinates {
+      (-2.2,2.85) (-1.4,1.15) (-0.7,0.28) (0,0)
+      (0.55,0.55) (1.05,1.45) (1.45,1.15) (1.95,0.95) (2.45,2.05)
+    };
+    \draw (1.05,0.12) -- (1.05,-0.12);
+    \draw (1.95,0.12) -- (1.95,-0.12);
+    \node[below] at (1.05,-0.14) {$x$};
+    \node[below] at (1.95,-0.14) {$y$};
+    \node[below] at (0,-1.05) {(a)};
+  \end{scope}
+  \begin{scope}[shift={(0,6.0)}, x=0.72cm, y=0.72cm]
+    \draw (-2.55,0) -- (2.85,0);
+    \draw (0,-0.35) -- (0,3.35);
+    \draw[thick] plot[smooth] coordinates {
+      (-2.2,2.85) (-1.4,1.15) (-0.7,0.28) (0,0) (0.85,0.55)
+    };
+    \draw[thick] plot[smooth] coordinates {
+      (1.15,1.35) (1.65,2.05) (2.25,2.95)
+    };
+    \node[below] at (0,-1.05) {(b)};
+  \end{scope}
+  \begin{scope}[shift={(0,0.8)}, x=0.72cm, y=0.72cm]
+    \draw (-2.55,0) -- (2.85,0);
+    \draw (0,-0.35) -- (0,3.35);
+    \draw[thick] plot[smooth] coordinates {
+      (-2.2,2.95) (-1.5,1.55) (-0.85,0.65) (-0.35,0.18) (0,0)
+    };
+    \draw[thick] plot[smooth] coordinates {
+      (0,0) (0.35,0.18) (0.85,0.65) (1.5,1.55) (2.2,2.95)
+    };
+    \node[below] at (0,-1.05) {(c)};
+  \end{scope}
+\end{tikzpicture}

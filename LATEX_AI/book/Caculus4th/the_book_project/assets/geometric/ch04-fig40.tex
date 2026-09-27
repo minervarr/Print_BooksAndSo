@@ -1,0 +1,26 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.05,0.78);
+  \coordinate (W) at (1.05,2.15);
+  \coordinate (S) at (3.10,2.93);
+  \coordinate (A) at (2.719,2.15);
+  \coordinate (B) at (1.669,0);
+  \draw (-1.15,0) -- (3.35,0);
+  \draw (0,-0.55) -- (0,3.55);
+  \fill (O) circle (1.7pt);
+  \draw (O) -- (V) -- (S) -- (W) -- cycle;
+  \draw (W) -- (A);
+  \draw ($ (B)!-0.55!(S) $) -- ($ (S)!-0.42!(B) $);
+  \fill (V) circle (1.5pt);
+  \fill (W) circle (1.5pt);
+  \fill (S) circle (1.5pt);
+  \fill (A) circle (1.5pt);
+  \fill (B) circle (1.5pt);
+  \node[below left] at (O) {$O$};
+  \node[above left] at (V) {$v$};
+  \node[left] at (W) {$w$};
+  \node[above left] at (S) {$v+w$};
+  \node[right] at (A) {$A$};
+  \node[below] at (B) {$B$};
+  \node[above right] at ($ (S)!-0.22!(B) $) {$L$};
+\end{tikzpicture}

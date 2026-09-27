@@ -8,18 +8,43 @@
 % --- layout ---------------------------------------------------------------
 \usepackage[margin=2.2cm,headsep=0.6cm,footskip=1cm]{geometry}
 
+% --- fonts (LuaLaTeX OpenType for the PDF; pdfLaTeX Latin Modern for EPUB) ---
+% fontspec here, the family selection lives in fonts.tex. unicode-math must
+% come after the math packages, so it sits below.
+% The EPUB build (book/ebook.tex sets \ifebook) runs pdfLaTeX instead, so
+% tex4ht's MathML path is the mature one and math comes out as real, searchable
+% MathML rather than PNG pictures or fontspec-mangled text. EPUB readers
+% substitute their own fonts anyway, so Latin Modern stands in for NewCM.
+\ifdefined\ifebook
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+\fi
+
 % --- typography ------------------------------------------------------------
+% Protrusion + expansion are pdfTeX/LuaTeX facilities; this book runs LuaLaTeX.
 \usepackage{microtype}
 
 % --- mathematics -----------------------------------------------------------
 \usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+% unicode-math is OpenType-only; the EPUB (pdflatex) build skips it.
+\ifdefined\ifebook\else
+  \usepackage{unicode-math}
+\fi
 
 % --- lists -----------------------------------------------------------------
 \usepackage{enumitem}
 
+% --- tables ----------------------------------------------------------------
+% Formal tables (booktabs rules, no vertical rules). Hand-computed stacks
+% stay tabular/array; this is for the tabulated data displays.
+\usepackage{booktabs}
+
 % --- figures ----------------------------------------------------------------
 % Semantic TikZ / pgfplots by default. graphicx is the last-resort scan embed.
 \usepackage{graphicx}
+\usepackage{svg}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{standalone}
@@ -29,3 +54,8 @@
 
 % --- links (digital edition is a first-class target) -----------------------
 \usepackage[hidelinks]{hyperref}
+
+% The EPUB build's display policy (the \Css overrides that play against
+% tex4ebook's browser-shaped defaults) lives in book/ebook.4ht, next to the
+% engine's own book entry point — not here. TeX-side packages belong in this
+% file; tex4ht configuration belongs in the .4ht paired with the ebook master.

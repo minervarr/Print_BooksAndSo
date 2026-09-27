@@ -1,0 +1,25 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-0.65,0) -- (6.45,0);
+  \draw (0,-1.85) -- (0,2.55);
+  \draw[line width=0.8pt]
+    (1.05,-1.45) .. controls (1.85,-0.85) and (2.45,-0.15) .. (2.95,0)
+    .. controls (3.25,1.35) and (3.35,1.55) .. (3.55,1.25)
+    .. controls (3.75,-0.65) and (3.95,-0.75) .. (4.25,-0.45)
+    .. controls (4.45,0.35) and (4.55,0.35) .. (4.75,0.15)
+    .. controls (4.92,-0.25) and (5.05,-0.25) .. (5.22,-0.05)
+    .. controls (5.45,1.15) and (5.75,1.85) .. (6.05,1.85);
+  \fill (1.05,-1.45) circle[radius=1.55pt];
+  \fill (6.05,1.85) circle[radius=1.55pt];
+  \draw[line width=2.1pt, line cap=butt] (1.05,0) -- (2.95,0);
+  \draw (1.05,0.12) -- (1.05,-0.12);
+  \draw (1.75,0.12) -- (1.75,-0.12);
+  \draw (2.95,0.18) -- (2.95,-0.18);
+  \draw (4.45,0.12) -- (4.45,-0.12);
+  \draw (6.05,0.12) -- (6.05,-0.12);
+  \node[below] at (1.05,-0.16) {$a$};
+  \node[below] at (1.75,-0.16) {$x$};
+  \node[below] at (2.95,-0.22) {$\alpha$};
+  \node[below] at (4.45,-0.16) {$x'$};
+  \node[below] at (6.05,-0.16) {$b$};
+  \node[above] at (2.05,0.12) {$A$};
+\end{tikzpicture}

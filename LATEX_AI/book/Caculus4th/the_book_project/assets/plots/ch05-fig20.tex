@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  ticks=none,
+  xmin=-2.7, xmax=5.8,
+  ymin=-2.15, ymax=8.6,
+  width=11.8cm, height=8.0cm,
+  clip=false,
+]
+  \addplot[domain=-2.25:2.95, samples=90] {x*x};
+  \draw[-Stealth] (0,6) -- (2.449,6);
+  \draw (0,4) -- (2.0,4);
+  \draw[-Stealth] (0,2) -- (1.414,2);
+  \draw (2.449,6) -- (2.449,0);
+  \draw (2.0,4) -- (2.0,0);
+  \draw (1.414,2) -- (1.414,0);
+  \draw (1.414,0.16) -- (1.414,-0.16);
+  \draw (2.0,0.16) -- (2.0,-0.16);
+  \draw (2.449,0.16) -- (2.449,-0.16);
+  \node[left] at (0,6) {$a^2+\varepsilon$};
+  \node[left] at (0,2) {$a^2-\varepsilon$};
+  \node[below] at (1.05,-0.28) {$\sqrt{a^2-\varepsilon}$};
+  \node[below] at (2.0,-0.28) {$a$};
+  \node[below] at (3.55,-0.28) {$\sqrt{a^2+\varepsilon}$};
+  \draw[-Stealth] (3.15,-1.05) to[out=180,in=-60] (2.22,-0.05);
+  \node[below] at (3.15,-1.12) {$\delta$};
+  \node[left] at (-0.75,3.35) {$f(x)=x^2$};
+\end{axis}
+\end{tikzpicture}

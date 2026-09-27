@@ -1,0 +1,43 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.92cm, y=1cm]
+  % open (a,b) and closed [a,b]
+  \draw (0,0) -- (5.6,0);
+  \draw[line width=1.1pt] (1.15,0) -- (2.55,0);
+  \node at (1.15,0) {\large$($};
+  \node at (2.55,0) {\large$)$};
+  \node[above, inner sep=3pt] at (1.15,0.12) {$a$};
+  \node[above, inner sep=3pt] at (2.55,0.12) {$b$};
+  \node[below] at (1.85,-0.22) {the open interval $(a,b)$};
+  \draw (6.3,0) -- (11.6,0);
+  \draw[line width=1.1pt] (7.45,0) -- (8.85,0);
+  \fill (7.45,0) circle (1.35pt);
+  \fill (8.85,0) circle (1.35pt);
+  \node[above] at (7.45,0.08) {$a$};
+  \node[above] at (8.85,0.08) {$b$};
+  \node[below] at (8.15,-0.22) {the closed interval $[a,b]$};
+  % Four rays: the same point a on one vertical (as in the scan).
+  \def\ax{5.2}
+  % (-\infty,a)
+  \draw (0,-1.55) -- (11.6,-1.55);
+  \draw[line width=1.1pt] (0,-1.55) -- (\ax,-1.55);
+  \node at (\ax,-1.55) {\large$)$};
+  \node[above, inner sep=3pt] at (\ax,-1.40) {$a$};
+  \node[below] at (2.4,-1.77) {the interval $(-\infty,a)$};
+  % (a,\infty)
+  \draw (0,-2.85) -- (11.6,-2.85);
+  \draw[line width=1.1pt] (\ax,-2.85) -- (11.6,-2.85);
+  \node at (\ax,-2.85) {\large$($};
+  \node[above, inner sep=3pt] at (\ax,-2.70) {$a$};
+  \node[below] at (8.4,-3.07) {the interval $(a,\infty)$};
+  % (-\infty,a]
+  \draw (0,-4.15) -- (11.6,-4.15);
+  \draw[line width=1.1pt] (0,-4.15) -- (\ax,-4.15);
+  \fill (\ax,-4.15) circle (1.35pt);
+  \node[above] at (\ax,-4.07) {$a$};
+  \node[below] at (2.4,-4.37) {the interval $(-\infty,a]$};
+  % [a,\infty)
+  \draw (0,-5.45) -- (11.6,-5.45);
+  \draw[line width=1.1pt] (\ax,-5.45) -- (11.6,-5.45);
+  \fill (\ax,-5.45) circle (1.35pt);
+  \node[above] at (\ax,-5.37) {$a$};
+  \node[below] at (8.4,-5.67) {the interval $[a,\infty)$};
+\end{tikzpicture}

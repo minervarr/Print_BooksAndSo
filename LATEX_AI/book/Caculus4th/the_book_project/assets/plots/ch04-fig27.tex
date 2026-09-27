@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.72\textwidth,
+  height=5.8cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-3.4, xmax=3.6,
+  ymin=-2.55, ymax=2.55,
+]
+  \addplot[domain=-1.35:1.35, samples=50] ({cosh(x)}, {0.85*sinh(x)});
+  \addplot[domain=-1.35:1.35, samples=50] ({-cosh(x)}, {0.85*sinh(x)});
+  \fill (axis cs:1,0) circle (1.5pt);
+  \fill (axis cs:-1,0) circle (1.5pt);
+  \node[anchor=north, inner sep=2.5pt] at (axis cs:0.52,-0.12) {$(a,0)$};
+  \node[anchor=north, inner sep=2.5pt] at (axis cs:-0.52,-0.12) {$(-a,0)$};
+  \node[anchor=north] at (axis cs:0,-1.85) {%
+    $\bigl\{(x,y):\frac{x^2}{a^2}-\frac{y^2}{b^2}=1\bigr\}$};
+\end{axis}
+\end{tikzpicture}

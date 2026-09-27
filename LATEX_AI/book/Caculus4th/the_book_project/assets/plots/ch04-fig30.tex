@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.68\textwidth,
+  height=6.6cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.15, xmax=2.55,
+  ymin=-0.85, ymax=3.55,
+]
+  \addplot[domain=-1.85:1.85, samples=80] {x^2};
+  \addplot[domain=-2.05:2.15, samples=2] {-0.25};
+  \fill (axis cs:0,0.25) circle (1.5pt);
+  \fill (axis cs:1.15,1.3225) circle (1.5pt);
+  \fill (axis cs:0,-0.25) circle (1.5pt);
+  \draw[dashed] (axis cs:0,0.25) -- (axis cs:1.15,1.3225);
+  \draw[dashed] (axis cs:1.15,1.3225) -- (axis cs:1.15,-0.25);
+  \node[anchor=south east, inner sep=3pt] at (axis cs:-0.08,0.32) {$\bigl(0,\frac14\bigr)$};
+  \node[anchor=west, inner sep=4pt] at (axis cs:1.18,1.32) {$(x,x^2)$};
+  \node[anchor=west, inner sep=3pt] at (axis cs:2.18,-0.25) {$g$};
+\end{axis}
+\end{tikzpicture}

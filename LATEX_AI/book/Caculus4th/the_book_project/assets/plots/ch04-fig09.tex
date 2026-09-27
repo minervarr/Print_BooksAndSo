@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.62\textwidth,
+  height=5.6cm,
+  xtick=\empty, ytick=\empty,
+  xmin=-2.3, xmax=3.3,
+  ymin=-1.6, ymax=3.1,
+]
+  \addplot[dashed, domain=-2:2.6, samples=2] {0.72*x};
+  \addplot[domain=-2:2.6, samples=2] {0.72*x + 1.15};
+  \fill (axis cs:0,1.15) circle (1.5pt);
+  \node[anchor=east, inner sep=3pt] at (axis cs:0,1.15) {$(0,d)$};
+  \node[anchor=south west] at (axis cs:0.06,2.35) {$f(x)=cx+d$};
+  \node[anchor=north west] at (axis cs:1.72,0.95) {$f(x)=cx$};
+\end{axis}
+\end{tikzpicture}

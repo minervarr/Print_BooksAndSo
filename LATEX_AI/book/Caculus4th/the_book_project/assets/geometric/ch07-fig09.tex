@@ -1,0 +1,14 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=1cm, y=1cm]
+  \draw (-4.55,0) -- (4.55,0);
+  \draw (0,-0.45) -- (0,3.55);
+  \draw[dashed] (-4.35,2.15) -- (4.35,2.15);
+  \draw[line width=0.8pt] plot[smooth, tension=0.58] coordinates {
+    (-4.25,2.55) (-3.55,1.45) (-2.65,0.95) (-1.45,1.25)
+    (-0.35,1.65) (0.15,1.85) (0.85,1.05) (1.55,0.55)
+    (2.15,1.15) (2.75,0.85) (3.45,1.65) (4.25,2.95)
+  };
+  \draw (-4.05,0.12) -- (-4.05,-0.12);
+  \draw (4.05,0.12) -- (4.05,-0.12);
+  \node[below] at (-4.05,-0.14) {$-b$};
+  \node[below] at (4.05,-0.14) {$b$};
+\end{tikzpicture}

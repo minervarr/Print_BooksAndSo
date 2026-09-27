@@ -1,0 +1,16 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (2.45,0.72);
+  \coordinate (W) at (0.95,1.85);
+  \coordinate (S) at (3.40,2.57);
+  \draw (-1.35,0) -- (3.15,0);
+  \draw (0,-0.55) -- (0,2.85);
+  \fill (O) circle (1.7pt);
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (V)
+    node[pos=0.62, below] {$v$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (W)
+    node[pos=0.58, left] {$w$};
+  \draw[thick, -{Stealth[length=2.4mm, width=1.9mm]}] (O) -- (S);
+  \node[anchor=west, inner sep=2pt] at ($(W)+(0.16,-0.10)$) {$v+w$};
+  \draw[dashed] (V) -- (S) -- (W);
+\end{tikzpicture}

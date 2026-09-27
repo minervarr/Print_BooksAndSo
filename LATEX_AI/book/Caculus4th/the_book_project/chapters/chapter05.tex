@@ -1,0 +1,1347 @@
+% chapter05.tex — Limits
+\spivakchapter{5}{Limits}
+
+The concept of a limit is surely the most important, and probably the most
+difficult one in all of calculus. The goal of this chapter is the definition of
+limits, but we are, once more, going to begin with a provisional definition;
+what we shall define is not the word ``limit'' but the notion of a function
+approaching a limit.
+
+\begin{spivakdefn}[PROVISIONAL DEFINITION]
+The function $f$ approaches the limit $l$ near $a$, if we can make $f(x)$ as
+close as we like to $l$ by requiring that $x$ be sufficiently close to, but
+unequal to, $a$.
+\end{spivakdefn}
+
+Of the six functions graphed in Figure~1, only the first three approach $l$ at
+$a$. Notice that although $g(a)$ is not defined, and $h(a)$ is defined ``the
+wrong way,'' it is still true that $g$ and $h$ approach $l$ near $a$. This is
+because we explicitly ruled out, in our definition, the necessity of ever
+considering the value of the function at $a$---it is only necessary that $f(x)$
+should be close to $l$ for $x$ close to $a$, but \emph{unequal to} $a$. We are
+simply not interested in the value of $f(a)$, or even in the question of
+whether $f(a)$ is defined.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig01}\\[0.6em]
+\figlabel{1}
+\end{center}
+One convenient way of picturing the assertion that $f$ approaches $l$ near $a$
+is provided by a method of drawing functions that was not mentioned in
+Chapter~4. In this method, we draw two straight lines, each representing
+$\mathbf{R}$, and arrows from a point $x$ in one, to $f(x)$ in the other.
+Figure~2 illustrates such a picture for two different functions.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig02}\\[0.6em]
+\figlabel{2}
+\end{center}
+Now consider a function $f$ whose drawing looks like Figure~3. Suppose we ask
+that $f(x)$ be close to $l$, say within the open interval $B$ which has been
+drawn in Figure~3. This can be guaranteed if we consider only the numbers $x$
+in the interval $A$ of Figure~3. (In this diagram we have chosen the largest
+interval which will work; any smaller interval containing $a$ could have been
+chosen instead.) If we
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig03}\\[0.6em]
+\figlabel{3}
+\end{center}
+\begin{center}
+\figtex{assets/geometric/ch05-fig04}\\[0.6em]
+\figlabel{4}
+\end{center}
+choose a smaller interval $B'$ (Figure~4) we will, usually, have to choose a
+smaller $A'$, but no matter how small we choose the open interval $B$, there is
+always supposed to be some open interval $A$ which works.
+
+A similar pictorial interpretation is possible in terms of the graph of $f$,
+but in this case the interval $B$ must be drawn on the vertical axis, and the
+set $A$ on the horizontal axis. The fact that $f(x)$ is in $B$ when $x$ is in
+$A$ means that the part of the graph lying over $A$ is contained in the region
+which is bounded by the horizontal lines through the end points of $B$;
+compare Figure~5(a), where a valid interval $A$ has been chosen, with
+Figure~5(b), where $A$ is too large.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig05}\\[0.6em]
+\figlabel{5}
+\end{center}
+To take a specific simple example, let's consider the function $f(x)=3x$ with
+$a=5$ (Figure~6). Presumably $f$ should approach the limit $15$ near $5$---we
+ought to be able to get $f(x)$ as close to $15$ as we like if we require that
+$x$ be sufficiently close to $5$. To be specific, suppose we want to make sure
+that $3x$ is within $\frac{1}{10}$ of $15$. This means that we want to have
+\[
+15 - \frac{1}{10} < 3x < 15 + \frac{1}{10},
+\]
+which we can also write as
+\[
+-\frac{1}{10} < 3x - 15 < \frac{1}{10}.
+\]
+To do this we just have to require that
+\[
+-\frac{1}{30} < x - 5 < \frac{1}{30},
+\]
+or simply $\abs{x-5}<\frac{1}{30}$; There is nothing special about the number
+$\frac{1}{10}$. It is just as easy to guarantee that
+$\abs{3x-15}<\frac{1}{100}$; simply require that
+$\abs{x-5}<\frac{1}{300}$. In fact, if we take any positive number
+$\varepsilon$ we can make $\abs{3x-15}<\varepsilon$ simply by requiring that
+$\abs{x-5}<\varepsilon/3$.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig06}\\[0.6em]
+\figlabel{6}
+\end{center}
+There's also nothing special about the choice $a=5$. It's just as easy to see
+that $f$ approaches the limit $3a$ at $a$ for any $a$: To ensure that
+\[
+\abs{3x-3a}<\varepsilon
+\]
+we just have to require that
+\[
+\abs{x-a}<\frac{\varepsilon}{3}.
+\]
+
+Naturally, the same sort of argument works for the function
+$f(x)=3{,}000{,}000x$. We just have to be $1{,}000{,}000$ times as careful,
+choosing $\abs{x-a}<\varepsilon/3{,}000{,}000$ in order to ensure that
+$\abs{f(x)-a}<\varepsilon$.
+
+The function $f(x)=x^2$ is a little more interesting. Presumably, we should be
+able to show that $f(x)$ approaches $9$ near $3$. This means that we need to
+show how to ensure the inequality
+\[
+\abs{x^2-9}<\varepsilon
+\]
+for any given positive number $\varepsilon$ by requiring $\abs{x-3}$ to be
+small enough. The obvious first step is to write
+\[
+\abs{x^2-9}=\abs{x-3}\cdot\abs{x+3},
+\]
+which gives us the useful $\abs{x-3}$ factor. Unlike the situation with the
+previous examples, however, the extra factor here is $\abs{x+3}$, which isn't
+a convenient constant like $3$ or $3{,}000{,}000$. But the only crucial thing
+is to make sure that we can say \emph{something} about how big $\abs{x+3}$ is.
+So the first thing we'll do is to require that $\abs{x-3}<1$. Once we've
+specified that $\abs{x-3}<1$, or $2<x<4$, we have $5<x+3<7$ and we've
+guaranteed that $\abs{x+3}<7$. So we now have
+\[
+\abs{x^2-9}=\abs{x-3}\cdot\abs{x+3}<7\abs{x-3},
+\]
+which shows that we have $\abs{x^2-9}<\varepsilon$ for
+$\abs{x-3}<\varepsilon/7$, provided that we've also required that
+$\abs{x-3}<1$. Or, to make it look more official: we require that
+$\abs{x-3}<\min(\varepsilon/7,1)$.
+
+The initial specification $\abs{x-3}<1$ was simply made for convenience. We
+could just as well have specified that $\abs{x-3}<\frac{1}{10}$ or
+$\abs{x-3}<10$ or any other convenient number. To make sure you understand the
+reasoning in the previous paragraph, it is a good exercise to figure out how
+the argument would read if we chose $\abs{x-3}<10$.
+
+Our argument to show that $f$ approaches $9$ near $3$ will basically work to
+show that $f$ approaches $a^2$ near $a$ for any $a$, except that we need to
+worry a bit more about getting the proper inequality for $\abs{x+a}$. We first
+require that $\abs{x-a}<1$, again with the expectation that this will ensure
+that $\abs{x+a}$ is not too large. In fact, Problem~1-12 shows that
+\[
+\abs{x}-\abs{a}\leq\abs{x-a}<1,
+\]
+so
+\[
+\abs{x}<1+\abs{a},
+\]
+and consequently
+\[
+\abs{x+a}\leq\abs{x}+\abs{a}<2\abs{a}+1,
+\]
+so that we then have
+\begin{align*}
+\abs{x^2-a^2}&=\abs{x-a}\cdot\abs{x+a}\\
+&<\abs{x-a}\cdot(2\abs{a}+1),
+\end{align*}
+which shows that we have $\abs{x^2-a^2}<\varepsilon$ for
+$\abs{x-a}<\varepsilon/(2\abs{a}+1)$, provided that we also have
+$\abs{x-a}<1$. Officially: we require that
+$\abs{x-a}<\min(\varepsilon/(2\abs{a}+1),1)$.
+
+In contrast to this example, we'll now consider the function $f(x)=1/x$ (for
+$x\neq 0$), and try to show that $f$ approaches $1/3$ near $3$. This means that
+we need to show how to guarantee the inequality
+\[
+\abs*{\frac{1}{x}-\frac{1}{3}}<\varepsilon
+\]
+for any given positive number $\varepsilon$ by requiring $\abs{x-3}$ to be
+small enough. We begin by writing
+\[
+\abs*{\frac{1}{x}-\frac{1}{3}}=\abs*{\frac{3-x}{3x}}=\frac{1}{3}\cdot\frac{1}{\abs{x}}\cdot\abs{x-3},
+\]
+giving us the nice factor $\abs{x-3}$, and even an extra $\frac{1}{3}$ for
+good measure, along with the problem factor $1/\abs{x}$. In this case, we first
+need to make sure that $\abs{x}$ isn't too \emph{small}, so that $1/\abs{x}$
+won't be too large.
+
+We can first require that $\abs{x-3}<1$, because this gives $2<x<4$, so that
+\[
+\frac{1}{4}<\frac{1}{x}<\frac{1}{2},
+\]
+which not only tells us that $\frac{1}{x}<\frac{1}{2}$, but also that $x>0$,
+which is important in order to conclude that $\frac{1}{\abs{x}}<\frac{1}{2}$.
+We now have
+\[
+\abs*{\frac{1}{x}-\frac{1}{3}}=\frac{1}{3}\cdot\frac{1}{\abs{x}}\cdot\abs{x-3}<\frac{1}{6}\abs{x-3},
+\]
+which shows that we have $\abs{1/x-1/3}<\varepsilon$ for
+$\abs{x-3}<6\varepsilon$, provided that we've also required that
+$\abs{x-3}<1$. Or, to make it look official again: we require that
+$\abs{x-3}<\min(6\varepsilon,1)$.
+
+If we instead wanted to show that $f$ approaches $-1/3$ near $-3$, we would
+begin by stipulating that $\abs{x-(-3)}<1$, giving $-4<x<-2$, once again
+implying that $\abs{1/x}<1/2$, so that everything works as before.
+
+To show in general that $f$ approaches $1/a$ near $a$ for any $a$ we proceed
+in basically the same way, except that, again, we have to be a little more
+careful in formulating our initial stipulation. It's not good enough simply to
+require that $\abs{x-a}$ should be less than $1$, or any other particular
+number, because if $a$ is close to $0$ this would allow values of $x$ that are
+negative (not to mention the embarrassing possibility that $x=0$, so that
+$f(x)$ isn't even defined!).
+
+The trick in this case is to first require that
+\[
+\abs{x-a}<\frac{\abs{a}}{2};
+\]
+in other words, we require that $x$ be less than half as far from $0$ as $a$
+(Figure~7). You should be able to check first that $x\neq 0$ and that
+$1/\abs{x}<2/\abs{a}$, and then work out the rest of the argument.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig07}\\[0.6em]
+\figlabel{7}
+\end{center}
+With all the work required for these simple examples, you may have begun to
+quail at the prospect of tackling even more complicated functions. But that
+won't really be necessary, since we will eventually have some basic theorems
+that we can rely on. Instead of worrying about the unpleasant algebra that
+might be involved in functions like $f(x)=x^3$ or $f(x)=1/x^3$, we'll turn our
+attention to some examples that might appear to be even more frightening.
+
+Consider first the function $f(x)=x\sin 1/x$ (Figure~8). Despite the erratic
+behavior of this function near $0$ it is clear, at least intuitively, that $f$
+approaches $l=0$ near $a=0$ (remember that our provisional definition
+specifically exempts $x=a$ from consideration, so it doesn't matter that this
+function isn't even defined at $0$). We want to show that we can get
+$f(x)=x\sin 1/x$ as close to $0$ as desired if we require that $x$ be
+sufficiently close to $0$, but $\neq 0$. In other words, for any number
+$\varepsilon>0$, we want to show that we can ensure that
+\[
+\abs{f(x)-0}=\abs*{x\sin\frac{1}{x}}<\varepsilon
+\]
+by requiring that $\abs{x}=\abs{x-0}$ is sufficiently small (but $\neq 0$).
+But this is easy. Since
+\[
+\abs*{\sin\frac{1}{x}}\leq 1, \qquad\text{for all }x\neq 0,
+\]
+we have
+\[
+\abs*{x\sin\frac{1}{x}}\leq\abs{x}, \qquad\text{for all }x\neq 0,
+\]
+so we can make $\abs{x\sin 1/x}<\varepsilon$ simply by requiring that
+$\abs{x}<\varepsilon$ and $\neq 0$.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig08}\\[0.6em]
+\figlabel{8}
+\end{center}
+For the function $f(x)=x^2\sin 1/x$ (Figure~9) it seems even clearer that $f$
+approaches $0$ near $0$. If, for example, we want
+\[
+\abs*{x^2\sin\frac{1}{x}}<\frac{1}{10},
+\]
+then we certainly need only require that $\abs{x}<\frac{1}{10}$ and $x\neq 0$,
+since this implies that $\abs{x^2}<\frac{1}{100}$ and consequently
+\[
+\abs*{x^2\sin\frac{1}{x}}\leq\abs{x^2}<\frac{1}{100}<\frac{1}{10}.
+\]
+(We could do even better, and allow $\abs{x}<1/\sqrt{10}$ and $x\neq 0$, but
+there is no particular virtue in being as economical as possible.) In general,
+if $\varepsilon>0$, to ensure that
+\[
+\abs*{x^2\sin\frac{1}{x}}<\varepsilon,
+\]
+we need only require that
+\[
+\abs{x}<\varepsilon \quad\text{and}\quad x\neq 0,
+\]
+provided that $\varepsilon\leq 1$. If we are given an $\varepsilon$ which is
+greater than $1$ (it might be, even though it is ``small'' $\varepsilon$'s
+which are of interest), then it does not suffice to require that
+$\abs{x}<\varepsilon$, but it certainly suffices to require that
+$\abs{x}<1$ and $x\neq 0$.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig09}\\[0.6em]
+\figlabel{9}
+\end{center}
+As a third example, consider the function $f(x)=\sqrt{\abs{x}}\sin 1/x$
+(Figure~10). In order to make $\abs{\sqrt{\abs{x}}\sin 1/x}<\varepsilon$ we
+can require that
+\[
+\abs{x}<\varepsilon^2 \quad\text{and}\quad x\neq 0
+\]
+(the algebra is left to you).
+
+\begin{center}
+\figtex{assets/plots/ch05-fig10}\\[0.6em]
+\figlabel{10}
+\end{center}
+Finally, let us consider the function $f(x)=\sin 1/x$ (Figure~11). For this
+function it is \emph{false} that $f$ approaches $0$ near $0$. This amounts to
+saying that it is not true for every number $\varepsilon>0$ that we can get
+$\abs{f(x)-0}<\varepsilon$ by choosing $x$ sufficiently small, and $\neq 0$.
+To show this we simply have to find \emph{one} $\varepsilon>0$ for which the
+condition $\abs{f(x)-0}<\varepsilon$ cannot be guaranteed, no matter how small
+we require $\abs{x}$ to be. In fact, $\varepsilon=\frac{1}{2}$ will do: it is
+impossible to ensure that $\abs{f(x)}<\frac{1}{2}$ no matter how small we
+require $\abs{x}$ to be; for if $A$ is any interval containing $0$, there is
+some number $x=1/(\frac{1}{2}\pi+2n\pi)$ which is in this interval, and for
+this $x$ we have $f(x)=1$.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig11}\\[0.6em]
+\figlabel{11}
+\end{center}
+This same argument can be used (Figure~12) to show that $f$ does not approach
+\emph{any} number near $0$. To show this we must again find, for any
+particular number $l$, some number $\varepsilon>0$ so that
+$\abs{f(x)-l}<\varepsilon$ is \emph{not} true, no matter how small $x$ is
+required to be. The choice $\varepsilon=\frac{1}{2}$ works for any number $l$;
+that is, no matter how small we require $\abs{x}$ to be, we cannot ensure that
+$\abs{f(x)-l}<\frac{1}{2}$. The reason is, that for any interval $A$
+containing $0$ we can find both $x_1$ and $x_2$ in this interval with
+\[
+f(x_1)=1 \qquad\text{and}\qquad f(x_2)=-1,
+\]
+namely
+\[
+x_1=\frac{1}{\frac{1}{2}\pi+2n\pi} \qquad\text{and}\qquad
+x_2=\frac{1}{\frac{3}{2}\pi+2m\pi}
+\]
+for large enough $n$ and $m$. But the interval from $l-\frac{1}{2}$ to
+$l+\frac{1}{2}$ cannot contain both $-1$ and $1$, since its total length is
+only $1$; so we cannot have
+\[
+\abs{1-l}<\frac{1}{2} \quad\text{and also}\quad \abs{-1-l}<\frac{1}{2},
+\]
+no matter what $l$ is.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig12}\\[0.6em]
+\figlabel{12}
+\end{center}
+The phenomenon exhibited by $f(x)=\sin 1/x$ near $0$ can occur in many ways.
+If we consider the function
+\[
+f(x)=\begin{cases}
+0, & x\text{ irrational}\\
+1, & x\text{ rational},
+\end{cases}
+\]
+then, no matter what $a$ is, $f$ does not approach any number $l$ near $a$.
+In fact, we cannot make $\abs{f(x)-l}<\frac{1}{4}$ no matter how close we
+bring $x$ to $a$, because in any interval around $a$ there are numbers $x$
+with $f(x)=0$, and also numbers $x$ with $f(x)=1$, so that we would need
+$\abs{0-l}<\frac{1}{4}$ and also $\abs{1-l}<\frac{1}{4}$.
+
+An amusing variation on this behavior is presented by the function shown in
+Figure~13:
+\[
+f(x)=\begin{cases}
+x, & x\text{ rational}\\
+0, & x\text{ irrational}.
+\end{cases}
+\]
+The behavior of this function is ``opposite'' to that of $g(x)=\sin 1/x$; it
+approaches $0$ at $0$, but does not approach any number at $a$, if $a\neq 0$.
+By now you should have no difficulty convincing yourself that this is true.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig13}\\[0.6em]
+\figlabel{13}
+\end{center}
+We conclude with a very simple example (Figure~14):
+\[
+f(x)=\begin{cases}
+-1, & x<0\\
+1, & x>0.
+\end{cases}
+\]
+If $a>0$, then $f$ approaches $1$ near $a$: indeed, to ensure that
+$\abs{f(x)-1}<\varepsilon$ it certainly suffices to require that
+$\abs{x-a}<a$, since this implies
+\begin{align*}
+&-a<x-a\\
+\text{or}\quad &0<x
+\end{align*}
+so that $f(x)=1$. Similarly, if $b<0$, then $f$ approaches $-1$ near $b$: to
+ensure that $\abs{f(x)-(-1)}<\varepsilon$ it suffices to require that
+$\abs{x-b}<-b$. Finally, as you may easily check, $f$ does not approach any
+number near $0$.
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig14}\\[0.6em]
+\figlabel{14}
+\end{center}
+The time has now come to point out that of the many demonstrations about
+limits which we have given, not one has been a real proof. The fault lies not
+with our reasoning, but with our definition. If our provisional definition of
+a function was open to criticism, our provisional definition of approaching a
+limit is even more vulnerable. This definition is simply not sufficiently
+precise to be used in proofs. It is hardly clear how one ``makes'' $f(x)$
+close to $l$ (whatever ``close'' means) by ``requiring'' $x$ to be
+sufficiently close to $a$ (however close ``sufficiently'' close is supposed to
+be). Despite the criticisms of our definition you may feel (I certainly hope
+you do) that our arguments were nevertheless quite convincing. In order to
+present any sort of argument at all, we have been practically forced to invent
+the real definition. It is possible to arrive at this definition in several
+steps, each one clarifying some obscure phrase which still remains. Let us
+begin, once again, with the provisional definition:
+
+\begin{quote}
+The function $f$ approaches the limit $l$ near $a$, if we can make $f(x)$ as
+close as we like to $l$ by requiring that $x$ be sufficiently close to, but
+unequal to, $a$.
+\end{quote}
+
+The very first change which we made in this definition was to note that making
+$f(x)$ close to $l$ meant making $\abs{f(x)-l}$ small, and similarly for $x$
+and $a$:
+
+\begin{quote}
+The function $f$ approaches the limit $l$ near $a$, if we can make
+$\abs{f(x)-l}$ as small as we like by requiring that $\abs{x-a}$ be
+sufficiently small, and $x\neq a$.
+\end{quote}
+
+The second, more crucial, change was to note that making $\abs{f(x)-l}$ ``as
+small as we like'' means making $\abs{f(x)-l}<\varepsilon$ for any
+$\varepsilon>0$ that happens to be given us:
+
+\begin{quote}
+The function $f$ approaches the limit $l$ near $a$, if for every number
+$\varepsilon>0$ we can make $\abs{f(x)-l}<\varepsilon$ by requiring that
+$\abs{x-a}$ be sufficiently small, and $x\neq a$.
+\end{quote}
+
+There is a common pattern to all the demonstrations about limits which we have
+given. For each number $\varepsilon>0$ we found some other positive number,
+$\delta$ say, with the property that if $x\neq a$ and $\abs{x-a}<\delta$, then
+$\abs{f(x)-l}<\varepsilon$. For the function $f(x)=x\sin 1/x$ (with $a=0$,
+$l=0$), the number $\delta$ was just the number $\varepsilon$; for
+$f(x)=\sqrt{\abs{x}}\sin 1/x$, it was $\varepsilon^2$; for $f(x)=x^2$ it was
+the minimum of $1$ and $\varepsilon/(2\abs{a}+1)$. In general, it may not be
+at all clear how to find the number $\delta$, given $\varepsilon$, but it is
+the condition $\abs{x-a}<\delta$ which expresses how small ``sufficiently''
+small must be:
+
+\begin{quote}
+The function $f$ approaches the limit $l$ near $a$, if for every
+$\varepsilon>0$ there is some $\delta>0$ such that, for all $x$, if
+$\abs{x-a}<\delta$ and $x\neq a$, then $\abs{f(x)-l}<\varepsilon$.
+\end{quote}
+
+This is practically the definition we will adopt. We will make only one
+trivial change, noting that ``$\abs{x-a}<\delta$ and $x\neq a$'' can just as
+well be expressed ``$0<\abs{x-a}<\delta$.''
+
+\begin{spivakdefn}
+The function $f$ \textbf{approaches the limit $l$ near $a$} means: for every
+$\varepsilon>0$ there is some $\delta>0$ such that, for all $x$, if
+$0<\abs{x-a}<\delta$, then $\abs{f(x)-l}<\varepsilon$.
+\end{spivakdefn}
+
+This definition is so important (\emph{everything} we do from now on depends
+on it) that proceeding any further without knowing it is hopeless. If
+necessary memorize it, like a poem! That, at least, is better than stating it
+incorrectly; if you do this you are doomed to give incorrect proofs. A good
+exercise in giving correct proofs is to review every fact already demonstrated
+about functions approaching limits, giving formal proofs of each. In most
+cases, this will merely involve a bit of rewording to make the arguments
+conform to our formal definition---all the algebraic work has been done
+already. When proving that $f$ does \emph{not} approach $l$ at $a$, be sure to
+negate the definition correctly:
+
+If it is \emph{not} true that
+\begin{quote}
+for every $\varepsilon>0$ there is some $\delta>0$ such that, for all $x$, if
+$0<\abs{x-a}<\delta$, then $\abs{f(x)-l}<\varepsilon$,
+\end{quote}
+then
+\begin{quote}
+there is \emph{some} $\varepsilon>0$ such that for \emph{every} $\delta>0$
+there is \emph{some} $x$ which satisfies $0<\abs{x-a}<\delta$ but not
+$\abs{f(x)-l}<\varepsilon$.
+\end{quote}
+
+Thus, to show that the function $f(x)=\sin 1/x$ does not approach $0$ near
+$0$, we consider $\varepsilon=\frac{1}{2}$ and note that for every
+$\delta>0$ there is some $x$ with $0<\abs{x-0}<\delta$ but not
+$\abs{\sin 1/x-0}<\frac{1}{2}$---namely, an $x$ of the form
+$1/(\pi/2+2n\pi)$, where $n$ is so large that $1/(\pi/2+2n\pi)<\delta$.
+
+As a final illustration of the use of the definition of a function approaching
+a limit, we have reserved the function shown in Figure~15, a standard example,
+but one of the most complicated:
+\[
+f(x)=\begin{cases}
+0, & x\text{ irrational, }0<x<1\\
+1/q, & x=p/q\text{ in lowest terms, }0<x<1.
+\end{cases}
+\]
+(Recall that $p/q$ is in lowest terms if $p$ and $q$ are integers with no
+common factor and $q>0$.)
+
+\begin{center}
+\figtex{assets/plots/ch05-fig15}\\[0.6em]
+\figlabel{15}
+\end{center}
+For any number $a$, with $0<a<1$, the function $f$ approaches $0$ at $a$. To
+prove this, consider any number $\varepsilon>0$. Let $n$ be a natural number
+so large that $1/n\leq\varepsilon$. Notice that the only numbers $x$ for which
+$\abs{f(x)-0}<\varepsilon$ could be false are:
+\[
+\frac{1}{2},\
+\frac{1}{3},\frac{2}{3},\
+\frac{1}{4},\frac{3}{4},\
+\frac{1}{5},\frac{2}{5},\frac{3}{5},\frac{4}{5},\
+\ldots,\
+\frac{1}{n},\ldots,\frac{n-1}{n}.
+\]
+(If $a$ is rational, then $a$ might be one of these numbers.) However many of
+these numbers there may be, there are, at any rate, only finitely many.
+Therefore, of all these numbers, one is closest to $a$; that is,
+$\abs{p/q-a}$ is smallest for one $p/q$ among these numbers. (If $a$ happens
+to be one of these numbers, then consider only the values $\abs{p/q-a}$ for
+$p/q\neq a$.) This closest distance may be chosen as the $\delta$. For if
+$0<\abs{x-a}<\delta$, then $x$ is \emph{not} one of
+\[
+\frac{1}{2},\ldots,\frac{n-1}{n}
+\]
+and therefore $\abs{f(x)-0}<\varepsilon$ is true. This completes the proof.
+Note that our description of the $\delta$ which works for a given
+$\varepsilon$ is completely adequate---there is no reason why we must give a
+formula for $\delta$ in terms of $\varepsilon$.
+
+Armed with our definition, we are now prepared to prove our first theorem; you
+have probably assumed the result all along, which is a very reasonable thing
+to do. This theorem is really a test case for our definition: if the theorem
+could not be proved, our definition would be useless.
+
+\begin{theorem}
+A function cannot approach two different limits near $a$. In other words, if
+$f$ approaches $l$ near $a$, and $f$ approaches $m$ near $a$, then $l=m$.
+\end{theorem}
+
+\begin{proof}
+Since this is our first theorem about limits it will certainly be necessary to
+translate the hypotheses according to the definition.
+
+Since $f$ approaches $l$ near $a$, we know that for any $\varepsilon>0$ there
+is some number $\delta_1>0$ such that, for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta_1,\text{ then }\abs{f(x)-l}<\varepsilon.
+\]
+We also know, since $f$ approaches $m$ near $a$, that there is some
+$\delta_2>0$ such that, for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta_2,\text{ then }\abs{f(x)-m}<\varepsilon.
+\]
+We have had to use two numbers, $\delta_1$ and $\delta_2$, since there is no
+guarantee that the $\delta$ which works in one definition will work in the
+other. But, in fact, it is now easy to conclude that for any $\varepsilon>0$
+there is some $\delta>0$ such that, for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta,\text{ then }\abs{f(x)-l}<\varepsilon\text{ and }\abs{f(x)-m}<\varepsilon;
+\]
+we simply choose $\delta=\min(\delta_1,\delta_2)$.
+
+To complete the proof we just have to pick a particular $\varepsilon>0$ for
+which the two conditions
+\[
+\abs{f(x)-l}<\varepsilon \quad\text{and}\quad \abs{f(x)-m}<\varepsilon
+\]
+cannot both hold, if $l\neq m$. The proper choice is suggested by Figure~16.
+If $l\neq m$, so that $\abs{l-m}>0$, we can choose $\abs{l-m}/2$ as our
+$\varepsilon$. It follows that there is a $\delta>0$ such that, for all $x$,
+\begin{align*}
+\text{if }0<\abs{x-a}<\delta,\text{ then }&\abs{f(x)-l}<\frac{\abs{l-m}}{2}\\
+\text{and }&\abs{f(x)-m}<\frac{\abs{l-m}}{2}.
+\end{align*}
+This implies that for $0<\abs{x-a}<\delta$ we have
+\begin{align*}
+\abs{l-m}&=\abs{l-f(x)+f(x)-m}\leq\abs{l-f(x)}+\abs{f(x)-m}\\
+&<\frac{\abs{l-m}}{2}+\frac{\abs{l-m}}{2}\\
+&=\abs{l-m},
+\end{align*}
+a contradiction.
+\end{proof}
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig16}\\[0.6em]
+\figlabel{16}
+\end{center}
+The number $l$ which $f$ approaches near $a$ is denoted by
+$\lim_{x\to a}f(x)$ (read: the limit of $f(x)$ as $x$ approaches $a$). This
+definition is possible only because of Theorem~1, which ensures that
+$\lim_{x\to a}f(x)$ never has to stand for two different numbers. The
+equation
+\[
+\lim_{x\to a}f(x)=l
+\]
+has exactly the same meaning as the phrase
+\[
+\text{$f$ approaches $l$ near $a$.}
+\]
+The possibility still remains that $f$ does not approach $l$ near $a$, for any
+$l$, so that $\lim_{x\to a}f(x)=l$ is false for every number $l$. This is
+usually expressed by saying that ``$\lim_{x\to a}f(x)$ does not exist.''
+
+Notice that our new notation introduces an extra, utterly irrelevant letter
+$x$, which could be replaced by $t$, $y$, or any other letter which does not
+already appear---the symbols
+\[
+\lim_{x\to a}f(x),\qquad \lim_{t\to a}f(t),\qquad \lim_{y\to a}f(y),
+\]
+all denote precisely the same number, which depends on $f$ and $a$, and has
+nothing to do with $x$, $t$, or $y$ (these letters, in fact, do not denote
+anything at all). A more logical symbol would be something like
+$\operatorname*{lim}\limits_{a}f$, but this notation, despite its brevity, is
+so infuriatingly rigid that almost no one has seriously tried to use it. The
+notation $\lim_{x\to a}f(x)$ is much more useful because a function $f$ often
+has no simple name, even though it might be possible to express $f(x)$ by a
+simple formula involving $x$. Thus, the short symbol
+\[
+\lim_{x\to a}(x^2+\sin x)
+\]
+could be paraphrased only by the awkward expression
+\[
+\operatorname*{lim}\limits_{a}f,\text{ where }f(x)=x^2+\sin x.
+\]
+Another advantage of the standard symbolism is illustrated by the expressions
+\begin{align*}
+\lim_{x\to a}x+t^3,\\
+\lim_{t\to a}x+t^3.
+\end{align*}
+The first means the number which $f$ approaches near $a$ when
+\[
+f(x)=x+t^3, \qquad\text{for all }x;
+\]
+the second means the number which $f$ approaches near $a$ when
+\[
+f(t)=x+t^3, \qquad\text{for all }t.
+\]
+You should have little difficulty (especially if you consult Theorem~2)
+proving that
+\begin{align*}
+\lim_{x\to a}x+t^3&=a+t^3,\\
+\lim_{t\to a}x+t^3&=x+a^3.
+\end{align*}
+
+These examples illustrate the main advantage of our notation, which is its
+flexibility. In fact, the notation $\lim_{x\to a}f(x)$ is so flexible that
+there is some danger of forgetting what it really means. Here is a simple
+exercise in the use of this notation, which will be important later: first
+interpret precisely, and then prove the equality of the expressions
+\[
+\lim_{x\to a}f(x) \qquad\text{and}\qquad \lim_{h\to 0}f(a+h).
+\]
+
+An important part of this chapter is the proof of a theorem which will make it
+easy to find many limits, as we promised long ago. The proof depends upon
+certain properties of inequalities and absolute values, hardly surprising when
+one considers the definition of limit. Although these facts have already been
+stated in Problems~1-20, 1-21, and 1-22, because of their importance they will
+be presented once again, in the form of a lemma (a lemma is an auxiliary
+theorem, a result that justifies its existence only by virtue of its prominent
+role in the proof of another theorem). The lemma says, roughly, that if $x$ is
+close to $x_0$, and $y$ is close to $y_0$, then $x+y$ will be close to
+$x_0+y_0$, and $xy$ will be close to $x_0 y_0$, and $1/y$ will be close to
+$1/y_0$. This intuitive statement is much easier to remember than the precise
+estimates of the lemma, and it is not unreasonable to read the proof of
+Theorem~2 first, in order to see just how these estimates are used.
+
+\begin{spivakdefn}[LEMMA]
+(1) If
+\[
+\abs{x-x_0}<\frac{\varepsilon}{2}\quad\text{and}\quad
+\abs{y-y_0}<\frac{\varepsilon}{2},
+\]
+then
+\[
+\abs{(x+y)-(x_0+y_0)}<\varepsilon.
+\]
+(2) If
+\[
+\abs{x-x_0}<\min\Bigl(1,\frac{\varepsilon}{2(\abs{y_0}+1)}\Bigr)
+\quad\text{and}\quad
+\abs{y-y_0}<\frac{\varepsilon}{2(\abs{x_0}+1)},
+\]
+then
+\[
+\abs{xy-x_0 y_0}<\varepsilon.
+\]
+(3) If $y_0\neq 0$ and
+\[
+\abs{y-y_0}<\min\Bigl(\frac{\abs{y_0}}{2},\frac{\varepsilon\abs{y_0}^2}{2}\Bigr),
+\]
+then $y\neq 0$ and
+\[
+\abs*{\frac{1}{y}-\frac{1}{y_0}}<\varepsilon.
+\]
+\end{spivakdefn}
+
+\begin{proof}
+(1)
+\begin{align*}
+\abs{(x+y)-(x_0+y_0)}&=\abs{(x-x_0)+(y-y_0)}\\
+&\leq\abs{x-x_0}+\abs{y-y_0}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.
+\end{align*}
+
+(2) Since $\abs{x-x_0}<1$ we have
+\[
+\abs{x}-\abs{x_0}\leq\abs{x-x_0}<1,
+\]
+so that
+\[
+\abs{x}<1+\abs{x_0}.
+\]
+Thus
+\begin{align*}
+\abs{xy-x_0 y_0}&=\abs{x(y-y_0)+y_0(x-x_0)}\\
+&\leq\abs{x}\cdot\abs{y-y_0}+\abs{y_0}\cdot\abs{x-x_0}\\
+&<(1+\abs{x_0})\cdot\frac{\varepsilon}{2(\abs{x_0}+1)}+\abs{y_0}\cdot\frac{\varepsilon}{2(\abs{y_0}+1)}\\
+&<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.
+\end{align*}
+
+(3) We have
+\[
+\abs{y_0}-\abs{y}\leq\abs{y-y_0}<\frac{\abs{y_0}}{2},
+\]
+so $\abs{y}>\abs{y_0}/2$. In particular, $y\neq 0$, and
+\[
+\frac{1}{\abs{y}}<\frac{2}{\abs{y_0}}.
+\]
+Thus
+\[
+\abs*{\frac{1}{y}-\frac{1}{y_0}}=\frac{\abs{y_0-y}}{\abs{y}\cdot\abs{y_0}}<\frac{2}{\abs{y_0}}\cdot\frac{1}{\abs{y_0}}\cdot\frac{\varepsilon\abs{y_0}^2}{2}=\varepsilon.
+\]
+\end{proof}
+
+\begin{theorem}
+If $\lim_{x\to a}f(x)=l$ and $\lim_{x\to a}g(x)=m$, then
+\begin{align*}
+&(1)& \lim_{x\to a}(f+g)(x)&=l+m;\\
+&(2)& \lim_{x\to a}(f\cdot g)(x)&=l\cdot m.
+\end{align*}
+Moreover, if $m\neq 0$, then
+\[
+(3)\qquad \lim_{x\to a}\Bigl(\frac{1}{g}\Bigr)(x)=\frac{1}{m}.
+\]
+\end{theorem}
+
+\begin{proof}
+The hypothesis means that for every $\varepsilon>0$ there are
+$\delta_1,\delta_2>0$ such that, for all $x$,
+\begin{align*}
+&\text{if }0<\abs{x-a}<\delta_1,\text{ then }\abs{f(x)-l}<\varepsilon,\\
+\text{and}\quad &\text{if }0<\abs{x-a}<\delta_2,\text{ then }\abs{g(x)-m}<\varepsilon.
+\end{align*}
+This means (since, after all, $\varepsilon/2$ is also a positive number) that
+there are $\delta_1,\delta_2>0$ such that, for all $x$,
+\begin{align*}
+&\text{if }0<\abs{x-a}<\delta_1,\text{ then }\abs{f(x)-l}<\frac{\varepsilon}{2},\\
+\text{and}\quad &\text{if }0<\abs{x-a}<\delta_2,\text{ then }\abs{g(x)-m}<\frac{\varepsilon}{2}.
+\end{align*}
+Now let $\delta=\min(\delta_1,\delta_2)$. If $0<\abs{x-a}<\delta$, then
+$0<\abs{x-a}<\delta_1$ and $0<\abs{x-a}<\delta_2$ are both true, so both
+\[
+\abs{f(x)-l}<\frac{\varepsilon}{2} \quad\text{and}\quad
+\abs{g(x)-m}<\frac{\varepsilon}{2}
+\]
+are true. But by part~(1) of the lemma this implies that
+$\abs{(f+g)(x)-(l+m)}<\varepsilon$. This proves~(1).
+
+To prove~(2) we proceed similarly, after consulting part~(2) of the lemma. If
+$\varepsilon>0$ there are $\delta_1,\delta_2>0$ such that, for all $x$,
+\begin{align*}
+&\text{if }0<\abs{x-a}<\delta_1,\text{ then }
+\abs{f(x)-l}<\min\Bigl(1,\frac{\varepsilon}{2(\abs{m}+1)}\Bigr),\\
+\text{and}\quad &\text{if }0<\abs{x-a}<\delta_2,\text{ then }
+\abs{g(x)-m}<\frac{\varepsilon}{2(\abs{l}+1)}.
+\end{align*}
+Again let $\delta=\min(\delta_1,\delta_2)$. If $0<\abs{x-a}<\delta$, then
+\[
+\abs{f(x)-l}<\min\Bigl(1,\frac{\varepsilon}{2(\abs{m}+1)}\Bigr)
+\quad\text{and}\quad
+\abs{g(x)-m}<\frac{\varepsilon}{2(\abs{l}+1)}.
+\]
+So, by the lemma, $\abs{(f\cdot g)(x)-l\cdot m}<\varepsilon$, and this
+proves~(2).
+
+Finally, if $\varepsilon>0$ there is a $\delta>0$ such that, for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta,\text{ then }
+\abs{g(x)-m}<\min\Bigl(\frac{\abs{m}}{2},\frac{\varepsilon\abs{m}^2}{2}\Bigr).
+\]
+But according to part~(3) of the lemma this means, first, that $g(x)\neq 0$,
+so $(1/g)(x)$ makes sense, and second that
+\[
+\abs*{\Bigl(\frac{1}{g}\Bigr)(x)-\frac{1}{m}}<\varepsilon.
+\]
+This proves~(3).
+\end{proof}
+
+Using Theorem~2 we can prove, trivially, such facts as
+\[
+\lim_{x\to a}\frac{x^3+7x^5}{x^2+1}=\frac{a^3+7a^5}{a^2+1},
+\]
+without going through the laborious process of finding a $\delta$, given an
+$\varepsilon$. We must begin with
+\begin{align*}
+\lim_{x\to a}7&=7,\\
+\lim_{x\to a}1&=1,\\
+\lim_{x\to a}x&=a,
+\end{align*}
+but these are easy to prove directly. If we \emph{want} to find the $\delta$,
+however, the proof of Theorem~2 amounts to a prescription for doing this.
+Suppose, to take a simpler example, that we want to find a $\delta$ such that,
+for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta,\text{ then }\abs{x^2+x-(a^2+a)}<\varepsilon.
+\]
+Consulting the proof of Theorem~2(1), we see that we must first find
+$\delta_1$ and $\delta_2>0$ such that, for all $x$,
+\begin{align*}
+&\text{if }0<\abs{x-a}<\delta_1,\text{ then }\abs{x^2-a^2}<\frac{\varepsilon}{2}\\
+\text{and}\quad &\text{if }0<\abs{x-a}<\delta_2,\text{ then }\abs{x-a}<\frac{\varepsilon}{2}.
+\end{align*}
+Since we have already given proofs that $\lim_{x\to a}x^2=a^2$ and
+$\lim_{x\to a}x=a$, we know how to do this:
+\begin{align*}
+\delta_1&=\min\Bigl(1,\frac{\varepsilon/2}{2\abs{a}+1}\Bigr),\\
+\delta_2&=\frac{\varepsilon}{2}.
+\end{align*}
+Thus we can take
+\[
+\delta=\min(\delta_1,\delta_2)=\min\Bigl(\min\Bigl(1,\frac{\varepsilon/2}{2\abs{a}+1}\Bigr),\frac{\varepsilon}{2}\Bigr).
+\]
+If $a\neq 0$, the same method can be used to find a $\delta>0$ such that, for
+all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta,\text{ then }
+\abs*{\frac{1}{x^2}-\frac{1}{a^2}}<\varepsilon.
+\]
+The proof of Theorem~2(3) shows that the second condition will follow if we
+find a $\delta>0$ such that, for all $x$,
+\[
+\text{if }0<\abs{x-a}<\delta,\text{ then }
+\abs{x^2-a^2}<\min\Bigl(\frac{\abs{a}^2}{2},\frac{\varepsilon\abs{a}^4}{2}\Bigr).
+\]
+Thus we can take
+\[
+\delta=\min\Biggl(1,\frac{\min\bigl(\abs{a}^2/2,\ \varepsilon\abs{a}^4/2\bigr)}{2\abs{a}+1}\Biggr).
+\]
+Naturally, these complicated expressions for $\delta$ can be simplified
+considerably, after they have been derived.
+
+One technical detail in the proof of Theorem~2 deserves some discussion. In
+order for $\lim_{x\to a}f(x)$ to be defined it is, as we know, not necessary
+for $f$ to be defined at $a$, nor is it necessary for $f$ to be defined at all
+points $x\neq a$. However, there must be some $\delta>0$ such that $f(x)$ is
+defined for $x$ satisfying $0<\abs{x-a}<\delta$; otherwise the clause
+\[
+\text{``if }0<\abs{x-a}<\delta,\text{ then }\abs{f(x)-l}<\varepsilon\text{''}
+\]
+would make no sense at all, since the symbol $f(x)$ would make no sense for
+some $x$'s. If $f$ and $g$ are two functions for which the definition makes
+sense, it is easy to see that the same is true for $f+g$ and $f\cdot g$. But
+this is not so clear for $1/g$, since $1/g$ is undefined for $x$ with
+$g(x)=0$. However, this fact gets established in the proof of Theorem~2(3).
+
+There are times when we would like to speak of the limit which $f$ approaches
+at $a$, even though there is no $\delta>0$ such that $f(x)$ is defined for $x$
+satisfying $0<\abs{x-a}<\delta$. For example, we want to distinguish the
+behavior of the two functions shown in Figure~17, even though they are not
+defined for numbers less than $a$. For the function of Figure~17(a) we write
+\[
+\lim_{x\to a^+}f(x)=l \qquad\text{or}\qquad \lim_{x\downarrow a}f(x)=l.
+\]
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig17}\\[0.6em]
+\figlabel{17}
+\end{center}
+(The symbols on the left are read: the limit of $f(x)$ as $x$ approaches $a$
+from above.) These ``limits from above'' are obviously closely related to
+ordinary limits, and the definition is very similar:
+$\lim_{x\to a^+}f(x)=l$ means that for every $\varepsilon>0$ there is a
+$\delta>0$ such that, for all $x$,
+\[
+\text{if }0<x-a<\delta,\text{ then }\abs{f(x)-l}<\varepsilon.
+\]
+(The condition ``$0<x-a<\delta$'' is equivalent to
+``$0<\abs{x-a}<\delta$ and $x>a$.'')
+
+``Limits from below'' (Figure~18) are defined similarly:
+$\lim_{x\to a^-}f(x)=l$ (or $\lim_{x\uparrow a}f(x)=l$) means that for every
+$\varepsilon>0$ there is a $\delta>0$ such that, for all $x$,
+\[
+\text{if }0<a-x<\delta,\text{ then }\abs{f(x)-l}<\varepsilon.
+\]
+
+\begin{center}
+\figtex{assets/geometric/ch05-fig18}\\[0.6em]
+\figlabel{18}
+\end{center}
+It is quite possible to consider limits from above and below even if $f$ is
+defined for numbers both greater and less than $a$. Thus, for the function $f$
+of Figure~14, we have
+\[
+\lim_{x\to 0^+}f(x)=1 \qquad\text{and}\qquad \lim_{x\to 0^-}f(x)=-1.
+\]
+It is an easy exercise (Problem~29) to show that $\lim_{x\to a}f(x)$ exists if
+and only if $\lim_{x\to a^+}f(x)$ and $\lim_{x\to a^-}f(x)$ both exist and are
+equal.
+
+Like the definitions of limits from above and below, which have been smuggled
+into the text informally, there are other modifications of the limit concept
+which will be found useful. In Chapter~4 it was claimed that if $x$ is large,
+then $\sin 1/x$ is close to $0$. This assertion is usually written
+\[
+\lim_{x\to\infty}\sin 1/x=0.
+\]
+The symbol $\lim_{x\to\infty}f(x)$ is read ``the limit of $f(x)$ as $x$
+approaches $\infty$,'' or ``as $x$ becomes infinite,'' and a limit of the form
+$\lim_{x\to\infty}f(x)$ is often called a limit at infinity.
+
+Figure~19 illustrates a general situation where $\lim_{x\to\infty}f(x)=l$.
+Formally, $\lim_{x\to\infty}f(x)=l$ means that for every $\varepsilon>0$ there
+is a number $N$ such that, for all $x$,
+\[
+\text{if }x>N,\text{ then }\abs{f(x)-l}<\varepsilon.
+\]
+The analogy with the definition of ordinary limits should be clear: whereas
+the condition ``$0<\abs{x-a}<\delta$'' expresses the fact that $x$ is close to
+$a$, the condition ``$x>N$'' expresses the fact that $x$ is large.
+
+\begin{center}
+\figtex{assets/plots/ch05-fig19}\\[0.6em]
+\figlabel{19}
+\end{center}
+We have spent so little time on limits from above and below, and at infinity,
+because the general philosophy behind the definitions should be clear if you
+understand the definition of ordinary limits (which are by far the most
+important). Many exercises on these definitions are provided in the Problems,
+which also contain several other types of limits which are occasionally
+useful.
+
+\subsection*{PROBLEMS}
+
+\pnum{1.}
+Find the following limits. (These limits all follow, after some algebraic
+manipulations, from the various parts of Theorem~2; be sure you know which
+ones are used in each case, but don't bother listing them.)
+\begin{romans}
+\item $\displaystyle\lim_{x\to 1}\dfrac{x^2-1}{x+1}$.
+\item $\displaystyle\lim_{x\to 2}\dfrac{x^3-8}{x-2}$.
+\item $\displaystyle\lim_{x\to 3}\dfrac{x^3-8}{x-2}$.
+\item $\displaystyle\lim_{x\to y}\dfrac{x^n-y^n}{x-y}$.
+\item $\displaystyle\lim_{y\to x}\dfrac{x^n-y^n}{x-y}$.
+\item $\displaystyle\lim_{h\to 0}\dfrac{\sqrt{a+h}-\sqrt{a}}{h}$.
+\end{romans}
+
+\pnum{2.}
+Find the following limits.
+\begin{romans}
+\item $\displaystyle\lim_{x\to 1}\dfrac{1-\sqrt{x}}{1-x}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{1-\sqrt{1-x^2}}{x}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{1-\sqrt{1-x^2}}{x^2}$.
+\end{romans}
+
+\pnum{3.}
+In each of the following cases, determine the limit $l$ for the given $a$, and
+prove that it is the limit by showing how to find a $\delta$ such that
+$\abs{f(x)-l}<\varepsilon$ for all $x$ satisfying $0<\abs{x-a}<\delta$.
+\begin{romans}
+\item $f(x)=x\bigl[3-\cos(x^2)\bigr]$, $a=0$.
+\item $f(x)=x^2+5x-2$, $a=2$.
+\item $f(x)=\dfrac{100}{x}$, $a=1$.
+\item $f(x)=x^4$, arbitrary $a$.
+\item $f(x)=x^4+\dfrac{1}{x}$, $a=1$.
+\item $f(x)=\dfrac{x}{2-\sin^2 x}$, $a=0$.
+\item $f(x)=\sqrt{\abs{x}}$, $a=0$.
+\item $f(x)=\sqrt{x}$, $a=1$.
+\end{romans}
+
+\pnum{4.}
+For each of the functions in Problem~4-17, decide for which numbers $a$ the
+limit $\lim_{x\to a}f(x)$ exists.
+
+\pnum{*5.}
+\begin{letters}
+\item Do the same for each of the functions in Problem~4-19.
+\item Same problem, if we use infinite decimals ending in a string of $0$'s
+instead of those ending in a string of $9$'s.
+\end{letters}
+
+\pnum{6.}
+Suppose the functions $f$ and $g$ have the following property: for all
+$\varepsilon>0$ and all $x$,
+\begin{align*}
+\text{if }0<\abs{x-2}<\sin^2\Bigl(\frac{\varepsilon^2}{9}\Bigr)+\varepsilon,
+&\text{ then }\abs{f(x)-2}<\varepsilon,\\
+\text{if }0<\abs{x-2}<\varepsilon^2,
+&\text{ then }\abs{g(x)-4}<\varepsilon.
+\end{align*}
+For each $\varepsilon>0$ find a $\delta>0$ such that, for all $x$,
+\begin{romans}
+\item if $0<\abs{x-2}<\delta$, then $\abs{f(x)+g(x)-6}<\varepsilon$.
+\item if $0<\abs{x-2}<\delta$, then $\abs{f(x)g(x)-8}<\varepsilon$.
+\item if $0<\abs{x-2}<\delta$, then
+$\abs*{\dfrac{1}{g(x)}-\dfrac{1}{4}}<\varepsilon$.
+\item if $0<\abs{x-2}<\delta$, then
+$\abs*{\dfrac{f(x)}{g(x)}-\dfrac{1}{2}}<\varepsilon$.
+\end{romans}
+
+\pnum{7.}
+Give an example of a function $f$ for which the following assertion is
+\emph{false}: If $\abs{f(x)-l}<\varepsilon$ when $0<\abs{x-a}<\delta$, then
+$\abs{f(x)-l}<\varepsilon/2$ when $0<\abs{x-a}<\delta/2$.
+
+\pnum{8.}
+\begin{letters}
+\item If $\lim_{x\to a}f(x)$ and $\lim_{x\to a}g(x)$ do not exist, can
+$\lim_{x\to a}[f(x)+g(x)]$ exist? Can $\lim_{x\to a}f(x)g(x)$ exist?
+\item If $\lim_{x\to a}f(x)$ exists and $\lim_{x\to a}[f(x)+g(x)]$ exists,
+must $\lim_{x\to a}g(x)$ exist?
+\item If $\lim_{x\to a}f(x)$ exists and $\lim_{x\to a}g(x)$ does not exist,
+can $\lim_{x\to a}[f(x)+g(x)]$ exist?
+\item If $\lim_{x\to a}f(x)$ exists and $\lim_{x\to a}f(x)g(x)$ exists, does
+it follow that $\lim_{x\to a}g(x)$ exists?
+\end{letters}
+
+\pnum{9.}
+Prove that $\lim_{x\to a}f(x)=\lim_{h\to 0}f(a+h)$. (This is mainly an
+exercise in understanding what the terms mean.)
+
+\pnum{10.}
+\begin{letters}
+\item Prove that $\lim_{x\to a}f(x)=l$ if and only if
+$\lim_{x\to a}[f(x)-l]=0$. (First see why the assertion is obvious; then
+provide a rigorous proof. In this chapter most problems which ask for proofs
+should be treated in the same way.)
+\item Prove that $\lim_{x\to 0}f(x)=\lim_{x\to a}f(x-a)$.
+\item Prove that $\lim_{x\to 0}f(x)=\lim_{x\to 0}f(x^3)$.
+\item Give an example where $\lim_{x\to 0}f(x^2)$ exists, but
+$\lim_{x\to 0}f(x)$ does not.
+\end{letters}
+
+\pnum{11.}
+Suppose there is a $\delta>0$ such that $f(x)=g(x)$ when
+$0<\abs{x-a}<\delta$. Prove that $\lim_{x\to a}f(x)=\lim_{x\to a}g(x)$. In
+other words, $\lim_{x\to a}f(x)$ depends only on the values of $f(x)$ for $x$
+near $a$---this fact is often expressed by saying that limits are a ``local
+property.'' (It will clearly help to use $\delta'$, or some other letter,
+instead of $\delta$, in the definition of limits.)
+
+\pnum{12.}
+\begin{letters}
+\item Suppose that $f(x)\leq g(x)$ for all $x$. Prove that
+$\lim_{x\to a}f(x)\leq\lim_{x\to a}g(x)$, provided that these limits exist.
+\item How can the hypotheses be weakened?
+\item If $f(x)<g(x)$ for all $x$, does it necessarily follow that
+$\lim_{x\to a}f(x)<\lim_{x\to a}g(x)$?
+\end{letters}
+
+\pnum{13.}
+Suppose that $f(x)\leq g(x)\leq h(x)$ and that
+$\lim_{x\to a}f(x)=\lim_{x\to a}h(x)$. Prove that $\lim_{x\to a}g(x)$ exists,
+and that $\lim_{x\to a}g(x)=\lim_{x\to a}f(x)=\lim_{x\to a}h(x)$. (Draw a
+picture!)
+
+\pnum{*14.}
+\begin{letters}
+\item Prove that if $\lim_{x\to 0}f(x)/x=l$ and $b\neq 0$, then
+$\lim_{x\to 0}f(bx)/x=bl$. Hint: Write $f(bx)/x=b[f(bx)/bx]$.
+\item What happens if $b=0$?
+\item Part~(a) enables us to find $\lim_{x\to 0}(\sin 2x)/x$ in terms of
+$\lim_{x\to 0}(\sin x)/x$. Find this limit in another way.
+\end{letters}
+
+\pnum{15.}
+Evaluate the following limits in terms of the number
+$\alpha=\lim_{x\to 0}(\sin x)/x$.
+\begin{romans}
+\item $\displaystyle\lim_{x\to 0}\dfrac{\sin 3x}{x}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{\sin ax}{\sin bx}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{\sin^2 2x}{x}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{\sin^2 2x}{x^2}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{1-\cos x}{x^2}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{\tan^2 x+2x}{x+x^2}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{x\sin x}{1-\cos x}$.
+\item $\displaystyle\lim_{h\to 0}\dfrac{\sin(x+h)-\sin x}{h}$.
+\item $\displaystyle\lim_{x\to 1}\dfrac{\sin(x^2-1)}{x-1}$.
+\item $\displaystyle\lim_{x\to 0}\dfrac{x^2(3+\sin x)}{(x+\sin x)^2}$.
+\item $\displaystyle\lim_{x\to 1}(x^2-1)^3\sin\Bigl(\dfrac{1}{x-1}\Bigr)^3$.
+\end{romans}
+
+\pnum{16.}
+\begin{letters}
+\item Prove that if $\lim_{x\to a}f(x)=l$, then
+$\lim_{x\to a}\abs{f}(x)=\abs{l}$.
+\item Prove that if $\lim_{x\to a}f(x)=l$ and $\lim_{x\to a}g(x)=m$, then
+$\lim_{x\to a}\max(f,g)(x)=\max(l,m)$ and similarly for $\min$.
+\end{letters}
+
+\pnum{17.}
+\begin{letters}
+\item Prove that $\lim_{x\to 0}1/x$ does not exist, i.e., show that
+$\lim_{x\to 0}1/x=l$ is false for every number $l$.
+\item Prove that $\lim_{x\to 1}1/(x-1)$ does not exist.
+\end{letters}
+
+\pnum{18.}
+Prove that if $\lim_{x\to a}f(x)=l$, then there is a number $\delta>0$ and a
+number $M$ such that $\abs{f(x)}<M$ if $0<\abs{x-a}<\delta$. (What does this
+mean pictorially?) Hint: Why does it suffice to prove that
+$l-1<f(x)<l+1$ for $0<\abs{x-a}<\delta$?
+
+\pnum{19.}
+Prove that if $f(x)=0$ for irrational $x$ and $f(x)=1$ for rational $x$, then
+$\lim_{x\to a}f(x)$ does not exist for any $a$.
+
+\pnum{*20.}
+Prove that if $f(x)=x$ for rational $x$, and $f(x)=-x$ for irrational $x$, then
+$\lim_{x\to a}f(x)$ does not exist if $a\neq 0$.
+
+\pnum{21.}
+\begin{letters}
+\item Prove that if $\lim_{x\to 0}g(x)=0$, then
+$\lim_{x\to 0}g(x)\sin 1/x=0$.
+\item Generalize this fact as follows: If $\lim_{x\to 0}g(x)=0$ and
+$\abs{h(x)}\leq M$ for all $x$, then $\lim_{x\to 0}g(x)h(x)=0$. (Naturally it
+is unnecessary to do part~(a) if you succeed in doing part~(b); actually the
+statement of part~(b) may make it easier than~(a)---that's one of the values
+of generalization.)
+\end{letters}
+
+\pnum{22.}
+Consider a function $f$ with the following property: if $g$ is any function
+for which $\lim_{x\to 0}g(x)$ does not exist, then
+$\lim_{x\to 0}[f(x)+g(x)]$ also does not exist. Prove that this happens if and
+only if $\lim_{x\to 0}f(x)$ \emph{does} exist. Hint: This is actually very
+easy: the assumption that $\lim_{x\to 0}f(x)$ does not exist leads to an
+immediate contradiction if you consider the right $g$.
+
+\pnum{**23.}
+This problem is the analogue of Problem~22 when $f+g$ is replaced by
+$f\cdot g$. In this case the situation is considerably more complex, and the
+analysis requires several steps (those in search of an especially challenging
+problem can attempt an independent solution).
+\begin{letters}
+\item Suppose that $\lim_{x\to 0}f(x)$ exists and is $\neq 0$. Prove that if
+$\lim_{x\to 0}g(x)$ does not exist, then $\lim_{x\to 0}f(x)g(x)$ also does
+not exist.
+\item Prove the same result if $\lim_{x\to 0}\abs{f(x)}=\infty$. (The precise
+definition of this sort of limit is given in Problem~37.)
+\item Prove that if neither of these two conditions holds, then there is a
+function $g$ such that $\lim_{x\to 0}g(x)$ does not exist, but
+$\lim_{x\to 0}f(x)g(x)$ does exist.
+
+Hint: Consider separately the following two cases: (1)~for some
+$\varepsilon>0$ we have $\abs{f(x)}>\varepsilon$ for all sufficiently small
+$x$. (2)~For every $\varepsilon>0$, there are arbitrarily small $x$ with
+$\abs{f(x)}<\varepsilon$. In the second case, begin by choosing points $x_n$
+with $\abs{x_n}<1/n$ and $\abs{f(x_n)}<1/n$.
+\end{letters}
+
+\pnum{*24.}
+Suppose that $A_n$ is, for each natural number $n$, some \emph{finite} set of
+numbers in $[0,1]$, and that $A_n$ and $A_m$ have no members in common if
+$m\neq n$. Define $f$ as follows:
+\[
+f(x)=\begin{cases}
+1/n, & x\text{ in }A_n\\
+0, & x\text{ not in }A_n\text{ for any }n.
+\end{cases}
+\]
+Prove that $\lim_{x\to a}f(x)=0$ for all $a$ in $[0,1]$.
+
+\pnum{25.}
+Explain why the following definitions of $\lim_{x\to a}f(x)=l$ are all
+correct: For every $\delta>0$ there is an $\varepsilon>0$ such that, for all
+$x$,
+\begin{romans}
+\item if $0<\abs{x-a}<\varepsilon$, then $\abs{f(x)-l}<\delta$.
+\item if $0<\abs{x-a}<\varepsilon$, then $\abs{f(x)-l}\leq\delta$.
+\item if $0<\abs{x-a}<\varepsilon$, then $\abs{f(x)-l}<5\delta$.
+\item if $0<\abs{x-a}<\varepsilon/10$, then $\abs{f(x)-l}<\delta$.
+\end{romans}
+
+\pnum{*26.}
+Give examples to show that the following definitions of
+$\lim_{x\to a}f(x)=l$ are \emph{not} correct.
+\begin{letters}
+\item For all $\delta>0$ there is an $\varepsilon>0$ such that if
+$0<\abs{x-a}<\delta$, then $\abs{f(x)-l}<\varepsilon$.
+\item For all $\varepsilon>0$ there is a $\delta>0$ such that if
+$\abs{f(x)-l}<\varepsilon$, then $0<\abs{x-a}<\delta$.
+\end{letters}
+
+\pnum{27.}
+For each of the functions in Problem~4-17 indicate for which numbers $a$ the
+one-sided limits $\lim_{x\to a^+}f(x)$ and $\lim_{x\to a^-}f(x)$ exist.
+
+\pnum{*28.}
+\begin{letters}
+\item Do the same for each of the functions in Problem~4-19.
+\item Also consider what happens if decimals ending in $0$'s are used instead
+of decimals ending in $9$'s.
+\end{letters}
+
+\pnum{29.}
+Prove that $\lim_{x\to a}f(x)$ exists if
+$\lim_{x\to a^+}f(x)=\lim_{x\to a^-}f(x)$.
+
+\pnum{30.}
+Prove that
+\begin{romans}
+\item $\displaystyle\lim_{x\to 0^+}f(x)=\lim_{x\to 0^-}f(-x)$.
+\item $\displaystyle\lim_{x\to 0}f(\abs{x})=\lim_{x\to 0^+}f(x)$.
+\item $\displaystyle\lim_{x\to 0}f(x^2)=\lim_{x\to 0^+}f(x)$.
+\end{romans}
+(These equations, and others like them, are open to several interpretations.
+They might mean only that the two limits are equal if they both exist; or that
+if a certain one of the limits exists, the other also exists and is equal to
+it; or that if either limit exists, then the other exists and is equal to it.
+Decide for yourself which interpretations are suitable.)
+
+\pnum{31.}
+Suppose that $\lim_{x\to a^-}f(x)<\lim_{x\to a^+}f(x)$. (Draw a picture to
+illustrate this assertion.) Prove that there is some $\delta>0$ such that
+$f(x)<f(y)$ whenever $x<a<y$ and $\abs{x-a}<\delta$ and $\abs{y-a}<\delta$.
+Is the converse true?
+
+\pnum{32.}
+Prove that
+\[
+\lim_{x\to\infty}\frac{a_n x^n+\cdots+a_0}{b_m x^m+\cdots+b_0}
+\]
+(with $a_n\neq 0$ and $b_m\neq 0$) exists if and only if $m\geq n$. What is
+the limit when $m=n$? When $m>n$? Hint: the one easy limit is
+$\lim_{x\to\infty}1/x^k=0$; do some algebra so that this is the only
+information you need.
+
+\pnum{33.}
+Find the following limits.
+\begin{romans}
+\item $\displaystyle\lim_{x\to\infty}\dfrac{x+\sin^3 x}{5x+6}$.
+\item $\displaystyle\lim_{x\to\infty}\dfrac{x\sin x}{x^2+5}$.
+\item $\displaystyle\lim_{x\to\infty}\sqrt{x^2+x}-x$.
+\item $\displaystyle\lim_{x\to\infty}\dfrac{x^2(1+\sin^2 x)}{(x+\sin x)^2}$.
+\end{romans}
+
+\pnum{34.}
+Prove that $\lim_{x\to 0^+}f(1/x)=\lim_{x\to\infty}f(x)$.
+
+\pnum{35.}
+Find the following limits in terms of the number
+$\alpha=\lim_{x\to 0}(\sin x)/x$.
+\begin{romans}
+\item $\displaystyle\lim_{x\to\infty}\dfrac{\sin x}{x}$.
+\item $\displaystyle\lim_{x\to\infty}x\sin\dfrac{1}{x}$.
+\end{romans}
+
+\pnum{36.}
+Define ``$\lim_{x\to-\infty}f(x)=l$.''
+\begin{letters}
+\item Find $\lim_{x\to-\infty}(a_n x^n+\cdots+a_0)/(b_m x^m+\cdots+b_0)$.
+\item Prove that $\lim_{x\to\infty}f(x)=\lim_{x\to-\infty}f(-x)$.
+\item Prove that $\lim_{x\to 0^-}f(1/x)=\lim_{x\to-\infty}f(x)$.
+\end{letters}
+
+\pnum{37.}
+We define $\lim_{x\to a}f(x)=\infty$ to mean that for all $N$ there is a
+$\delta>0$ such that, for all $x$, if $0<\abs{x-a}<\delta$, then $f(x)>N$.
+(Draw an appropriate picture!) (Of course, we may still say that
+$\lim_{x\to a}f(x)$ ``does not exist'' in the usual sense.)
+\begin{letters}
+\item Show that $\lim_{x\to 3}1/(x-3)^2=\infty$.
+\item Prove that if $f(x)>\varepsilon>0$ for all $x$, and
+$\lim_{x\to a}g(x)=0$, then
+\[
+\lim_{x\to a}f(x)/\abs{g(x)}=\infty.
+\]
+\end{letters}
+
+\pnum{38.}
+\begin{letters}
+\item Define $\lim_{x\to a^+}f(x)=\infty$ and
+$\lim_{x\to a^-}f(x)=\infty$. (Or at least convince yourself that you could
+write down the definitions if you had the energy. How many other such symbols
+can you define?)
+\item Prove that $\lim_{x\to 0^+}1/x=\infty$.
+\item Prove that $\lim_{x\to 0^+}f(x)=\infty$ if and only if
+$\lim_{x\to\infty}f(1/x)=\infty$.
+\end{letters}
+
+\pnum{39.}
+Find the following limits, when they exist.
+\begin{romans}
+\item $\displaystyle\lim_{x\to\infty}\dfrac{x^3+4x-7}{7x^2-x+1}$.
+\item $\displaystyle\lim_{x\to\infty}x(1+\sin^2 x)$.
+\item $\displaystyle\lim_{x\to\infty}x\sin^2 x$.
+\item $\displaystyle\lim_{x\to\infty}x^2\sin\dfrac{1}{x}$.
+\item $\displaystyle\lim_{x\to\infty}\sqrt{x^2+2x}-x$.
+\item $\displaystyle\lim_{x\to\infty}x\bigl(\sqrt{x+2}-\sqrt{x}\bigr)$.
+\item $\displaystyle\lim_{x\to\infty}\dfrac{\sqrt{\abs{x}}}{x}$.
+\end{romans}
+
+\pnum{40.}
+\begin{letters}
+\item Find the perimeter of a regular $n$-gon inscribed in a circle of radius
+$r$. [Answer: $2rn\sin(\pi/n)$.]
+\item What value does this perimeter approach as $n$ becomes very large?
+\item What limit can you guess from this?
+\end{letters}
+
+\pnum{41.}
+\begin{letters}
+\item For $c>1$, show that $c^{1/n}=\sqrt[n]{c}$ approaches $1$ as $n$ becomes
+very large. Hint: Show that for any $\varepsilon>0$ we cannot have
+$c^{1/n}>1+\varepsilon$ for large $n$.
+\item More generally, if $c>0$, then $c^{1/n}$ approaches $1$ as $n$ becomes
+very large.
+\end{letters}
+
+\pnum{*42.}
+After sending the manuscript for the first edition of this book off to the
+printer, I thought of a much simpler way to prove that $\lim_{x\to a}x^2=a^2$
+and $\lim_{x\to a}x^3=a^3$, without going through all the factoring tricks on
+page~92. Suppose, for example, that we want to prove that
+$\lim_{x\to a}x^2=a^2$, where $a>0$. Given $\varepsilon>0$, we simply let
+$\delta$ be the minimum of $\sqrt{a^2+\varepsilon}-a$ and
+$a-\sqrt{a^2-\varepsilon}$ (see Figure~19); then $\abs{x-a}<\delta$ implies
+that $\sqrt{a^2-\varepsilon}<x<\sqrt{a^2+\varepsilon}$, so
+$a^2-\varepsilon<x^2<a^2+\varepsilon$, or $\abs{x^2-a^2}<\varepsilon$. It is
+fortunate that these pages had already been set, so that I couldn't make these
+changes, because this ``proof'' is completely fallacious. Wherein lies the
+fallacy?
+
+\begin{center}
+\figtex{assets/plots/ch05-fig20}\\[0.6em]
+\figlabel{20}
+\end{center}

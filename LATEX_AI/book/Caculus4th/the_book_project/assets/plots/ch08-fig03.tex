@@ -1,0 +1,21 @@
+% $f(\alpha)>0$: $f$ stays positive on a neighbourhood of $\alpha$.
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.95cm, y=0.72cm]
+  \draw (0,-2.25) -- (0,3.05);
+  \draw (-0.35,0) -- (6.85,0);
+  \draw (1.15,0.14) -- (1.15,-0.14);
+  \node[below] at (1.15,-0.16) {$a$};
+  \draw (2.85,0.14) -- (2.85,-0.14);
+  \node[below] at (2.85,-0.16) {$\alpha$};
+  \draw (6.35,0.14) -- (6.35,-0.14);
+  \node[below] at (6.35,-0.16) {$b$};
+  \draw[thick] plot[smooth, tension=0.7] coordinates {
+    (1.15,-2.00) (1.75,-1.35) (2.35,-0.35) (2.70,0.35)
+    (3.25,1.25) (3.70,2.25) (4.05,2.40) (4.40,1.65)
+  };
+  \fill (1.15,-2.00) circle[radius=1.6pt];
+  \draw (2.55,0.12) -- (2.55,-0.12);
+  \node[above] at (2.55,0.14) {$x_0$};
+  \draw[->] (2.85,-1.05) -- (2.85,-0.22);
+  \node[align=left, anchor=north west] at (3.05,-1.05)
+    {\small $f(x)>0$ for all $x$\\[-0.1em]\small in this interval};
+\end{tikzpicture}

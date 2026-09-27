@@ -1,0 +1,928 @@
+% chapter03.tex — Functions
+% Book pp. 39–55 (appendix included). Slice pp. 1–3 are Part II + Dedekind
+% (those live in main.tex). No figures.
+
+\spivakchapter{3}{Functions}
+
+Undoubtedly the most important concept in all of mathematics is that of a
+function---in almost every branch of modern mathematics functions turn out to
+be the central objects of investigation. It will therefore probably not surprise
+you to learn that the concept of a function is one of great generality. Perhaps
+it will be a relief to learn that, for the present, we will be able to restrict our
+attention to functions of a very special kind; even this small class of functions
+will exhibit sufficient variety to engage our attention for quite some time. We
+will not even begin with a proper definition. For the moment a provisional
+definition will enable us to discuss functions at length, and will illustrate the
+intuitive notion of functions, as understood by mathematicians. Later, we will
+consider and discuss the advantages of the modern mathematical definition.
+Let us therefore begin with the following:
+
+\begin{spivakdefn}[PROVISIONAL DEFINITION]
+A function is a rule which assigns, to each of certain real numbers, some other
+real number.
+\end{spivakdefn}
+
+The following examples of functions are meant to illustrate and amplify this
+definition, which, admittedly, requires some such clarification.
+
+\textit{Example 1}\quad The rule which assigns to each number the square of that
+number.
+
+\textit{Example 2}\quad The rule which assigns to each number $y$ the number
+\[
+\frac{y^3 + 3y + 5}{y^2 + 1}.
+\]
+
+\textit{Example 3}\quad The rule which assigns to each number $c \neq 1$, $-1$ the
+number
+\[
+\frac{c^3 + 3c + 5}{c^2 - 1}.
+\]
+
+\textit{Example 4}\quad The rule which assigns to each number $x$ satisfying
+$-17 \leq x \leq \pi/3$ the number $x^2$.
+
+\textit{Example 5}\quad The rule which assigns to each number $a$ the number $0$
+if $a$ is irrational, and the number $1$ if $a$ is rational.
+
+\textit{Example 6}\quad The rule which assigns
+\begin{align*}
+&\text{to $2$ the number $5$,}\\
+&\text{to $17$ the number $\dfrac{36}{\pi}$,}\\
+&\text{to $\dfrac{\pi^2}{17}$ the number $28$,}\\
+&\text{to $\dfrac{36}{\pi}$ the number $28$,}
+\end{align*}
+and to any $y \neq 2$, $17$, $\pi^2/17$, or $36/\pi$, the number $16$ if $y$ is of
+the form $a + b\sqrt{2}$ for $a$, $b$ in $\mathbb{Q}$.
+
+\textit{Example 7}\quad The rule which assigns to each number $t$ the number
+$t^3 + x$. (This rule depends, of course, on what the number $x$ is, so we are
+really describing infinitely many different functions, one for each number $x$.)
+
+\textit{Example 8}\quad The rule which assigns to each number $z$ the number of
+$7$'s in the decimal expansion of $z$, if this number is finite, and $-\pi$ if there
+are infinitely many $7$'s in the decimal expansion of $z$.
+
+One thing should be abundantly clear from these examples---a function is
+\emph{any} rule that assigns numbers to certain other numbers, not just a rule
+which can be expressed by an algebraic formula, or even by one uniform
+condition which applies to every number; nor is it necessarily a rule which you,
+or anybody else, can actually apply in practice (no one knows, for example,
+what rule $8$ associates to $\pi$). Moreover, the rule may neglect some numbers
+and it may not even be clear to which numbers the function applies (try to
+determine, for example, whether the function in Example~$6$ applies to $\pi$).
+The set of numbers to which a function \emph{does} apply is called the
+\textbf{domain} of the function.
+
+Before saying anything else about functions we badly need some notation.
+Since throughout this book we shall frequently be talking about functions
+(indeed we shall hardly ever talk about anything else) we need a convenient
+way of naming functions, and of referring to functions in general. The
+standard practice is to denote a function by a letter. For obvious reasons the
+letter ``$f$'' is a favorite, thereby making ``$g$'' and ``$h$'' other obvious
+candidates, but any letter (or any reasonable symbol, for that matter) will do,
+not excluding ``$x$'' and ``$y$'', although these letters are usually reserved for
+indicating numbers. If $f$ is a function, then the number which $f$ associates
+to a number $x$ is denoted by $f(x)$---this symbol is read ``$f$ of $x$'' and is
+often called the \textbf{value of $\boldsymbol{f}$ at $\boldsymbol{x}$}. Naturally, if we denote a
+function by $x$, some other letter must be chosen to denote the number (a
+perfectly legitimate, though perverse, choice would be ``$f$,'' leading to the
+symbol $x(f)$). Note that the symbol $f(x)$ makes sense only for $x$ in the
+domain of $f$; for other $x$ the symbol $f(x)$ is not defined.
+
+If the functions defined in Examples~$1$--$8$ are denoted by $f$, $g$, $h$, $r$,
+$s$, $\theta$, $\alpha_x$, and $y$, then we can rewrite their definitions as follows:
+\begin{steps}
+\item $f(x) = x^2$ \quad for all $x$.
+\item $g(y) = \dfrac{y^3 + 3y + 5}{y^2 + 1}$ \quad for all $y$.
+\item $h(c) = \dfrac{c^3 + 3c + 5}{c^2 - 1}$ \quad for all $c \neq 1$, $-1$.
+\item $r(x) = x^2$ \quad for all $x$ such that $-17 \leq x \leq \pi/3$.
+\item $\displaystyle s(x) =
+\begin{cases}
+0, & x\text{ irrational}\\
+1, & x\text{ rational.}
+\end{cases}$
+\item $\displaystyle \theta(x) =
+\begin{cases}
+5, & x = 2\\[4pt]
+\dfrac{36}{\pi}, & x = 17\\[8pt]
+28, & x = \dfrac{\pi^2}{17}\\[8pt]
+28, & x = \dfrac{36}{\pi}\\[8pt]
+16, &
+\begin{aligned}[t]
+&x \neq 2,\ 17,\ \dfrac{\pi^2}{17},\ \text{or }\dfrac{36}{\pi},\\
+&\text{and }x = a + b\sqrt{2}\text{ for }a,\ b\text{ in }\mathbb{Q}.
+\end{aligned}
+\end{cases}$
+\item $\alpha_x(t) = t^3 + x$ \quad for all numbers $t$.
+\item $\displaystyle y(x) =
+\begin{cases}
+n, & \text{exactly $n$ $7$'s appear in the decimal expansion of $x$}\\
+-\pi, & \text{infinitely many $7$'s appear in the decimal expansion of $x$.}
+\end{cases}$
+\end{steps}
+
+These definitions illustrate the common procedure adopted for defining a
+function $f$---indicating what $f(x)$ is for every number $x$ in the domain of
+$f$. (Notice that this is exactly the same as indicating $f(a)$ for every number
+$a$, or $f(b)$ for every number $b$, etc.) In practice, certain abbreviations are
+tolerated. Definition~(1) could be written simple
+\[
+(1)\qquad f(x) = x^2
+\]
+the qualifying phrase ``for all $x$'' being understood. Of course, for
+definition~(4) the only possible abbreviation is
+\[
+(4)\qquad r(x) = x^2, \qquad -17 \leq x \leq \pi/3.
+\]
+It is usually understood that a definition such as
+\[
+k(x) = \frac{1}{x} + \frac{1}{x-1}, \qquad x \neq 0,\ 1
+\]
+can be shortened to
+\[
+k(x) = \frac{1}{x} + \frac{1}{x-1};
+\]
+in other words, \emph{unless the domain is explicitly restricted further, it is
+understood to consist of all numbers for which the definition makes any sense
+at all.}
+
+You should have little difficulty checking the following assertions about the
+functions defined above:
+\begin{align*}
+f(x+1) &= f(x) + 2x + 1;\\
+g(x) &= h(x)\text{ if }x^3 + 3x + 5 = 0;\\
+r(x+1) &= r(x) + 2x + 1\text{ if }{-17} \leq x \leq \tfrac{\pi}{3} - 1;\\
+s(x+y) &= s(x)\text{ if $y$ is rational;}\\
+\theta\Bigl(\frac{\pi^2}{17}\Bigr) &= \theta\Bigl(\frac{36}{\pi}\Bigr);\\
+\alpha_x(x) &= x \cdot \bigl[f(x) + 1\bigr];\\
+y\Bigl(\frac{1}{3}\Bigr) &= 0,\quad
+y\Bigl(\frac{7}{9}\Bigr) = -\pi.
+\end{align*}
+
+If the expression $f(s(a))$ looks unreasonable to you, then you are forgetting
+that $s(a)$ is a number like any other number, so that $f(s(a))$ makes sense.
+As a matter of fact, $f(s(a)) = s(a)$ for all $a$. Why? Even more complicated
+expressions than $f(s(a))$ are, after a first exposure, no more difficult to
+unravel. The expression
+\[
+f\bigl(r\bigl(s\bigl(\theta\bigl(\alpha_3\bigl(y(\tfrac13)\bigr)\bigr)\bigr)\bigr)\bigr),
+\]
+formidable as it appears, may be evaluated quite easily with a little patience:
+\begin{align*}
+f\bigl(r\bigl(s\bigl(\theta\bigl(\alpha_3\bigl(y(\tfrac13)\bigr)\bigr)\bigr)\bigr)\bigr)
+&= f\bigl(r\bigl(s\bigl(\theta\bigl(\alpha_3(0)\bigr)\bigr)\bigr)\bigr)\\
+&= f\bigl(r\bigl(s\bigl(\theta(3)\bigr)\bigr)\bigr)\\
+&= f\bigl(r\bigl(s(16)\bigr)\bigr)\\
+&= f\bigl(r(1)\bigr)\\
+&= f(1)\\
+&= 1.
+\end{align*}
+
+The first few problems at the end of this chapter give further practice
+manipulating this symbolism.
+
+The function defined in~(1) is a rather special example of an extremely
+important class of functions, the polynomial functions. A function $f$ is a
+\textbf{polynomial function} if there are real numbers $a_0, \dots, a_n$ such
+that
+\[
+f(x) = a_n x^n + a_{n-1}x^{n-1} + \cdots + a_2 x^2 + a_1 x + a_0,
+\qquad\text{for all $x$}
+\]
+(when $f(x)$ is written in this form it is usually tacitly assumed that
+$a_n \neq 0$). The highest power of $x$ with a nonzero coefficient is called
+the \textbf{degree} of $f$; for example, the polynomial function $f$ defined by
+$f(x) = 5x^6 + 137x^4 - \pi$ has degree~$6$.
+
+The functions defined in~(2) and~(3) belong to a somewhat larger class of
+functions, the \textbf{rational functions}; these are the functions of the form
+$p/q$ where $p$ and $q$ are polynomial functions (and $q$ is not the function
+which is always~$0$). The rational functions are themselves quite special
+examples of an even larger class of functions, very thoroughly studied in
+calculus, which are simpler than many of the functions first mentioned in this
+chapter. The following are examples of this kind of function:
+\begin{steps}[start=9]
+\item $f(x) = \dfrac{x + x^2 + x\sin^2 x}{x\sin x + x\sin^2 x}$
+\item $f(x) = \sin(x^2)$.
+\item $f(x) = \sin(\sin(x^2))$.
+\item $\displaystyle
+f(x) = \sin^2\bigl(\sin(\sin^2(x\sin^2 x^2))\bigr)
+\cdot \sin\Biggl(\frac{x + \sin(x\sin x)}{x + \sin x}\Biggr).$
+\end{steps}
+
+By what criterion, you may feel impelled to ask, can such functions,
+especially a monstrosity like~(12), be considered simple? The answer is that
+they can be built up from a few simple functions using a few simple means of
+combining functions. In order to construct the functions~(9)--(12) we need to
+start with the ``identity function'' $I$, for which $I(x) = x$, and the ``sine
+function'' $\sin$, whose value $\sin(x)$ at $x$ is often written simple
+$\sin x$. The following are some of the important ways in which functions may
+be combined to produce new functions.
+
+If $f$ and $g$ are any two functions, we can define a new function $f+g$,
+called the \textbf{sum} of $f$ and $g$, by the equation
+\[
+(f+g)(x) = f(x) + g(x).
+\]
+Note that according to the conventions we have adopted, the domain of $f+g$
+consists of all $x$ for which ``$f(x)+g(x)$'' makes sense, i.e., the set of all
+$x$ in both $\dom f$ and $\dom g$. If $A$ and $B$ are any two sets, then
+$A \cap B$ (read ``$A$ intersect $B$'' or ``the intersection of $A$ and $B$'')
+denotes the set of $x$ in both $A$ and $B$; this notation allows us to write
+$\dom(f+g) = \dom f \cap \dom g$.
+
+In a similar vein, we define the \textbf{product} $f \cdot g$ and the
+\textbf{quotient} $\dfrac{f}{g}$ (or $f/g$) of $f$ and $g$ by
+\[
+(f \cdot g)(x) = f(x) \cdot g(x)
+\]
+and
+\[
+\Biggl(\frac{f}{g}\Biggr)(x) = \frac{f(x)}{g(x)}.
+\]
+Moreover, if $g$ is a function and $c$ is a number, we define a new function
+$c \cdot g$ by
+\[
+(c \cdot g)(x) = c \cdot g(x).
+\]
+This becomes a special case of the notation $f \cdot g$ if we agree that the
+symbol $c$ should also represent the function $f$ defined by $f(x) = c$; such
+a function, which has the same value for all numbers $x$, is called a
+\textbf{constant function}.
+
+The domain of $f \cdot g$ is $\dom f \cap \dom g$, and the domain of
+$c \cdot g$ is simply the domain of $g$. On the other hand, the domain of
+$f/g$ is rather complicated---it may be written
+$\dom f \cap \dom g \cap \{x : g(x) \neq 0\}$, the symbol
+$\{x : g(x) \neq 0\}$ denoting the set of numbers $x$ such that
+$g(x) \neq 0$. In general, $\{x : \ldots\}$ denotes the set of all $x$ such
+that ``$\ldots$'' is true. Thus $\{x : x^3 + 3 < 11\}$ denotes the set of all
+numbers $x$ such that $x^3 < 8$, and consequently
+$\{x : x^3 + 3 < 11\} = \{x : x < 2\}$. Either of these symbols could just as
+well have been written using $y$ everywhere instead of $x$. Variations of this
+notation are common, but hardly require any discussion. Any one can guess
+that $\{x > 0 : x^3 < 8\}$ denotes the set of positive numbers whose cube is
+less than~$8$; it could be expressed more formally as
+$\{x : x > 0\text{ and }x^3 < 8\}$. Incidentally, this set is equal to the set
+$\{x : 0 < x < 2\}$. One variation is slightly less transparent, but very
+standard. The set $\{1, 3, 2, 4\}$, for example, contains just the four numbers
+$1$, $2$, $3$, and~$4$; it can also be denoted by
+$\{x : x = 1\text{ or }x = 3\text{ or }x = 2\text{ or }x = 4\}$.
+
+Certain facts about the sum, product, and quotient of functions are obvious
+consequences of facts about sums, products, and quotients of numbers. For
+example, it is very easy to prove that
+\[
+(f+g)+h = f+(g+h).
+\]
+The proof is characteristic of almost every proof which demonstrates that two
+functions are equal---the two functions must be shown to have the same domain,
+and the same value at any number in the domain. For example, to prove that
+$(f+g)+h = f+(g+h)$, note that unraveling the definition of the two sides
+gives
+\begin{align*}
+[(f+g)+h](x)
+&= (f+g)(x) + h(x)\\
+&= \bigl[f(x) + g(x)\bigr] + h(x)
+\end{align*}
+and
+\begin{align*}
+[f+(g+h)](x)
+&= f(x) + (g+h)(x)\\
+&= f(x) + \bigl[g(x) + h(x)\bigr],
+\end{align*}
+and the equality of $[f(x)+g(x)]+h(x)$ and $f(x)+[g(x)+h(x)]$ is a fact about
+numbers. In this proof the equality of the two domains was not explicitly
+mentioned because this is obvious, as soon as we begin to write down these
+equations; the domain of $(f+g)+h$ and of $f+(g+h)$ is clearly
+$\dom f \cap \dom g \cap \dom h$. We naturally write $f+g+h$ for
+$(f+g)+h = f+(g+h)$, precisely as we did for numbers.
+
+It is just as easy to prove that $(f \cdot g) \cdot h = f \cdot (g \cdot h)$,
+and this function is denoted by $f \cdot g \cdot h$. The equations
+$f+g = g+f$ and $f \cdot g = g \cdot f$ should also present no difficulty.
+
+Using the operations $+$, $\cdot$, $/$ we can now express the function $f$
+defined in~(9) by
+\[
+f = \frac{I + I \cdot I + I \cdot \sin \cdot \sin}
+{I \cdot \sin + I \cdot \sin \cdot \sin}.
+\]
+It should be clear, however, that we cannot express function~(10) this way. We
+require yet another way of combining functions. This combination, the
+composition of two functions, is by far the most important.
+
+If $f$ and $g$ are any two functions, we define a new function $f \circ g$,
+the \textbf{composition} of $f$ and $g$, by
+\[
+(f \circ g)(x) = f(g(x));
+\]
+the domain of $f \circ g$ is $\{x : x\text{ is in }\dom g\text{ and }g(x)
+\text{ is in }\dom f\}$. The symbol ``$f \circ g$'' is often read ``$f$ circle
+$g$.'' Compared to the phrase ``the composition of $f$ and $g$'' this has the
+advantage of brevity, of course, but there is another advantage of far greater
+import: there is much less chance of confusing $f \circ g$ with $g \circ f$,
+and these must \emph{not} be confused, since they are not usually equal; in
+fact, almost any $f$ and $g$ chosen at random will illustrate this point (try
+$f = I \cdot I$ and $g = \sin$, for example). Lest you become too apprehensive
+about the operation of composition, let us hasten to point out that
+composition \emph{is} associative:
+\[
+(f \circ g) \circ h = f \circ (g \circ h)
+\]
+(and the proof is a triviality); this function is denoted by $f \circ g \circ h$.
+We can now write the functions~(10), (11), (12) as
+\begin{align*}
+(10)\quad f &= \sin \circ (I \cdot I),\\
+(11)\quad f &= \sin \circ \sin \circ (I \cdot I),\\
+(12)\quad f &= (\sin \cdot \sin) \circ \sin \circ (\sin \cdot \sin)
+\circ \bigl(I \cdot [(\sin \cdot \sin) \circ (I \cdot I)]\bigr)\\
+&\qquad\cdot
+\sin \circ \Biggl(\frac{I + \sin \circ (I \cdot \sin)}{I + \sin}\Biggr).
+\end{align*}
+
+One fact has probably already become clear. Although this method of writing
+functions reveals their ``structure'' very clearly, it is hardly short or
+convenient. The shortest name for the function $f$ such that
+$f(x) = \sin(x^2)$ for all $x$ unfortunately seems to be ``the function $f$
+such that $f(x) = \sin(x^2)$ for all $x$.'' The need for abbreviating this
+clumsy description has been clear for two hundred years, but no reasonable
+abbreviation has received universal acclaim. At present the strongest
+contender for this honor is something like
+\[
+x \to \sin(x^2)
+\]
+(read ``$x$ goes to $\sin(x^2)$'' or just ``$x$ arrow $\sin(x^2)$''), but it is
+hardly popular among writers of calculus textbooks. In this book we will
+tolerate a certain amount of ellipsis, and speak of ``the function
+$f(x) = \sin(x^2)$.'' Even more popular is the quite drastic abbreviation:
+``the function $\sin(x^2)$.'' For the sake of precision we will never use this
+description, which, strictly speaking, confuses a number and a function, but
+it is so convenient that you will probably end up adopting it for personal
+use. As with any convention, utility is the motivating factor, and this
+criterion is reasonable so long as the slight logical deficiencies cause no
+confusion. On occasion, confusion \emph{will} arise unless a more precise
+description is used. For example, ``the function $x + t^3$'' is an ambiguous
+phrase; it could mean either
+\[
+x \to x + t^3,\text{ i.e., the function $f$ such that $f(x) = x + t^3$
+for all $x$}
+\]
+or
+\[
+t \to x + t^3,\text{ i.e., the function $f$ such that $f(t) = x + t^3$
+for all $t$}.
+\]
+As we shall see, however, for many important concepts associated with
+functions, calculus has a notation which contains the ``$x \to$'' built in.
+
+By now we have made a sufficiently extensive investigation of functions to
+warrant reconsidering our definition. We have defined a function as a
+``rule,'' but it is hardly clear what this means. If we ask ``What happens if
+you break this rule?'' it is not easy to say whether this question is merely
+facetious or actually profound.
+
+A more substantial objection to the use of the word ``rule'' is that
+\[
+f(x) = x^2
+\]
+and
+\[
+f(x) = x^2 + 3x + 3 - 3(x+1)
+\]
+are certainly \emph{different} rules, if by a rule we mean the actual
+instructions given for determining $f(x)$; nevertheless, we want
+\[
+f(x) = x^2
+\]
+and
+\[
+f(x) = x^2 + 3x + 3 - c(x+1)
+\]
+to define the same function. For this reason, a function is sometimes defined
+as an ``association'' between numbers; unfortunately the word ``association''
+escapes the objections raised against ``rule'' only because it is even more
+vague.
+
+There is, of course, a satisfactory way of defining functions, or we should
+never have gone to the trouble of criticizing our original definition. But a
+satisfactory definition can never be constructed by finding synonyms for
+English words which are troublesome. The definition which mathematicians have
+finally accepted for ``function'' is a beautiful example of the means by which
+intuitive ideas have been incorporated into rigorous mathematics. The correct
+question to ask about a function is not ``What is a rule?'' or ``What is an
+association?'' but ``What does one have to know about a function in order to
+know all about it?'' The answer to the last question is easy---for each number
+$x$ one needs to know the number $f(x)$; we can imagine a table which would
+display all the information one could desire about the function
+$f(x) = x^2$:
+\[
+\begin{array}{cc}
+x & f(x)\\
+\hline
+1 & 1\\
+-1 & 1\\
+2 & 4\\
+-2 & 4\\
+\sqrt{2} & 2\\
+-\sqrt{2} & 2\\
+\pi & \pi^2\\
+-\pi & \pi^2
+\end{array}
+\]
+It is not even necessary to arrange the numbers in a table (which would
+actually be impossible if we wanted to list all of them). Instead of a two
+column array we can consider various pairs of numbers
+\[
+(1,1),\ (-1,1),\ (2,4),\ (-2,4),\ (\pi,\pi^2),\ (\sqrt{2},2),\dots
+\]
+simply collected together into a set.\footnote{The pairs occurring here are
+often called ``ordered pairs,'' to emphasize that, for example, $(2,4)$ is not
+the same pair as $(4,2)$. It is only fair to warn that we are going to define
+functions in terms of ordered pairs, another undefined term. Ordered pairs
+\emph{can} be defined, however, and an appendix to this chapter has been
+provided for skeptics.} To find $f(1)$ we simply take the second number of
+the pair whose first member is~$1$; to find $f(\pi)$ we take the second number
+of the pair whose first member is~$\pi$. We seem to be saying that a function
+might as well be defined as a collection of pairs of numbers. For example, if
+we were given the following collection (which contains just~$5$ pairs):
+\[
+f = \bigl\{(1,7),\ (3,7),\ (5,3),\ (4,8),\ (8,4)\bigr\},
+\]
+then $f(1)=7$, $f(3)=7$, $f(5)=3$, $f(4)=8$, $f(8)=4$ and $1$, $3$, $4$, $5$,
+$8$ are the only numbers in the domain of $f$. If we consider the collection
+\[
+f = \bigl\{(1,7),\ (3,7),\ (2,5),\ (1,8),\ (8,4)\bigr\},
+\]
+then $f(3)=7$, $f(2)=5$, $f(8)=4$; but it is impossible to decide whether
+$f(1)=7$ or $f(1)=8$. In other words, a function cannot be defined to be any
+old collection of pairs of numbers; we must rule out the possibility which
+arose in this case. We are therefore led to the following definition.
+
+\begin{spivakdefn}
+A \textbf{function} is a collection of pairs of numbers with the following
+property: if $(a,b)$ and $(a,c)$ are both in the collection, then $b=c$; in
+other words, the collection must not contain two different pairs with the same
+first element.
+\end{spivakdefn}
+
+This is our first full-fledged definition, and illustrates the format we shall
+always use to define significant new concepts. These definitions are so
+important (at least as important as theorems) that it is essential to know
+when one is actually at hand, and to distinguish them from comments,
+motivating remarks, and casual explanations. They will be preceded by the
+word \textbf{DEFINITION}, contain the term being defined in boldface letters,
+and constitute a paragraph unto themselves.
+
+There is one more definition (actually defining two things at once) which can
+now be made rigorously:
+
+\begin{spivakdefn}
+If $f$ is a function, the \textbf{domain} of $f$ is the set of all $a$ for
+which there is some $b$ such that $(a,b)$ is in $f$. If $a$ is in the domain
+of $f$, it follows from the definition of a function that there is, in fact, a
+\emph{unique} number $b$ such that $(a,b)$ is in $f$. This unique $b$ is
+denoted by $\boldsymbol{f(a)}$.
+\end{spivakdefn}
+
+With this definition we have reached our goal: the important thing about a
+function $f$ is that a number $f(x)$ is determined for each number $x$ in its
+domain. You may feel that we have also reached the point where an intuitive
+definition has been replaced by an abstraction with which the mind can hardly
+grapple. Two consolations may be offered. First, although a function has been
+defined as a collection of pairs, there is nothing to stop you from
+\emph{thinking} of a function as a rule. Second, neither the intuitive nor the
+formal definition indicates the best way of thinking about functions. The best
+way is to draw pictures; but this requires a chapter all by itself.
+
+\subsection*{PROBLEMS}
+
+\pnum{1.} Let $f(x) = 1/(1+x)$. What is
+\begin{romans}
+\item $f(f(x))$ (for which $x$ does this make sense?).
+\item $\displaystyle f\Biggl(\frac{1}{x}\Biggr)$.
+\item $f(cx)$.
+\item $f(x+y)$.
+\item $f(x)+f(y)$.
+\item For which numbers $c$ is there a number $x$ such that $f(cx)=f(x)$.
+Hint: There are a lot more than you might think at first glance.
+\item For which numbers $c$ is it true that $f(cx)=f(x)$ for two different
+numbers $x$?
+\end{romans}
+
+\pnum{2.} Let $g(x)=x^2$, and let
+\[
+h(x) =
+\begin{cases}
+0, & x\text{ rational}\\
+1, & x\text{ irrational.}
+\end{cases}
+\]
+\begin{romans}
+\item For which $y$ is $h(y) \leq y$?
+\item For which $y$ is $h(y) \leq g(y)$?
+\item What is $g(h(z)) - h(z)$?
+\item For which $w$ is $g(w) \leq w$?
+\item For which $\varepsilon$ is $g(g(\varepsilon)) = g(\varepsilon)$?
+\end{romans}
+
+\pnum{3.} Find the domain of the functions defined by the following formulas.
+\begin{romans}
+\item $f(x) = \sqrt{1-x^2}$.
+\item $f(x) = \sqrt{1 - \sqrt{1-x^2}}$.
+\item $\displaystyle f(x) = \frac{1}{x-1} + \frac{1}{x-2}$.
+\item $f(x) = \sqrt{1-x^2} + \sqrt{x^2-1}$.
+\item $f(x) = \sqrt{1-x} + \sqrt{x-2}$.
+\end{romans}
+
+\pnum{4.} Let $S(x)=x^2$, let $P(x)=2^x$, and let $s(x)=\sin x$. Find each of
+the following. In each case you answer should be a \emph{number}.
+\begin{romans}
+\item $(S \circ P)(y)$.
+\item $(S \circ s)(y)$.
+\item $(S \circ P \circ s)(t) + (s \circ P)(t)$.
+\item $s(t^3)$.
+\end{romans}
+
+\pnum{5.} Express each of the following functions in terms of $S$, $P$, $s$,
+using only $+$, $\cdot$, and $\circ$ (for example, the answer to~(i) is
+$P \circ s$). In each case your answer should be a \emph{function}.
+\begin{romans}
+\item $f(x) = 2^{\sin x}$.
+\item $f(x) = \sin 2^x$.
+\item $f(x) = \sin x^2$.
+\item $f(x) = \sin^2 x$ (remember that $\sin^2 x$ is an abbreviation for
+$(\sin x)^2$).
+\item $f(t) = 2^{2^t}$. (Note: $a^{b^c}$ \emph{always} means $a^{(b^c)}$; this
+convention is adopted because $(a^b)^c$ can be written more simply as
+$a^{bc}$.)
+\item $f(u) = \sin(2^u + 2^{u^2})$.
+\item $f(y) = \sin\bigl(\sin\bigl(\sin(2^{2^{\sin y}})\bigr)\bigr)$.
+\item $f(a) = 2^{\sin^2 a} + \sin(a^2) + 2^{\sin(a^2 + \sin a)}$.
+\end{romans}
+
+Polynomial functions, because they are simple, yet flexible, occupy a favored
+role in most investigations of functions. The following two problems
+illustrate their flexibility, and guide you through a derivation of their most
+important elementary properties.
+
+\pnum{6.}
+\begin{letters}
+\item If $x_1, \dots, x_n$ are distinct numbers, find a polynomial function
+$f_i$ of degree $n-1$ which is $1$ at $x_i$ and $0$ at $x_j$ for $j \neq i$.
+Hint: the product of all $(x-x_j)$ for $j \neq i$, is $0$ at $x_j$ if
+$j \neq i$. (This product is usually denoted by
+\[
+\prod_{\substack{j=1\\ j\neq i}}^n (x-x_j),
+\]
+the symbol $\Pi$ (capital pi) playing the same role for products that $\Sigma$
+plays for sums.)
+\item Now find a polynomial function $f$ of degree $n-1$ such that
+$f(x_i)=a_i$, where $a_1, \dots, a_n$ are given numbers. (You should use the
+functions $f_i$ from part~(a). The formula you will obtain is called the
+``Lagrange interpolation formula.'')
+\end{letters}
+
+\pnum{7.}
+\begin{letters}
+\item Prove that for any polynomial function $f$, and any number $a$, there is
+a polynomial function $g$, and a number $b$, such that
+$f(x)=(x-a)g(x)+b$ for all $x$. (The idea is simply to divide $(x-a)$ into
+$f(x)$ by long division, until a constant remainder is left. For example, the
+calculation
+\begin{center}
+\begin{tabular}{@{}r@{\,}c@{}r@{}r@{}r@{}r@{}}
+ && $x^2$ & ${}+x$ && ${}-2$ \\
+\cline{3-6}
+$x-1$ & $\big)$& $x^3$ && ${}-3x$ & ${}+1$ \\
+ && $x^3$ & ${}-x^2$ \\
+\cline{3-4}
+ &&& $x^2$ & ${}-3x$ \\
+ &&& $x^2$ & ${}-x$ \\
+\cline{4-5}
+ &&&& ${}-2x$ & ${}+1$ \\
+ &&&& ${}-2x$ & ${}+2$ \\
+\cline{5-6}
+ &&&&& ${}-1$
+\end{tabular}
+\end{center}
+shows that $x^3 - 3x + 1 = (x-1)(x^2 + x - 2) - 1$. A formal proof is possible
+by induction on the degree of $f$.)
+\item Prove that if $f(a)=0$, then $f(x)=(x-a)g(x)$ for some polynomial
+function $g$. (The converse is obvious.)
+\item Prove that if $f$ is a polynomial function of degree $n$, then $f$ has
+at most $n$ roots, i.e., there are at most $n$ numbers $a$ with $f(a)=0$.
+\item Show that for each $n$ there is a polynomial function of degree $n$ with
+$n$ roots. If $n$ is even find a polynomial function of degree $n$ with no
+roots, and if $n$ is odd find one with only one root.
+\end{letters}
+
+\pnum{8.} For which numbers $a$, $b$, $c$, and $d$ will the function
+\[
+f(x) = \frac{ax+b}{cx+d}
+\]
+satisfy $f(f(x))=x$ for all $x$ (for which this equation makes sense)?
+
+\pnum{9.}
+\begin{letters}
+\item If $A$ is any set of real numbers, define a function $C_A$ as follows:
+\[
+C_A(x) =
+\begin{cases}
+1, & x\text{ in }A\\
+0, & x\text{ not in }A.
+\end{cases}
+\]
+Find expressions for $C_{A\cap B}$ and $C_{A\cup B}$ and $C_{\mathbf{R}-A}$,
+in terms of $C_A$ and $C_B$. (The symbol $A \cap B$ was defined in this
+chapter, but the other two may be new to you. They can be defined as follows:
+\begin{align*}
+A \cup B &= \{x : x\text{ is in }A\text{ or }x\text{ is in }B\},\\
+\mathbf{R} - A &= \{x : x\text{ is in }\mathbf{R}\text{ but }x\text{ is not
+in }A\}.)
+\end{align*}
+\item Suppose $f$ is a function such that $f(x)=0$ or $1$ for each $x$. Prove
+that there is a set $A$ such that $f = C_A$.
+\item Show that $f = f^2$ if and only if $f = C_A$ for some set $A$.
+\end{letters}
+
+\pnum{10.}
+\begin{letters}
+\item For which functions $f$ is there a function $g$ such that $f = g^2$?
+Hint: You can certainly answer this question if ``function'' is replaced by
+``number.''
+\item For which functions $f$ is there a function $g$ such that $f = 1/g$?
+\item[*(c)] For which functions $b$ and $c$ can we find a function $x$ such
+that
+\[
+(x(t))^2 + b(t)x(t) + c(t) = 0
+\]
+for all numbers $t$?
+\item[*(d)] What conditions must the functions $a$ and $b$ satisfy if there
+is to be a function $x$ such that
+\[
+a(t)x(t) + b(t) = 0
+\]
+for all numbers $t$? How many such functions $x$ will there be?
+\end{letters}
+
+\pnum{11.}
+\begin{letters}
+\item Suppose that $H$ is a function and $y$ is a number such that
+$H(H(y))=y$. What is
+\[
+\underbrace{H(H(H(\cdots(H(y)\cdots)}_{80\text{ times}}?
+\]
+\item Same question if $80$ is replaced by $81$.
+\item Same question if $H(H(y))=H(y)$.
+\item[*(d)] Find a function $H$ such that $H(H(x))=H(x)$ for all numbers $x$,
+and such that $H(1)=36$, $H(2)=\pi/3$, $H(13)=47$, $H(36)=36$,
+$H(\pi/3)=\pi/3$, $H(47)=47$. (Don't try to ``solve'' for $H(x)$; there are
+many functions $H$ with $H(H(x))=H(x)$. The extra conditions on $H$ are
+supposed to suggest a way of finding a suitable $H$.)
+\item[*(e)] Find a function $H$ such that $H(H(x))=H(x)$ for all $x$, and such
+that $H(1)=7$, $H(17)=18$.
+\end{letters}
+
+\pnum{12.} A function $f$ is \textbf{even} if $f(x)=f(-x)$ and \textbf{odd} if
+$f(x)=-f(-x)$. For example, $f$ is even if $f(x)=x^2$ or $f(x)=\abs{x}$ or
+$f(x)=\cos x$, while $f$ is odd if $f(x)=x$ or $f(x)=\sin x$.
+\begin{letters}
+\item Determine whether $f+g$ is even, odd, or not necessarily either, in the
+four cases obtained by choosing $f$ even or odd, and $g$ even or odd. (Your
+answers can most conveniently be displayed in a $2 \times 2$ table.)
+\item Do the same for $f \cdot g$.
+\item Do the same for $f \circ g$.
+\item Prove that every even function $f$ can be written $f(x)=g(\abs{x})$, for
+infinitely many functions $g$.
+\end{letters}
+
+\pnum{*13.}
+\begin{letters}
+\item Prove that any function $f$ with domain $\mathbf{R}$ can be written
+$f = E + O$, where $E$ is even and $O$ is odd.
+\item Prove that this way of writing $f$ is unique. (If you try to do
+part~(b) first, by ``solving'' for $E$ and $O$ you will probably find the
+solution to part~(a).)
+\end{letters}
+
+\pnum{14.} If $f$ is any function, define a new function $\abs{f}$ by
+$\abs{f}(x)=\abs{f(x)}$. If $f$ and $g$ are functions, define two new
+functions, $\max(f,g)$ and $\min(f,g)$, by
+\begin{align*}
+\max(f,g)(x) &= \max(f(x), g(x)),\\
+\min(f,g)(x) &= \min(f(x), g(x)).
+\end{align*}
+Find an expression for $\max(f,g)$ and $\min(f,g)$ in terms of $\abs{\ }$.
+
+\pnum{15.}
+\begin{letters}
+\item Show that $f = \max(f,0) + \min(f,0)$. This particular way of writing
+$f$ is fairly useful; the functions $\max(f,0)$ and $\min(f,0)$ are called the
+\textbf{positive} and \textbf{negative parts} of $f$.
+\item A function $f$ is called \textbf{nonnegative} if $f(x) \geq 0$ for all
+$x$. Prove that any function $f$ can be written $f = g - h$, where $g$ and $h$
+are nonnegative, in infinitely many ways. (The ``standard way'' is
+$g = \max(f,0)$ and $h = -\min(f,0)$.) Hint: Any \emph{number} can certainly
+be written as the difference of two nonnegative \emph{numbers} in infinitely
+many ways.
+\end{letters}
+
+\pnum{*16.} Suppose $f$ satisfies $f(x+y)=f(x)+f(y)$ for all $x$ and $y$.
+\begin{letters}
+\item Prove that $f(x_1 + \cdots + x_n) = f(x_1) + \cdots + f(x_n)$.
+\item Prove that there is some number $c$ such that $f(x)=cx$ for all
+\emph{rational} numbers $x$ (at this point we're not trying to say anything
+about $f(x)$ for irrational $x$). Hint: First figure out what $c$ must be. Now
+prove that $f(x)=cx$, first when $x$ is a natural number, then when $x$ is an
+integer, then when $x$ is the reciprocal of an integer and, finally, for all
+rational $x$.
+\end{letters}
+
+\pnum{*17.} If $f(x)=0$ for all $x$, then $f$ satisfies
+$f(x+y)=f(x)+f(y)$ for all $x$ and $y$, and also $f(x \cdot y)=f(x) \cdot f(y)$
+for all $x$ and $y$. Now suppose that $f$ satisfies these two properties, but
+that $f(x)$ is not always~$0$. Prove that $f(x)=x$ for all $x$, as follows:
+\begin{letters}
+\item Prove that $f(1)=1$.
+\item Prove that $f(x)=x$ if $x$ is rational.
+\item Prove that $f(x)>0$ if $x>0$. (This part is tricky, but if you have been
+paying attention to the philosophical remarks accompanying the problems in the
+last two chapters, you will know what to do.)
+\item Prove that $f(x)>f(y)$ if $x>y$.
+\item Prove that $f(x)=x$ for all $x$. Hint: Use the fact that between any two
+numbers there is a rational number.
+\end{letters}
+
+\pnum{*18.} Precisely what conditions must $f$, $g$, $h$, and $k$ satisfy in
+order that $f(x)g(y)=h(x)k(y)$ for all $x$ and $y$?
+
+\pnum{*19.}
+\begin{letters}
+\item Prove that there do \emph{not} exist functions $f$ and $g$ with either
+of the following properties:
+\begin{romans}
+\item $f(x)+g(y)=xy$ for all $x$ and $y$.
+\item $f(x) \cdot g(y)=x+y$ for all $x$ and $y$.
+\end{romans}
+Hint: Try to get some information about $f$ or $g$ by choosing particular
+values of $x$ and $y$.
+\item Find functions $f$ and $g$ such that $f(x+y)=g(xy)$ for all $x$ and $y$.
+\end{letters}
+
+\pnum{*20.}
+\begin{letters}
+\item Find a function $f$, other than a constant function, such that
+$\abs{f(y)-f(x)} \leq \abs{y-x}$.
+\item Suppose that $f(y)-f(x) \leq (y-x)^2$ for all $x$ and $y$. (Why does this
+imply that $\abs{f(y)-f(x)} \leq (y-x)^2$?) Prove that $f$ is a constant
+function. Hint: Divide the interval from $x$ to $y$ into $n$ equal pieces.
+\end{letters}
+
+\pnum{21.} Prove or give a counterexample for each of the following
+assertions:
+\begin{letters}
+\item $f \circ (g+h) = f \circ g + f \circ h$.
+\item $(g+h) \circ f = g \circ f + h \circ f$.
+\item $\dfrac{1}{f \circ g} = \dfrac{1}{f} \circ g$.
+\item $\dfrac{1}{f \circ g} = f \circ \Biggl(\dfrac{1}{g}\Biggr)$.
+\end{letters}
+
+\pnum{22.}
+\begin{letters}
+\item Suppose $g = h \circ f$. Prove that if $f(x)=f(y)$, then $g(x)=g(y)$.
+\item Conversely, suppose that $f$ and $g$ are two functions such that
+$g(x)=g(y)$ whenever $f(x)=f(y)$. Prove that $g = h \circ f$ for some function
+$h$. Hint: Just try to define $h(z)$ when $z$ is of the form $z=f(x)$ (these
+are the only $z$ that matter) and use the hypotheses to show that your
+definition will not run into trouble.
+\end{letters}
+
+\pnum{23.} Suppose that $f \circ g = I$, where $I(x)=x$. Prove that
+\begin{letters}
+\item if $x \neq y$, then $g(x) \neq g(y)$;
+\item every number $b$ can be written $b=f(a)$ for some number $a$.
+\end{letters}
+
+\pnum{*24.}
+\begin{letters}
+\item Suppose $g$ is a function with the property that $g(x) \neq g(y)$ if
+$x \neq y$. Prove that there is a function $f$ such that $f \circ g = I$.
+\item Suppose that $f$ is a function such that every number $b$ can be written
+$b=f(a)$ for some number $a$. Prove that there is a function $g$ such that
+$f \circ g = I$.
+\end{letters}
+
+\pnum{*25.} Find a function $f$ such that $g \circ f = I$ for some $g$, but
+such that there is no function $h$ with $f \circ h = I$.
+
+\pnum{*26.} Suppose $f \circ g = I$ and $h \circ f = I$. Prove that $g=h$.
+Hint: Use the fact that composition is associative.
+
+\pnum{27.}
+\begin{letters}
+\item Suppose $f(x)=x+1$. Are there any functions $g$ such that
+$f \circ g = g \circ f$?
+\item Suppose $f$ is a constant function. For which functions $g$ does
+$f \circ g = g \circ f$?
+\item Suppose that $f \circ g = g \circ f$ for \emph{all} functions $g$. Show
+that $f$ is the identity function, $f(x)=x$.
+\end{letters}
+
+\pnum{28.}
+\begin{letters}
+\item Let $F$ be the set of all functions whose domain is $\mathbf{R}$. Prove
+that, using $+$ and $\cdot$ as defined in this chapter, all of properties
+P1--P9 except P7 hold for $F$, provided $0$ and $1$ are interpreted as
+constant functions.
+\item Show that P7 does not hold.
+\item[*(c)] Show that P10--P12 cannot hold. In other words, show that there
+is no collection $P$ of functions in $F$, such that P10--P12 hold for $P$. (It
+is sufficient, and will simplify things, to consider only functions which are
+$0$ except at two points $x_0$ and $x_1$.)
+\item[(d)] Suppose we define $f < g$ to mean that $f(x) < g(x)$ for all $x$.
+Which of P$'$10--P$'$13 (in Problem~1-8) now hold?
+\item[(e)] If $f < g$, is $h \circ f < h \circ g$? Is $f \circ h < g \circ h$?
+\end{letters}
+
+% Appendix. Ordered Pairs
+\subsection*{APPENDIX. ORDERED PAIRS}
+
+Not only in the definition of a function, but in other parts of the book as
+well, it is necessary to use the notion of an ordered pair of objects. A
+definition has not yet been given, and we have never even stated explicitly
+what properties an ordered pair is supposed to have. The one property which
+we will require states formally that the ordered pair $(a,b)$ should be
+determined by $a$ and $b$, and the order in which they are given:
+\[
+\text{if }(a,b)=(c,d),\text{ then }a=c\text{ and }b=d.
+\]
+
+Ordered pairs may be treated most conveniently by simply introducing $(a,b)$
+as an undefined term and adopting the basic property as an axiom---since this
+property is the only significant fact about ordered pairs, there is not much
+point worrying about what an ordered pair ``really'' is. Those who find this
+treatment satisfactory need read no further.
+
+The rest of this short appendix is for the benefit of those readers who will
+feel uncomfortable unless ordered pairs are somehow defined so that this
+basic property becomes a theorem. There is no point in restricting our
+attention to ordered pairs of numbers; it is just as reasonable, and just as
+important, to have available the notion of an ordered pair of any two
+mathematical objects. This means that our definition ought to involve only
+concepts common to all branches of mathematics. The one common concept which
+pervades all areas of mathematics is that of a set, and ordered pairs (like
+everything else in mathematics) can be defined in this context; an ordered
+pair will turn out to be a set of a rather special sort.
+
+The set $\{a,b\}$, containing the two elements $a$ and $b$, is an obvious
+first choice, but will not do as a definition for $(a,b)$, because there is
+no way of determining from $\{a,b\}$ which of $a$ or $b$ is meant to be the
+first element. A more promising candidate is the rather startling set:
+\[
+\bigl\{\{a\},\ \{a,b\}\bigr\}.
+\]
+This set has two members, both of which are \emph{themselves} sets; one
+member is the set $\{a\}$, containing the single member $a$, the other is the
+set $\{a,b\}$. Shocking as it may seem, we are going to define $(a,b)$ to be
+this set. The justification for this choice is given by the theorem
+immediately following the definition---the definition works, and there really
+isn't anything else worth saying.
+
+\begin{spivakdefn}
+\[
+(a,b) = \bigl\{\{a\},\ \{a,b\}\bigr\}.
+\]
+\end{spivakdefn}
+
+\begin{theorem}
+If $(a,b)=(c,d)$, then $a=c$ and $b=d$.
+\end{theorem}
+
+\begin{proof}
+The hypothesis means that
+\[
+\bigl\{\{a\},\ \{a,b\}\bigr\} = \bigl\{\{c\},\ \{c,d\}\bigr\}.
+\]
+Now $\{\{a\},\ \{a,b\}\}$ contains just two members, $\{a\}$ and $\{a,b\}$;
+and $a$ is the only common element of these two members of
+$\{\{a\},\ \{a,b\}\}$. Similarly, $c$ is the unique common member of both
+members of $\{\{c\},\ \{c,d\}\}$. Therefore $a=c$. We therefore have
+\[
+\bigl\{\{a\},\ \{a,b\}\bigr\} = \bigl\{\{a\},\ \{a,d\}\bigr\},
+\]
+and only the proof that $b=d$ remains. It is convenient to distinguish $2$
+cases.
+
+\textit{Case 1.} $b=a$. In this case, $\{a,b\}=\{a\}$, so the set
+$\{\{a\},\ \{a,b\}\}$ really has only one member, namely, $\{a\}$. The same
+must be true of $\{\{a\},\ \{a,d\}\}$, so $\{a,d\}=\{a\}$, which implies that
+$d=a=b$.
+
+\textit{Case 2.} $b \neq a$. In this case, $b$ is in one member of
+$\{\{a\},\ \{a,b\}\}$ but not in the other. It must therefore be true that $b$
+is in one member of $\{\{a\},\ \{a,d\}\}$ but not in the other. This can
+happen only if $b$ is in $\{a,d\}$, but $b$ is not in $\{a\}$; thus $b=a$ or
+$b=d$, but $b \neq a$; so $b=d$.
+\end{proof}

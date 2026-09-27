@@ -1,0 +1,19 @@
+\begin{tikzpicture}[reconstruction, reconstruction line]
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (-2.15,-0.85);
+  \coordinate (Pos) at (2.15,0.85);
+  \coordinate (X) at (1.6,0);
+  \draw (-2.65,0) -- (2.85,0);
+  \draw (0,-1.55) -- (0,2.15);
+  \draw ($ (P)!-0.15!(Pos) $) -- ($ (Pos)!-0.25!(P) $);
+  \fill (P) circle (1.7pt);
+  \node[below left, inner sep=2pt] at (P) {$P$};
+  \draw[decorate, decoration={brace, amplitude=4pt, raise=2pt, mirror}] (O) -- (P);
+  \node[below=11pt] at ($(O)!0.55!(P)$) {length $r$};
+  \pic[draw, angle radius=8.2mm, angle eccentricity=1.35, "$\theta_0$"] {angle=X--O--Pos};
+  \draw (0.95,0) arc [start angle=0, end angle=180, radius=0.95];
+  \node[above left, inner sep=1pt] at (-0.55,0.82) {$\theta_1$};
+  \node[align=left, font=\small] at (0.2,-2.35) {%
+    $P$ is the point with polar coordinates $(r,\theta_1)$\\
+    and also the point with polar coordinates $(-r,\theta_0)$.};
+\end{tikzpicture}

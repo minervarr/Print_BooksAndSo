@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\begin{axis}[
+  reconstruction plot,
+  width=0.95\textwidth,
+  height=3.6cm,
+  trig format plots=rad,
+  xtick={-6.28318, 6.28318, 12.56637},
+  xticklabels={$-2\pi$, $2\pi$, $4\pi$},
+  ytick={-1, 1},
+  yticklabels={$-1$, $1$},
+  xmin=-7.4, xmax=14.2,
+  ymin=-1.55, ymax=1.65,
+]
+  \addplot[domain=-7.1:13.6, samples=400] {sin(x)};
+  \node[anchor=south west, inner sep=1pt] at (axis cs:1.72,1.02) {$f(x)=\sin x$};
+\end{axis}
+\end{tikzpicture}

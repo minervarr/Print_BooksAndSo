@@ -1,0 +1,17 @@
+\begin{tikzpicture}[reconstruction, reconstruction line, x=0.95cm]
+  \fill[black!18] (-6.2,-0.14) rectangle (-2.05,0.14);
+  \fill[black!18] (2.05,-0.14) rectangle (6.2,0.14);
+  \draw[-Stealth] (-6.4,0) -- (6.4,0);
+  \draw (0,0.18) -- (0,-0.18);
+  \draw (-4.1,0.22) -- (-4.1,-0.22);
+  \draw (-2.05,0.18) -- (-2.05,-0.18);
+  \draw (2.05,0.18) -- (2.05,-0.18);
+  \draw (4.1,0.22) -- (4.1,-0.22);
+  \node[above] at (-2.05,0.22) {$\dfrac{a}{2}$};
+  \node[above] at (2.05,0.22) {$\dfrac{a}{2}$};
+  \node[below] at (-4.1,-0.28) {$a<0$};
+  \node[below] at (4.1,-0.28) {$a>0$};
+  \node[above] at (0,1.55) {possible values for $x$};
+  \draw[-Stealth] (-1.35,1.35) to[bend right=18] (-4.05,0.28);
+  \draw[-Stealth] (1.35,1.35) to[bend left=18] (4.05,0.28);
+\end{tikzpicture}
